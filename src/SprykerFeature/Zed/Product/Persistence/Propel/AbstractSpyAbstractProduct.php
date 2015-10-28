@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\Product\Persistence\Propel;
 
-use SprykerFeature\Zed\Product\Persistence\Propel\Base\SpyProductToBundleQuery as BaseSpyProductToBundleQuery;
+use Orm\Zed\Product\Persistence\Base\SpyAbstractProduct as BaseSpyAbstractProduct;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'spy_product_to_bundle' table.
+ * Skeleton subclass for representing a row from the 'spy_abstract_product' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Base\SpyProductToBundleQuery a
  * long as it does not already exist in the output directory.
  *
  */
-class SpyProductToBundleQuery extends BaseSpyProductToBundleQuery
+abstract class AbstractSpyAbstractProduct extends BaseSpyAbstractProduct
 {
 
 }

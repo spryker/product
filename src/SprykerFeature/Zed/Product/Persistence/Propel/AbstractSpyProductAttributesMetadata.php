@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\Product\Persistence\Propel;
 
-use SprykerFeature\Zed\Product\Persistence\Propel\Base\SpyProductQuery as BaseSpyProductQuery;
+use Orm\Zed\Product\Persistence\Base\SpyProductAttributesMetadata as BaseSpyProductAttributesMetadata;
 
 /**
- * Skeleton subclass for performing query and update operations on the 'spy_product' table.
+ * Skeleton subclass for representing a row from the 'spy_attributes_metadata' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Base\SpyProductQuery as BaseSp
  * long as it does not already exist in the output directory.
  *
  */
-class SpyProductQuery extends BaseSpyProductQuery
+abstract class AbstractSpyProductAttributesMetadata extends BaseSpyProductAttributesMetadata
 {
 
 }

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Product\Persistence\Propel;
 
-use SprykerFeature\Zed\Product\Persistence\Propel\Base\SpyLocalizedProductAttributes as BaseSpyLocalizedProductAttributes;
+use Orm\Zed\Product\Persistence\Base\SpyLocalizedProductAttributes as BaseSpyLocalizedProductAttributes;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_product_localized_attributes' table.
@@ -14,6 +14,6 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Base\SpyLocalizedProductAttrib
  * long as it does not already exist in the output directory.
  *
  */
-class SpyLocalizedProductAttributes extends BaseSpyLocalizedProductAttributes
+abstract class AbstractSpyLocalizedProductAttributes extends BaseSpyLocalizedProductAttributes
 {
 }
