@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Product\Service\Storage;
+namespace SprykerFeature\Client\Product\Storage;
 
 interface ProductStorageInterface
 {
