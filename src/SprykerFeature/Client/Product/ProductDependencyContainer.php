@@ -4,18 +4,18 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Product\Service;
+namespace SprykerFeature\Client\Product;
 
-use SprykerFeature\Client\Product\Service\KeyBuilder\ProductResourceKeyBuilder;
-use SprykerFeature\Client\Product\Service\Storage\ProductStorage;
-use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
+use SprykerFeature\Client\Product\KeyBuilder\ProductResourceKeyBuilder;
+use SprykerFeature\Client\Product\Storage\ProductStorage;
+use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
 use SprykerFeature\Client\Product\ProductDependencyProvider;
-use SprykerFeature\Client\Product\Service\Storage\ProductStorageInterface;
-use SprykerFeature\Client\Storage\Service\StorageClientInterface;
+use SprykerFeature\Client\Product\Storage\ProductStorageInterface;
+use SprykerFeature\Client\Storage\StorageClientInterface;
 use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
-use SprykerEngine\Client\Locale\Service\LocaleClient;
+use SprykerEngine\Client\Locale\LocaleClient;
 
-class ProductDependencyContainer extends AbstractServiceDependencyContainer
+class ProductDependencyContainer extends AbstractDependencyContainer
 {
 
     /**
