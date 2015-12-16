@@ -40,7 +40,7 @@ use Spryker\Zed\Product\Business\Product\ProductManager;
  * @method ProductConfig getConfig()
  * @method ProductQueryContainerInterface getQueryContainer()
  */
-class ProductDependencyContainer extends AbstractBusinessFactory
+class ProductBusinessFactory extends AbstractBusinessFactory
 {
 
     /**

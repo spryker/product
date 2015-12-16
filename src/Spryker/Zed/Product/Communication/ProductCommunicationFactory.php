@@ -22,7 +22,7 @@ use Spryker\Zed\Url\Business\UrlFacade;
  * @method ProductQueryContainer getQueryContainer()
  * @method ProductConfig getConfig()
  */
-class ProductDependencyContainer extends AbstractCommunicationFactory
+class ProductCommunicationFactory extends AbstractCommunicationFactory
 {
 
     /**

@@ -15,7 +15,7 @@ use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use Spryker\Client\Locale\LocaleClient;
 
-class ProductDependencyContainer extends AbstractFactory
+class ProductFactory extends AbstractFactory
 {
 
     /**
