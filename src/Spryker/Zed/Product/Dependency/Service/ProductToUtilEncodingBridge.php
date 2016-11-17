@@ -4,22 +4,22 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Dependency\Facade;
+namespace Spryker\Zed\Product\Dependency\Service;
 
 class ProductToUtilEncodingBridge implements ProductToUtilEncodingInterface
 {
 
     /**
-     * @var \Spryker\Zed\UtilEncoding\Business\UtilEncodingFacadeInterface
+     * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
      */
-    protected $utilEncodingFacade;
+    protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Zed\UtilEncoding\Business\UtilEncodingFacadeInterface $utilEncodingFacade
+     * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $utilEncodingService
      */
-    public function __construct($utilEncodingFacade)
+    public function __construct($utilEncodingService)
     {
-        $this->utilEncodingFacade = $utilEncodingFacade;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -31,7 +31,7 @@ class ProductToUtilEncodingBridge implements ProductToUtilEncodingInterface
      */
     public function encodeJson($value, $options = null, $depth = null)
     {
-        return $this->utilEncodingFacade->encodeJson($value, $options, $depth);
+        return $this->utilEncodingService->encodeJson($value, $options, $depth);
     }
 
     /**
@@ -44,7 +44,7 @@ class ProductToUtilEncodingBridge implements ProductToUtilEncodingInterface
      */
     public function decodeJson($jsonString, $assoc = false, $depth = null, $options = null)
     {
-        return $this->utilEncodingFacade->decodeJson($jsonString, $assoc, $depth, $options);
+        return $this->utilEncodingService->decodeJson($jsonString, $assoc, $depth, $options);
     }
 
 }
