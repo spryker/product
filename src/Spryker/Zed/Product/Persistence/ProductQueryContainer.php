@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Persistence;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -210,5 +211,19 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
                 ->filterByFkLocale($idLocale)
                 ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, 'name');
+    }
+
+    /**
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryProductConcreteIdsByAbstractProductId($idProductAbstract)
+    {
+        return $this->queryProduct()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->select([SpyProductTableMap::COL_ID_PRODUCT]);
     }
 }

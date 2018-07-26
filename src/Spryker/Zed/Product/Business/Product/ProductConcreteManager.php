@@ -10,6 +10,7 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -292,6 +293,50 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             ->filterByIdProduct($productConcreteTransfer->getIdProductConcrete())
             ->findOne();
     }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException
+     *
+     * @return int
+     */
+    public function getProductAbstractIdByConcreteId($idProductConcrete)
+    {
+        $productConcrete = $this->productQueryContainer
+            ->queryProduct()
+            ->filterByIdProduct($idProductConcrete)
+            ->findOne();
+        if (!$productConcrete) {
+            throw new MissingProductException(
+                sprintf(
+                    'Tried to retrieve a product concrete with id %s, but it does not exist.',
+                    $idProductConcrete
+                )
+            );
+        }
+
+        return $productConcrete->getFkProductAbstract();
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return int[]
+     */
+    public function findProductConcreteIdsByAbstractProductId($idProductAbstract)
+    {
+        $productConcreteIds = $this->productQueryContainer
+            ->queryProductConcreteIdsByAbstractProductId($idProductAbstract)
+            ->find();
+
+        if (!$productConcreteIds) {
+            return [];
+        }
+
+        return $productConcreteIds->getData();
+    }
+
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
