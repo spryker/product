@@ -4,14 +4,14 @@
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
-namespace Spryker\Client\Product\Storage;
+namespace Spryker\Zed\Product\Business\Product\Sku;
 
-interface AttributeMapStorageInterface
+interface SkuIncrementGeneratorInterface
 {
     /**
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return string
      */
-    public function getAttributeMapByIdProductAbstract($idProductAbstract);
+    public function generateProductConcreteSkuIncrement(int $idProductAbstract): string;
 }
