@@ -733,4 +733,17 @@ interface ProductFacadeInterface
      * @return int
      */
     public function getProductAbstractIdByConcreteId(int $idProductConcrete): int;
+
+    /**
+     * Specification:
+     * - Returns an array of abstract product ids for the passed concrete product ids.
+     * - Returns a map, where each key is a concrete product id and its value is a corresponding abstract product id.
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
 }

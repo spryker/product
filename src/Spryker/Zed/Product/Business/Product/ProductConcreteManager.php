@@ -337,6 +337,20 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         return $productConcreteIds->getData();
     }
 
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
+    {
+        return $this->productQueryContainer
+            ->queryProduct()
+            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_ID_PRODUCT])
+            ->filterByIdProduct_In($productConcreteIds)
+            ->find()
+            ->toKeyValue(SpyProductTableMap::COL_ID_PRODUCT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

@@ -99,4 +99,11 @@ interface ProductConcreteManagerInterface
      * @return int[]
      */
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract);
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
 }

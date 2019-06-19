@@ -840,4 +840,20 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
             ->createProductConcreteManager()
             ->findProductConcreteIdsByAbstractProductId($idProductAbstract);
     }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteManager()
+            ->getProductAbstractIdsByProductConcreteIds($productConcreteIds);
+    }
 }
