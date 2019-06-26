@@ -71,5 +71,16 @@
         <property name="sku" type="string" />
     </transfer>
 
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="lastPage" type="int"/>
+    </transfer>
+
+    <transfer name="ProductAbstractSuggestionCollection">
+        <property name="productAbstracts" type="ProductAbstract[]"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
 </transfers>
 
