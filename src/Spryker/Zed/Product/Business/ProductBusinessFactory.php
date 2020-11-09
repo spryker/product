@@ -162,7 +162,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductAbstractStatusChecker()
     {
-        return new ProductAbstractStatusChecker($this->getQueryContainer(), $this->getRepository());
+        return new ProductAbstractStatusChecker($this->getQueryContainer());
     }
 
     /**
