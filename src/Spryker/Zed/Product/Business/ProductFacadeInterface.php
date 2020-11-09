@@ -625,6 +625,18 @@ interface ProductFacadeInterface
 
     /**
      * Specification:
+     * - Returns true if concrete product is active.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return bool
+     */
+    public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool;
+
+    /**
+     * Specification:
      * - Returns an array with attribute keys of a persisted product.
      * - The result is a combination of the abstract product's attribute keys and all its existing concretes' attribute keys.
      * - If $localeTransfer is provided then localized abstract and concrete attribute keys are also part of the result.

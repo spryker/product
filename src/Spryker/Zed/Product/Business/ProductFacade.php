@@ -704,6 +704,22 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return bool
+     */
+    public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createProductConcreteStatusChecker()
+            ->isActive($productConcreteTransfer);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @api
