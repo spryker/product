@@ -122,7 +122,8 @@ class ProductDataHelper extends Module
      */
     public function haveFullProduct(
         array $productConcreteOverride = [],
-        array $productAbstractOverride = []
+        array $productAbstractOverride = [],
+        bool $useExistAbstractProductOrCreate = false
     ): ProductConcreteTransfer {
         $allStoresRelation = $this->getAllStoresRelation()->toArray();
 
@@ -140,7 +141,30 @@ class ProductDataHelper extends Module
 
         $productFacade = $this->getProductFacade();
 
-        $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);
+        $prevMessage = 'Inserted AbstractProduct';
+
+        if ($useExistAbstractProductOrCreate) {
+            if (
+                isset($productAbstractOverride[ProductAbstractTransfer::SKU])
+                && $productFacade->hasProductAbstract($productAbstractOverride[ProductAbstractTransfer::SKU])
+            ) {
+                $abstractProductId = $productFacade->findProductAbstractIdBySku(
+                    $productAbstractOverride[ProductAbstractTransfer::SKU]
+                );
+                $prevMessage = 'Found AbstractProduct';
+            } else if (
+                isset($productAbstractOverride[ProductAbstractTransfer::ID_PRODUCT_ABSTRACT])
+                && $productFacade->findProductAbstractById($productAbstractOverride[ProductAbstractTransfer::ID_PRODUCT_ABSTRACT]) !== null
+            ) {
+                $abstractProductId = $productAbstractOverride[ProductAbstractTransfer::ID_PRODUCT_ABSTRACT];
+                $prevMessage = 'Found AbstractProduct';
+            } else {
+                $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);
+            }
+        } else {
+            $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);
+        }
+
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productAbstractTransfer */
         $productConcreteTransfer = (new ProductConcreteBuilder(array_merge(['fkProductAbstract' => $abstractProductId], $productConcreteOverride)))
             ->withLocalizedAttributes($localizedAttributes)
@@ -150,12 +174,13 @@ class ProductDataHelper extends Module
 
         $productFacade->createProductConcrete($productConcreteTransfer);
 
-        $productFacade->createProductUrl(
+        $productFacade->updateProductUrl(
             $productAbstractTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
         );
 
         $this->debug(sprintf(
-            'Inserted AbstractProduct: %d, Concrete Product: %d',
+            '%s: %d, Inserted Concrete Product: %d',
+            $prevMessage,
             $abstractProductId,
             $productConcreteTransfer->getIdProductConcrete()
         ));
