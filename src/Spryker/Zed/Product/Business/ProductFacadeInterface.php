@@ -774,4 +774,15 @@ interface ProductFacadeInterface
      * @return int[]
      */
     public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<string> $productAbstractSkus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array;
 }

@@ -106,4 +106,11 @@ interface ProductConcreteManagerInterface
      * @return int[]
      */
     public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
+     * @param array<string> $productAbstractSkus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array;
 }
