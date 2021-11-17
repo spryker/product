@@ -34,4 +34,11 @@ interface ProductRepositoryInterface
         PaginationTransfer $paginationTransfer,
         LocaleTransfer $localeTransfer
     ): ProductAbstractSuggestionCollectionTransfer;
+
+    /**
+     * @param array<string> $productAbstractSkus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array;
 }

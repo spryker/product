@@ -29,4 +29,17 @@ class ProductMapper implements ProductMapperInterface
 
         return $productAbstractTransfer;
     }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function mapProductAbstractEntityToProductAbstractTransferWithoutRelations(
+        SpyProductAbstract $productAbstractEntity,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductAbstractTransfer {
+        return $productAbstractTransfer->fromArray($productAbstractEntity->toArray(), true);
+    }
 }

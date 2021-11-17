@@ -774,4 +774,17 @@ interface ProductFacadeInterface
      * @return int[]
      */
     public function getProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
+     * Specification:
+     * - Retrieves product abstract transfer by sku.
+     * - Doesn't populate it with additional data.
+     *
+     * @api
+     *
+     * @param array<string> $productAbstractSkus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array;
 }

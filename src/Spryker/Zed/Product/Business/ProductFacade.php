@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Product\Business\ProductBusinessFactory getFactory()
+ * @method \Spryker\Zed\Product\Persistence\ProductRepositoryInterface getRepository()
  */
 class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 {
@@ -890,5 +891,19 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         return $this->getFactory()
             ->createProductConcreteManager()
             ->getProductAbstractIdsByProductConcreteIds($productConcreteIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<string> $productAbstractSkus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array
+    {
+        return $this->getRepository()->getRawProductAbstractTransfersByAbstractSkus($productAbstractSkus);
     }
 }

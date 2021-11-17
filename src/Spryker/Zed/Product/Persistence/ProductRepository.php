@@ -85,6 +85,40 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
+     * @param array<string> $productAbstractSkus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array
+    {
+        $productAbstractEntities = $this->getFactory()->createProductAbstractQuery()
+            ->filterBySku_In($productAbstractSkus)
+            ->find();
+
+        return $this->mapProductAbstractEntitiesToProductAbstractTransfersWithoutRelations($productAbstractEntities);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
+     */
+    protected function mapProductAbstractEntitiesToProductAbstractTransfersWithoutRelations(ObjectCollection $productAbstractEntities): array
+    {
+        $productAbstractTransfers = [];
+        $mapper = $this->getFactory()->createProductMapper();
+
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $productAbstractTransfers[] = $mapper->mapProductAbstractEntityToProductAbstractTransferWithoutRelations(
+                $productAbstractEntity,
+                new ProductAbstractTransfer()
+            );
+        }
+
+        return $productAbstractTransfers;
+    }
+
+    /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $spyProductAbstractQuery
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
