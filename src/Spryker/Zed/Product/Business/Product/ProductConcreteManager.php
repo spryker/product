@@ -220,15 +220,15 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @param string $concreteSku
+     * @param string $productConcreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getProductConcrete($concreteSku)
+    public function getProductConcrete($productConcreteSku)
     {
-        $productConcreteTransfer = $this->findProductConcreteBySku($concreteSku);
+        $productConcreteTransfer = $this->findProductConcreteBySku($productConcreteSku);
 
-        $this->assertProductConcreteTransfer($concreteSku, $productConcreteTransfer);
+        $this->assertProductConcreteTransfer($productConcreteSku, $productConcreteTransfer);
 
         return $productConcreteTransfer;
     }

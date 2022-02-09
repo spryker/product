@@ -38,32 +38,32 @@ class ProductMapper implements ProductMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productConcreteEntity
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function mapProductConcreteEntityToTransfer(
-        SpyProduct $productEntity,
+        SpyProduct $productConcreteEntity,
         ProductConcreteTransfer $productConcreteTransfer
     ): ProductConcreteTransfer {
         $productConcreteTransfer->fromArray(
-            $productEntity->toArray(),
+            $productConcreteEntity->toArray(),
             true,
         );
 
-        $productConcreteTransfer->setIdProductConcrete($productEntity->getIdProduct());
+        $productConcreteTransfer->setIdProductConcrete($productConcreteEntity->getIdProduct());
         $productConcreteTransfer->setAbstractSku(
-            $productEntity->getSpyProductAbstract()->getSku(),
+            $productConcreteEntity->getSpyProductAbstract()->getSku(),
         );
 
-        foreach ($productEntity->getSpyProductLocalizedAttributess() as $productLocalizedAttributesEntity) {
+        foreach ($productConcreteEntity->getSpyProductLocalizedAttributess() as $productLocalizedAttributesEntity) {
             $productConcreteTransfer->addLocalizedAttributes(
                 $this->mapProductLocalizedAttributesEntityToTransfer($productLocalizedAttributesEntity, new LocalizedAttributesTransfer()),
             );
         }
 
-        foreach ($productEntity->getSpyProductAbstract()->getSpyProductAbstractStores() as $productAbstractStoreEntity) {
+        foreach ($productConcreteEntity->getSpyProductAbstract()->getSpyProductAbstractStores() as $productAbstractStoreEntity) {
             $productConcreteTransfer->addStores(
                 $this->mapStoreEntityToTransfer($productAbstractStoreEntity->getSpyStore(), new StoreTransfer()),
             );
