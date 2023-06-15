@@ -97,7 +97,8 @@ class ProductEventBusExporter implements ProductExporterInterface
      */
     protected function getStoreTransfer(ProductExportCriteriaTransfer $productExportCriteriaTransfer): StoreTransfer
     {
-        return $this->storeFacade->getStoreByStoreReference($productExportCriteriaTransfer->getStoreReferenceOrFail());
+        // MBv2
+        return $this->storeFacade->getAllStores()[0];
     }
 
     /**
