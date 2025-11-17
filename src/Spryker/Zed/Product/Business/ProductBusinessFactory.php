@@ -61,6 +61,11 @@ use Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlManager;
 use Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator;
 use Spryker\Zed\Product\Business\Product\Variant\VariantGenerator;
+use Spryker\Zed\Product\Business\Provider\ProductReadiness\IsActiveAbstractProductReadinessProvider;
+use Spryker\Zed\Product\Business\Provider\ProductReadiness\IsActiveConcreteProductReadinessProvider;
+use Spryker\Zed\Product\Business\Provider\ProductReadiness\ProductAbstractReadinessProviderInterface;
+use Spryker\Zed\Product\Business\Provider\ProductReadiness\ProductConcreteReadinessProviderInterface;
+use Spryker\Zed\Product\Business\Provider\ProductReadiness\StoreRelationAbstractProductReadinessProvider;
 use Spryker\Zed\Product\Business\Publisher\ProductMessageBrokerPublisher;
 use Spryker\Zed\Product\Business\Publisher\ProductPublisherInterface;
 use Spryker\Zed\Product\Business\Reader\ProductAbstractReader;
@@ -830,6 +835,23 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductAttributeMapper(
             $this->createAttributeEncoder(),
+        );
+    }
+
+    public function createIsActiveAbstractProductReadinessProvider(): ProductAbstractReadinessProviderInterface
+    {
+        return new IsActiveAbstractProductReadinessProvider();
+    }
+
+    public function createIsActiveConcreteProductReadinessProvider(): ProductConcreteReadinessProviderInterface
+    {
+        return new IsActiveConcreteProductReadinessProvider();
+    }
+
+    public function createStoreRelationAbstractProductReadinessProvider(): ProductAbstractReadinessProviderInterface
+    {
+        return new StoreRelationAbstractProductReadinessProvider(
+            $this->getStoreFacade(),
         );
     }
 }
