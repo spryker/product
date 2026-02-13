@@ -181,11 +181,14 @@
         <property name="productConcreteConditions" type="ProductConcreteConditions"/>
         <property name="sortCollection" type="Sort[]" singular="sort"/>
         <property name="pagination" type="Pagination"/>
+        <property name="withProductAbstractData" type="bool"/>
     </transfer>
 
     <transfer name="ProductConcreteConditions" strict="true">
         <property name="skus" type="string[]" singular="sku"/>
         <property name="localeNames" type="string[]" singular="localeName"/>
+        <property name="productIds" type="int[]" singular="idProduct" strict="true"/>
+        <property name="productAbstractIds" type="int[]" singular="idProductAbstract" strict="true"/>
     </transfer>
 
     <transfer name="ProductAttributeKeyCriteria" strict="true">

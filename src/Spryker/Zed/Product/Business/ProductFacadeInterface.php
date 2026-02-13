@@ -1151,12 +1151,16 @@ interface ProductFacadeInterface
     /**
      * Specification:
      * - Retrieves product concrete entities filtered by criteria.
-     * - Uses `ProductConcreteCriteriaTransfer.productConcreteConditions.skus` to filter products by `skus`.
-     * - Uses `ProductConcreteCriteriaTransfer.productConcreteConditions.localeNames` to filter products by `localeNames`.
-     * - Uses `ProductConcreteCriteriaTransfer.SortTransfer.field` to set the `order by` field.
-     * - Uses `ProductConcreteCriteriaTransfer.SortTransfer.isAscending` to set ascending order otherwise will be used descending order.
-     * - Uses `ProductConcreteCriteriaTransfer.PaginationTransfer.{limit, offset}` to paginate result with limit and offset.
-     * - Uses `ProductConcreteCriteriaTransfer.PaginationTransfer.{page, maxPerPage}` to paginate result with page and maxPerPage.
+     * - Uses `ProductConcreteCriteria.productConcreteConditions.skus` to filter products by `skus`.
+     * - Uses `ProductConcreteCriteria.productConcreteConditions.productIds` to filter products by `idProduct` column.
+     * - Uses `ProductConcreteCriteria.productConcreteConditions.productAbstractIds` to filter products by `idProductAbstract` column.
+     * - Uses `ProductConcreteCriteria.productConcreteConditions.localeNames` to filter products by `localeNames`.
+     * - Uses `ProductConcreteCriteria.withProductAbstractData` to enable merging product concrete data with product abstract data.
+     *   When `withProductAbstractData` is true, populates abstract SKU, localized attributes, and URL data from product abstract.
+     * - Uses `ProductConcreteCriteria.sort.field` to set the `order by` field.
+     * - Uses `ProductConcreteCriteria.sort.isAscending` to set ascending order otherwise will be used descending order.
+     * - Uses `ProductConcreteCriteria.pagination.{limit, offset}` to paginate result with limit and offset.
+     * - Uses `ProductConcreteCriteria.pagination.{page, maxPerPage}` to paginate result with page and maxPerPage.
      * - Executes the stack of {@link \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface} plugins.
      * - Returns `ProductConcreteCollectionTransfer` filled with found products.
      *

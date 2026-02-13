@@ -81,16 +81,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     {
         $productConcreteTransfers = $this->productConcreteManager->findProductConcreteByIds($productConcreteIds);
 
-        $productAbstractIds = $this->extractProductAbstractIds($productConcreteTransfers);
-
-        $productAbstractTransfersIndexedByProductAbstractIds = $this->productAbstractManager->findProductAbstractByIdsIndexedByProductAbstractIds($productAbstractIds);
-
-        $this->setProductUrls($productConcreteTransfers, $productAbstractTransfersIndexedByProductAbstractIds);
-
-        return $this->productConcreteMerger->mergeProductConcreteTransfersWithProductAbstractTransfers(
-            $productConcreteTransfers,
-            $productAbstractTransfersIndexedByProductAbstractIds,
-        );
+        return $this->hydrateProductConcreteTransfersWithProductAbstracts($productConcreteTransfers);
     }
 
     /**
@@ -104,7 +95,30 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
         $productConcreteCollectionTransfer = $this->productRepository->getProductConcreteCollection($productConcreteCriteriaTransfer);
         $expandedProductConcreteTransfers = $this->executeProductConcreteExpanderPlugins((array)$productConcreteCollectionTransfer->getProducts());
 
+        if ($productConcreteCriteriaTransfer->getWithProductAbstractData()) {
+            $expandedProductConcreteTransfers = $this->hydrateProductConcreteTransfersWithProductAbstracts($expandedProductConcreteTransfers);
+        }
+
         return $productConcreteCollectionTransfer->setProducts(new ArrayObject($expandedProductConcreteTransfers));
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    protected function hydrateProductConcreteTransfersWithProductAbstracts(array $productConcreteTransfers): array
+    {
+        $productAbstractIds = $this->extractProductAbstractIds($productConcreteTransfers);
+
+        $productAbstractTransfersIndexedByProductAbstractIds = $this->productAbstractManager->findProductAbstractByIdsIndexedByProductAbstractIds($productAbstractIds);
+
+        $this->setProductUrls($productConcreteTransfers, $productAbstractTransfersIndexedByProductAbstractIds);
+
+        return $this->productConcreteMerger->mergeProductConcreteTransfersWithProductAbstractTransfers(
+            $productConcreteTransfers,
+            $productAbstractTransfersIndexedByProductAbstractIds,
+        );
     }
 
     /**
