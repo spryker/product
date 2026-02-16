@@ -51,6 +51,7 @@ class AttributePermutationGenerator implements AttributePermutationGeneratorInte
             $newVariants[] = array_splice($newAttributes, $index++, 1);
 
             $recurseResult = $this->generateAttributePermutations($newAttributes, $idProductConcrete, $newVariants);
+            // @phpstan-ignore function.alreadyNarrowedType
             if (is_array($recurseResult)) {
                 $recurseResult = array_merge($result, $recurseResult);
             }

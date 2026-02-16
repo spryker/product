@@ -43,6 +43,7 @@ class ProductToEventBridge implements ProductToEventInterface
      */
     public function triggerBulk(string $eventName, array $transfers): void
     {
+        // @phpstan-ignore function.alreadyNarrowedType
         if (method_exists($this->eventFacade, 'triggerBulk')) {
             $this->eventFacade->triggerBulk($eventName, $transfers);
 

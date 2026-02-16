@@ -1257,7 +1257,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      * Provided query can not contain group by, offset, or limit directives otherwise it will alter the results.
      *
      * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
-     * @param list<string> $localeNames
+     * @param array<string> $localeNames
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */

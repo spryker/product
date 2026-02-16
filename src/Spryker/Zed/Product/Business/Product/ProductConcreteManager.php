@@ -653,6 +653,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
             $jsonAttributes = $localizedAttributes->getAttributes();
+            // @phpstan-ignore function.alreadyNarrowedType
             if (is_array($jsonAttributes)) {
                 $jsonAttributes = $this->attributeEncoder->encodeAttributes($localizedAttributes->getAttributes());
             }

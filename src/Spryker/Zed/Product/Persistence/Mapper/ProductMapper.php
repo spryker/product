@@ -121,6 +121,7 @@ class ProductMapper implements ProductMapperInterface
         $productConcreteTransfer->setIdProductConcrete($productEntity->getIdProduct());
 
         $productAbstractEntityTransfer = $productEntity->getSpyProductAbstract();
+        // @phpstan-ignore notIdentical.alwaysTrue
         if ($productAbstractEntityTransfer !== null) {
             $productConcreteTransfer->setAbstractSku($productAbstractEntityTransfer->getSku());
         }

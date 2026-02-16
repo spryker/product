@@ -341,7 +341,7 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return list<string>
+     * @return array<string>
      */
     protected function getStoreReferences(ProductConcreteTransfer $productConcreteTransfer): array
     {
@@ -396,7 +396,7 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
         if ($productAbstractIds !== []) {
             $this->performProductsPublish(
                 (new ProductPublisherConfigTransfer())
-                    ->setProductAbstractIds(array_values($productAbstractIds))
+                    ->setProductAbstractIds($productAbstractIds)
                     ->setEventName(ProductUpdatedTransfer::class),
             );
         }
@@ -441,7 +441,7 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
         if ($productIds !== [] || $fkProductAbstractIds !== []) {
             $this->performProductsPublish(
                 (new ProductPublisherConfigTransfer())
-                    ->setProductIds(array_values($productIds))
+                    ->setProductIds($productIds)
                     ->setEventName(ProductUpdatedTransfer::class)
                     // added only for BC reasons, should be removed in the future
                     ->setProductAbstractIds(array_values($fkProductAbstractIds)),
