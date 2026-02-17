@@ -58,6 +58,83 @@ class GetProductConcreteCollectionFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetProductConcreteCollectionFiltersProductConcretesByIds(): void
+    {
+        // Arrange
+        $productConcreteTransfers = $this->createTwoProductConcreteTransfers();
+        $productConcreteCriteriaTransfer = (new ProductConcreteCriteriaTransfer())->setProductConcreteConditions(
+            (new ProductConcreteConditionsTransfer())->addIdProduct($productConcreteTransfers[0]->getIdProductConcrete()),
+        );
+
+        // Act
+        $productConcreteCollectionTransfer = $this->tester
+            ->getProductFacade()
+            ->getProductConcreteCollection($productConcreteCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $productConcreteCollectionTransfer->getProducts());
+        $this->assertSame($productConcreteTransfers[0]->getIdProductConcrete(), $productConcreteCollectionTransfer->getProducts()->getIterator()->current()->getIdProductConcrete());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteCollectionFiltersProductConcretesByProductAbstractIds(): void
+    {
+        // Arrange
+        $productConcreteTransfers = $this->createTwoProductConcreteTransfers();
+        $productConcreteCriteriaTransfer = (new ProductConcreteCriteriaTransfer())->setProductConcreteConditions(
+            (new ProductConcreteConditionsTransfer())->addIdProductAbstract($productConcreteTransfers[0]->getFkProductAbstract()),
+        );
+
+        // Act
+        $productConcreteCollectionTransfer = $this->tester
+            ->getProductFacade()
+            ->getProductConcreteCollection($productConcreteCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $productConcreteCollectionTransfer->getProducts());
+        $this->assertSame($productConcreteTransfers[0]->getFkProductAbstract(), $productConcreteCollectionTransfer->getProducts()->offsetGet(0)->getFkProductAbstract());
+        $this->assertSame($productConcreteTransfers[1]->getFkProductAbstract(), $productConcreteCollectionTransfer->getProducts()->offsetGet(1)->getFkProductAbstract());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteCollectionReturnsProductAbstractDataWhenWithProductAbstractDataIsEnabled(): void
+    {
+        // Arrange
+        $productConcreteTransfers = $this->createTwoProductConcreteTransfers();
+        $expectedAbstractSku = $this->tester->getProductFacade()
+            ->findProductAbstractById($productConcreteTransfers[0]->getFkProductAbstract())
+            ->getSku();
+
+        $productConcreteCriteriaTransfer = (new ProductConcreteCriteriaTransfer())
+            ->setProductConcreteConditions(
+                (new ProductConcreteConditionsTransfer())->addIdProductAbstract($productConcreteTransfers[0]->getFkProductAbstract()),
+            )
+            ->setWithProductAbstractData(true);
+
+        // Act
+        $productConcreteCollectionTransfer = $this->tester
+            ->getProductFacade()
+            ->getProductConcreteCollection($productConcreteCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $productConcreteCollectionTransfer->getProducts());
+
+        $firstProduct = $productConcreteCollectionTransfer->getProducts()->offsetGet(0);
+        $this->assertNotNull($firstProduct->getAbstractSku(), 'Abstract SKU should be populated when withProductAbstractData is true');
+        $this->assertSame($expectedAbstractSku, $firstProduct->getAbstractSku(), 'Abstract SKU should match the product abstract SKU');
+
+        $secondProduct = $productConcreteCollectionTransfer->getProducts()->offsetGet(1);
+        $this->assertNotNull($secondProduct->getAbstractSku(), 'Abstract SKU should be populated when withProductAbstractData is true');
+        $this->assertSame($expectedAbstractSku, $secondProduct->getAbstractSku(), 'Abstract SKU should match the product abstract SKU');
+    }
+
+    /**
+     * @return void
+     */
     public function testGetProductConcreteCollectionFiltersProductConcretesByLocaleNames(): void
     {
         // Arrange
