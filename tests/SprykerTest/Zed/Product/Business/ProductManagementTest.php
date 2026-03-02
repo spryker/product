@@ -37,9 +37,6 @@ class ProductManagementTest extends FacadeTestAbstract
      */
     protected const STORE_NAME_AT = 'AT';
 
-    /**
-     * @return void
-     */
     public function testAddProductShouldCreateProductAbstractAndConcrete(): void
     {
         $this->productAbstractTransfer->setSku('new-sku');
@@ -58,9 +55,6 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->assertAddProductConcrete($this->productConcreteTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testSaveProductShouldUpdateProductAbstractAndCreateProductConcrete(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
@@ -88,9 +82,6 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->assertSaveProductConcrete($this->productConcreteTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testSaveProductShouldUpdateProductAbstractAndSaveProductConcrete(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
@@ -114,9 +105,6 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->assertAddProductConcrete($this->productConcreteTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testIsProductActiveShouldReturnTrue(): void
     {
         $this->productConcreteTransfer->setIsActive(true);
@@ -127,9 +115,6 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->assertTrue($isActive);
     }
 
-    /**
-     * @return void
-     */
     public function testIsProductActiveShouldReturnFalse(): void
     {
         $this->productConcreteTransfer->setIsActive(false);
@@ -140,9 +125,6 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->assertFalse($isActive);
     }
 
-    /**
-     * @return void
-     */
     public function testIsProductConcreteActiveShouldReturnTrue(): void
     {
         // Arrange
@@ -156,9 +138,6 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->assertTrue($isActive);
     }
 
-    /**
-     * @return void
-     */
     public function testIsProductConcreteActiveShouldReturnFalse(): void
     {
         // Arrange
@@ -172,9 +151,6 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->assertFalse($isActive);
     }
 
-    /**
-     * @return void
-     */
     public function testCreateProductAbstractSavesStoreRelation(): void
     {
         // Assign
@@ -200,9 +176,6 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->assertEquals($expectedIdStores, $actualIdStores);
     }
 
-    /**
-     * @return void
-     */
     public function testSaveProductAbstractUpdatesStoreRelation(): void
     {
         // Assign
@@ -231,9 +204,6 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->assertEquals($expectedIdStores, $actualIdStores);
     }
 
-    /**
-     * @return void
-     */
     public function testFindProductAbstractByIdRetrievesStoreRelation(): void
     {
         // Assign
@@ -259,11 +229,6 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->assertEquals($expectedIdStores, $actualIdStores);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
     protected function assertAddProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
     {
         $createdProductEntity = $this->getProductAbstractEntityById($productAbstractTransfer->getIdProductAbstract());
@@ -272,11 +237,6 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->assertSame($productAbstractTransfer->getSku(), $createdProductEntity->getSku());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
     protected function assertSaveProductAbstract(ProductAbstractTransfer $productAbstractTransfer): void
     {
         $updatedProductEntity = $this->getProductAbstractEntityById($productAbstractTransfer->getIdProductAbstract());
@@ -291,11 +251,6 @@ class ProductManagementTest extends FacadeTestAbstract
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
     protected function assertAddProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $createdProductEntity = $this->getProductConcreteEntityByAbstractId(
@@ -306,11 +261,6 @@ class ProductManagementTest extends FacadeTestAbstract
         $this->assertEquals($productConcreteTransfer->getSku(), $createdProductEntity->getSku());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
     protected function assertSaveProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $updatedProductEntity = $this->getProductConcreteEntityByAbstractId(
@@ -333,11 +283,6 @@ class ProductManagementTest extends FacadeTestAbstract
         }
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract|null
-     */
     protected function getProductAbstractEntityById(int $idProductAbstract): ?SpyProductAbstract
     {
         return $this->productQueryContainer
@@ -346,11 +291,6 @@ class ProductManagementTest extends FacadeTestAbstract
             ->findOne();
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct|null
-     */
     protected function getProductConcreteEntityByAbstractId(int $idProductAbstract): ?SpyProduct
     {
         return $this->productQueryContainer

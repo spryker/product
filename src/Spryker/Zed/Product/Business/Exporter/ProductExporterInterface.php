@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\ProductExportCriteriaTransfer;
 
 interface ProductExporterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductExportCriteriaTransfer $productExportCriteriaTransfer
-     *
-     * @return void
-     */
     public function export(ProductExportCriteriaTransfer $productExportCriteriaTransfer): void;
 }

@@ -48,12 +48,6 @@ class ProductUrlGenerator implements ProductUrlGeneratorInterface
      */
     protected const STR_REPLACE = '-';
 
-    /**
-     * @param \Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGeneratorInterface $productAbstractNameGenerator
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface $utilTextService
-     * @param \Spryker\Zed\Product\ProductConfig $productConfig
-     */
     public function __construct(
         ProductAbstractNameGeneratorInterface $productAbstractNameGenerator,
         ProductToLocaleInterface $localeFacade,

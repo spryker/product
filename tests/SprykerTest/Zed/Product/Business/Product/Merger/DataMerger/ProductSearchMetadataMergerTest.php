@@ -27,9 +27,6 @@ use Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductSearchMetadata
  */
 class ProductSearchMetadataMergerTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testProductConcreteSearchMetadataNotTakenFromProductAbstractIfNotEmpty(): void
     {
         // Arrange
@@ -48,9 +45,6 @@ class ProductSearchMetadataMergerTest extends Unit
         $this->assertEquals(['color' => ['red', 'green']], $productConcreteCollection[0]->getSearchMetadata());
     }
 
-    /**
-     * @return void
-     */
     public function testProductConcreteSearchMetadataTakenFromProductAbstractIfEmpty(): void
     {
         // Arrange

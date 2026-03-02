@@ -24,10 +24,6 @@ class VariantGenerator implements VariantGeneratorInterface
      */
     protected $skuGenerator;
 
-    /**
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
-     * @param \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface $skuGenerator
-     */
     public function __construct(
         ProductToUrlInterface $urlFacade,
         SkuGeneratorInterface $skuGenerator

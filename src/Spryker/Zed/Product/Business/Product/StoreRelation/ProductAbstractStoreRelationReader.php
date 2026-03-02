@@ -25,10 +25,6 @@ class ProductAbstractStoreRelationReader implements ProductAbstractStoreRelation
      */
     protected $storeFacade;
 
-    /**
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToStoreInterface $storeFacade
-     */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
         ProductToStoreInterface $storeFacade

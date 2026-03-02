@@ -37,11 +37,6 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
         $this->productAbstractCollectionExpanderPlugins = $productAbstractCollectionExpanderPlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
-     */
     public function getProductAbstractCollection(ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer): ProductAbstractCollectionTransfer
     {
         $productAbstractCollectionTransfer = $this->productRepository->getProductAbstractCollection($productAbstractCriteriaTransfer);

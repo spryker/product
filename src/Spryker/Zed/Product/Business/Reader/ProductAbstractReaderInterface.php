@@ -12,10 +12,5 @@ use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 
 interface ProductAbstractReaderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
-     */
     public function getProductAbstractCollection(ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer): ProductAbstractCollectionTransfer;
 }

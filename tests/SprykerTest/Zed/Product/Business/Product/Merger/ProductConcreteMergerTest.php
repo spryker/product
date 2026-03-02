@@ -28,9 +28,6 @@ use Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteMergerPluginIn
  */
 class ProductConcreteMergerTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testProductConcreteTransfersMergedWithProductAbstractTransfers(): void
     {
         // Arrange
@@ -70,9 +67,6 @@ class ProductConcreteMergerTest extends Unit
         $this->assertEquals($productConcreteCollection[0]->getIdProductConcrete(), $productConcrete->getIdProductConcrete());
     }
 
-    /**
-     * @return void
-     */
     public function testProductConcreteRatingContainsNull(): void
     {
         // Arrange

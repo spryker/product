@@ -34,9 +34,6 @@ class GetProductConcreteCollectionFacadeTest extends Unit
      */
     protected ProductBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteCollectionFiltersProductConcretesBySkus(): void
     {
         // Arrange
@@ -55,9 +52,6 @@ class GetProductConcreteCollectionFacadeTest extends Unit
         $this->assertSame($productConcreteTransfers[0]->getSku(), $productConcreteCollectionTransfer->getProducts()->getIterator()->current()->getSku());
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteCollectionFiltersProductConcretesByIds(): void
     {
         // Arrange
@@ -76,9 +70,6 @@ class GetProductConcreteCollectionFacadeTest extends Unit
         $this->assertSame($productConcreteTransfers[0]->getIdProductConcrete(), $productConcreteCollectionTransfer->getProducts()->getIterator()->current()->getIdProductConcrete());
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteCollectionFiltersProductConcretesByProductAbstractIds(): void
     {
         // Arrange
@@ -98,9 +89,6 @@ class GetProductConcreteCollectionFacadeTest extends Unit
         $this->assertSame($productConcreteTransfers[1]->getFkProductAbstract(), $productConcreteCollectionTransfer->getProducts()->offsetGet(1)->getFkProductAbstract());
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteCollectionReturnsProductAbstractDataWhenWithProductAbstractDataIsEnabled(): void
     {
         // Arrange
@@ -132,9 +120,6 @@ class GetProductConcreteCollectionFacadeTest extends Unit
         $this->assertSame($expectedAbstractSku, $secondProduct->getAbstractSku(), 'Abstract SKU should match the product abstract SKU');
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteCollectionFiltersProductConcretesByLocaleNames(): void
     {
         // Arrange
@@ -158,9 +143,6 @@ class GetProductConcreteCollectionFacadeTest extends Unit
         $this->assertCount(0, $productConcreteCollectionTransfer->getProducts());
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteCollectionFiltersProductConcretesByExistingLocaleName(): void
     {
         // Arrange
@@ -185,9 +167,6 @@ class GetProductConcreteCollectionFacadeTest extends Unit
         $this->assertCount(1, $productConcreteCollectionTransfer->getProducts()->offsetGet(1)->getLocalizedAttributes());
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteCollectionPaginatesProductConcretes(): void
     {
         // Arrange
@@ -210,9 +189,6 @@ class GetProductConcreteCollectionFacadeTest extends Unit
         $this->assertCount(1, $productConcreteCollectionTransfer->getProducts());
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteCollectionSortsProductConcretesBySku(): void
     {
         // Arrange
@@ -237,9 +213,6 @@ class GetProductConcreteCollectionFacadeTest extends Unit
         $this->assertSame($productConcreteCollectionTransfer->getProducts()->offsetGet(1)->getSku(), 'abcdefg');
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteCollectionReturnsProductConcretesWithLocalizedAttributes(): void
     {
         // Arrange

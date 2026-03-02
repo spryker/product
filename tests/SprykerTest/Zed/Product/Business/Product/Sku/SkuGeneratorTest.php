@@ -31,9 +31,6 @@ use SprykerTest\Zed\Product\Business\FacadeTestAbstract;
  */
 class SkuGeneratorTest extends FacadeTestAbstract
 {
-    /**
-     * @return void
-     */
     public function testGenerateProductAbstractSkuShouldSanitizeSku(): void
     {
         $skuGenerator = $this->createSkuGenerator();
@@ -46,9 +43,6 @@ class SkuGeneratorTest extends FacadeTestAbstract
         $this->assertSame('one-ONEONE-Lietuviskai', $sanitizedSku);
     }
 
-    /**
-     * @return void
-     */
     public function testGenerateProductConcreteSkuShouldSanitizeAndConcatSku(): void
     {
         $skuGenerator = $this->createSkuGenerator();
@@ -67,9 +61,6 @@ class SkuGeneratorTest extends FacadeTestAbstract
         $this->assertSame('one-ONEONE-Lietuviskai-key-value_key2-value2', $sanitizedSku);
     }
 
-    /**
-     * @return void
-     */
     public function testGenerateProductConcreteSkuWithManyAttributesShouldTruncatesToMaxSkuLength(): void
     {
         $skuGenerator = $this->createSkuGenerator();
@@ -99,9 +90,6 @@ class SkuGeneratorTest extends FacadeTestAbstract
         $this->assertTrue(strlen($formattedSku) <= SkuGenerator::SKU_MAX_LENGTH);
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface
-     */
     protected function createSkuGenerator(): SkuGeneratorInterface
     {
         return new SkuGenerator($this->createUtilTextServiceMock(), $this->createSkuIncrementGeneratorMock());
@@ -115,9 +103,6 @@ class SkuGeneratorTest extends FacadeTestAbstract
         return $this->getMockBuilder(ProductToUtilTextInterface::class)->getMock();
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGenerator
-     */
     protected function createSkuIncrementGeneratorMock(): SkuIncrementGenerator
     {
         return new SkuIncrementGenerator($this->productConcreteManager);

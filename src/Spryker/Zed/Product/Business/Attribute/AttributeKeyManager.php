@@ -18,9 +18,6 @@ class AttributeKeyManager implements AttributeKeyManagerInterface
      */
     protected $productQueryContainer;
 
-    /**
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     */
     public function __construct(ProductQueryContainerInterface $productQueryContainer)
     {
         $this->productQueryContainer = $productQueryContainer;

@@ -322,11 +322,6 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         return $productConcrete->getSpyProductAbstract()->getSku();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return int
-     */
     protected function executeCreateProductAbstractTransaction(ProductAbstractTransfer $productAbstractTransfer): int
     {
         $productAbstractTransfer->setSku(
@@ -352,11 +347,6 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         return $idProductAbstract;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return int
-     */
     protected function executeUpdateProductAbstractTransaction(ProductAbstractTransfer $productAbstractTransfer): int
     {
         $idProductAbstract = $productAbstractTransfer->getIdProductAbstractOrFail();
@@ -490,11 +480,6 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
     protected function executePersistProductAbstractLocalizedAttributesTransaction(ProductAbstractTransfer $productAbstractTransfer): void
     {
         $idProductAbstract = $productAbstractTransfer->getIdProductAbstract();
@@ -521,11 +506,6 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
     protected function executeProductAbstractPreCreatePlugins(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
         foreach ($this->productAbstractPreCreatePlugins as $productAbstractPreCreatePlugin) {

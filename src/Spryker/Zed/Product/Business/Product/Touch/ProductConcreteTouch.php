@@ -24,11 +24,6 @@ class ProductConcreteTouch extends AbstractProductTouch implements ProductConcre
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
     public function touchProductConcreteByTransfer(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteTransfer): void {
@@ -36,22 +31,12 @@ class ProductConcreteTouch extends AbstractProductTouch implements ProductConcre
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
     protected function executeTouchProductConcreteTransactionByTransfer(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $this->touchConcreteByTransferStatus($productConcreteTransfer);
         $this->touchAbstractByStatus($productConcreteTransfer->getFkProductAbstract());
     }
 
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
     protected function executeTouchProductConcreteTransaction(int $idProductConcrete): void
     {
         $concreteProductEntity = $this->getProductEntity($idProductConcrete);
@@ -83,11 +68,6 @@ class ProductConcreteTouch extends AbstractProductTouch implements ProductConcre
         return $concreteProductEntity;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
     protected function touchConcreteByTransferStatus(ProductConcreteTransfer $productConcreteTransfer): void
     {
         if ($productConcreteTransfer->getIsActive()) {

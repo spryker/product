@@ -23,9 +23,6 @@ class ProductTransferMapper implements ProductTransferMapperInterface
      */
     protected $attributeEncoder;
 
-    /**
-     * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
-     */
     public function __construct(AttributeEncoderInterface $attributeEncoder)
     {
         $this->attributeEncoder = $attributeEncoder;
@@ -91,11 +88,6 @@ class ProductTransferMapper implements ProductTransferMapperInterface
         return $productTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SpyProductEntityTransfer $productEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function mapSpyProductEntityTransferToProductConcreteTransfer(SpyProductEntityTransfer $productEntityTransfer): ProductConcreteTransfer
     {
         $productTransfer = $this->mapProductConcreteFromData($productEntityTransfer->toArray());

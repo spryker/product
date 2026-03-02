@@ -182,11 +182,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         return $this->loadProductTransfers($productEntityTransfers);
     }
 
-    /**
-     * @param string $productConcreteSku
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
-     */
     public function findProductConcreteBySku(string $productConcreteSku): ?ProductConcreteTransfer
     {
         $productEntityTransfer = $this->productRepository->findProductConcreteBySku($productConcreteSku);
@@ -362,11 +357,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         return $productConcrete->getFkProductAbstract();
     }
 
-    /**
-     * @param int $idConcrete
-     *
-     * @return int|null
-     */
     public function findProductAbstractIdByConcreteId(int $idConcrete): ?int
     {
         return $this->productRepository->findProductAbstractIdByConcreteId($idConcrete);
@@ -433,11 +423,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             ->findOne();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return int
-     */
     protected function executeCreateProductConcrete(ProductConcreteTransfer $productConcreteTransfer): int
     {
         $sku = $productConcreteTransfer->getSku();
@@ -457,11 +442,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         return $idProductConcrete;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return int
-     */
     protected function executeUpdateProductConcreteTransaction(ProductConcreteTransfer $productConcreteTransfer): int
     {
         $sku = $productConcreteTransfer
@@ -527,11 +507,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         return $productConcreteEntity;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SpyProductEntityTransfer|null $productEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
-     */
     protected function loadProductTransfer(?SpyProductEntityTransfer $productEntityTransfer): ?ProductConcreteTransfer
     {
         if (!$productEntityTransfer) {
@@ -559,11 +534,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         return $this->loadProductData($productConcreteTransfers);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\SpyProductEntityTransfer|null $productEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
-     */
     protected function loadRawProductTransfer(?SpyProductEntityTransfer $productEntityTransfer): ?ProductConcreteTransfer
     {
         if (!$productEntityTransfer) {
@@ -576,11 +546,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         return $productTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     protected function loadRawProductData(ProductConcreteTransfer $productTransfer): ProductConcreteTransfer
     {
         $productTransfer = $this->loadLocalizedAttributes([$productTransfer])[0];
@@ -613,11 +578,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         return $productTransfers;
     }
 
-    /**
-     * @param int $idLocale
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
     protected function getLocaleTransferByIdLocale(int $idLocale): LocaleTransfer
     {
         if (!isset(static::$localeTransfersCache[$idLocale])) {
@@ -641,11 +601,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
     protected function executePersistProductConcreteLocalizedAttributesTransaction(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $idProductConcrete = $productConcreteTransfer->getIdProductConcrete();

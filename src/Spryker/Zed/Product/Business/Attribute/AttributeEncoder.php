@@ -16,9 +16,6 @@ class AttributeEncoder implements AttributeEncoderInterface
      */
     protected $utilEncodingService;
 
-    /**
-     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface $utilEncodingService
-     */
     public function __construct(ProductToUtilEncodingInterface $utilEncodingService)
     {
         $this->utilEncodingService = $utilEncodingService;

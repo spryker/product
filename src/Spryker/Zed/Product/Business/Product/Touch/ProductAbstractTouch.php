@@ -21,11 +21,6 @@ class ProductAbstractTouch extends AbstractProductTouch implements ProductAbstra
         });
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
     protected function executeTouchProductAbstractTransaction(int $idProductAbstract): void
     {
         $this->touchAbstractByStatus($idProductAbstract);

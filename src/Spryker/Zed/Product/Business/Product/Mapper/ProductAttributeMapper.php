@@ -18,20 +18,11 @@ class ProductAttributeMapper implements ProductAttributeMapperInterface
      */
     protected $attributeEncoder;
 
-    /**
-     * @param \Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface $attributeEncoder
-     */
     public function __construct(AttributeEncoderInterface $attributeEncoder)
     {
         $this->attributeEncoder = $attributeEncoder;
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributesEntity
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
-     */
     public function mapProductAttributeEntityToProductAbstractTransfer(
         SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributesEntity,
         LocalizedAttributesTransfer $localizedAttributesTransfer

@@ -33,11 +33,6 @@ abstract class AbstractProductTouch
      */
     protected $productAbstractStatusChecker;
 
-    /**
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface $productAbstractStatusChecker
-     */
     public function __construct(
         ProductToTouchInterface $touchFacade,
         ProductQueryContainerInterface $productQueryContainer,
@@ -142,33 +137,18 @@ abstract class AbstractProductTouch
         $this->touchFacade->touchDeleted(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $idProductConcrete);
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
     protected function executeTouchProductAbstractActiveTransaction(int $idProductAbstract): void
     {
         $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
         $this->touchFacade->touchActive(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
     protected function executeTouchProductAbstractInactiveTransaction(int $idProductAbstract): void
     {
         $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);
         $this->touchFacade->touchInactive(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $idProductAbstract);
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
     protected function executeTouchProductAbstractDeletedTransaction(int $idProductAbstract): void
     {
         $this->touchFacade->touchDeleted(ProductConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT, $idProductAbstract);

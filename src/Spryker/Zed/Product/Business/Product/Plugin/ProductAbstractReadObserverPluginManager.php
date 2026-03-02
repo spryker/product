@@ -63,11 +63,6 @@ class ProductAbstractReadObserverPluginManager implements ProductAbstractReadObs
         return $productAbstractTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
     public function executeProductAbstractExpanderPlugins(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
         foreach ($this->productAbstractExpanderPlugins as $productAbstractExpanderPlugin) {

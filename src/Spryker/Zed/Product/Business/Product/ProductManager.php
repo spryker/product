@@ -30,11 +30,6 @@ class ProductManager implements ProductManagerInterface
      */
     protected $productConcreteManager;
 
-    /**
-     * @param \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface $productAbstractManager
-     * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     */
     public function __construct(
         ProductAbstractManagerInterface $productAbstractManager,
         ProductConcreteManagerInterface $productConcreteManager,

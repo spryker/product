@@ -22,10 +22,6 @@ class ProductAbstractStatusChecker implements ProductAbstractStatusCheckerInterf
      */
     protected $productRepository;
 
-    /**
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
-     */
     public function __construct(ProductQueryContainerInterface $productQueryContainer, ProductRepositoryInterface $productRepository)
     {
         $this->productQueryContainer = $productQueryContainer;

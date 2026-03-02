@@ -79,9 +79,6 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
         return $this->getProvidedDependency(ProductDependencyProvider::QUERY_CONTAINER_URL);
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface
-     */
     public function getUtilEncodingService(): ProductToUtilEncodingInterface
     {
         return $this->getProvidedDependency(ProductDependencyProvider::SERVICE_UTIL_ENCODING);
@@ -95,9 +92,6 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
         return SpyProductAbstractStoreQuery::create();
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Persistence\Mapper\ProductMapperInterface
-     */
     public function createProductMapper(): ProductMapperInterface
     {
         return new ProductMapper(
@@ -106,33 +100,21 @@ class ProductPersistenceFactory extends AbstractPersistenceFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Persistence\Mapper\LocalizedAttributesMapper
-     */
     public function createLocalizedAttributesMapper(): LocalizedAttributesMapper
     {
         return new LocalizedAttributesMapper($this->getUtilEncodingService());
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Persistence\Mapper\ProductAbstractStoreMapper
-     */
     public function createProductAbstractStoreMapper(): ProductAbstractStoreMapper
     {
         return new ProductAbstractStoreMapper();
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Persistence\Mapper\ProductAttributeKeyMapper
-     */
     public function createProductAttributeKeyMapper(): ProductAttributeKeyMapper
     {
         return new ProductAttributeKeyMapper();
     }
 
-    /**
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
     public function createUrlQuery(): SpyUrlQuery
     {
         return SpyUrlQuery::create();

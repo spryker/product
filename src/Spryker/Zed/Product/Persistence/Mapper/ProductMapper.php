@@ -32,10 +32,6 @@ class ProductMapper implements ProductMapperInterface
      */
     protected $localizedAttributeMapper;
 
-    /**
-     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface $utilEncodingService
-     * @param \Spryker\Zed\Product\Persistence\Mapper\LocalizedAttributesMapper $localizedAttributeMapper
-     */
     public function __construct(
         ProductToUtilEncodingInterface $utilEncodingService,
         LocalizedAttributesMapper $localizedAttributeMapper
@@ -44,12 +40,6 @@ class ProductMapper implements ProductMapperInterface
         $this->localizedAttributeMapper = $localizedAttributeMapper;
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function mapProductConcreteEntityToTransfer(
         SpyProduct $productEntity,
         ProductConcreteTransfer $productConcreteTransfer
@@ -86,12 +76,6 @@ class ProductMapper implements ProductMapperInterface
         return $productConcreteTransfer;
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
     public function mapProductAbstractEntityToProductAbstractTransferForSuggestion(
         SpyProductAbstract $productAbstractEntity,
         ProductAbstractTransfer $productAbstractTransfer
@@ -103,12 +87,6 @@ class ProductMapper implements ProductMapperInterface
         return $productAbstractTransfer;
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function mapProductEntityToProductConcreteTransferWithoutStores(
         SpyProduct $productEntity,
         ProductConcreteTransfer $productConcreteTransfer
@@ -138,12 +116,6 @@ class ProductMapper implements ProductMapperInterface
         return $productConcreteTransfer;
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function mapProductConcreteEntityToProductConcreteTransferWithoutRelations(
         SpyProduct $productEntity,
         ProductConcreteTransfer $productConcreteTransfer
@@ -156,12 +128,6 @@ class ProductMapper implements ProductMapperInterface
             ->setIdProductConcrete($productEntity->getIdProduct());
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
     public function mapProductAbstractEntityToProductAbstractTransferWithoutRelations(
         SpyProductAbstract $productAbstractEntity,
         ProductAbstractTransfer $productAbstractTransfer
@@ -169,12 +135,6 @@ class ProductMapper implements ProductMapperInterface
         return $productAbstractTransfer->fromArray($productAbstractEntity->toArray(), true);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct
-     */
     public function mapProductConcreteTransferToProductEntity(
         ProductConcreteTransfer $productConcreteTransfer,
         SpyProduct $productEntity
@@ -231,12 +191,6 @@ class ProductMapper implements ProductMapperInterface
         return $productAbstractCollectionTransfer;
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
     public function mapProductAbstractEntityToProductAbstractTransfer(
         SpyProductAbstract $productAbstractEntity,
         ProductAbstractTransfer $productAbstractTransfer
@@ -265,12 +219,6 @@ class ProductMapper implements ProductMapperInterface
         return $productConcreteCollectionTransfer;
     }
 
-    /**
-     * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
     protected function mapStoreEntityToTransfer(SpyStore $storeEntity, StoreTransfer $storeTransfer): StoreTransfer
     {
         return $storeTransfer->fromArray($storeEntity->toArray(), true);

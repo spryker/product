@@ -43,10 +43,6 @@ class SkuGenerator implements SkuGeneratorInterface
      */
     protected $skuIncrementGenerator;
 
-    /**
-     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilTextInterface $utilTextService
-     * @param \Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGeneratorInterface $skuIncrementGenerator
-     */
     public function __construct(ProductToUtilTextInterface $utilTextService, SkuIncrementGeneratorInterface $skuIncrementGenerator)
     {
         $this->utilTextService = $utilTextService;
@@ -146,11 +142,6 @@ class SkuGenerator implements SkuGeneratorInterface
         return rtrim($sku, static::SKU_VALUE_SEPARATOR);
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return string
-     */
     protected function addSkuIncrementValue(int $idProductAbstract): string
     {
         return $this->skuIncrementGenerator->generateProductConcreteSkuIncrement($idProductAbstract);

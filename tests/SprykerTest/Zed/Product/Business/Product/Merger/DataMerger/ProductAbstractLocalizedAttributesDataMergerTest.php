@@ -29,9 +29,6 @@ use Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductAbstractLocali
  */
 class ProductAbstractLocalizedAttributesDataMergerTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testProductConcreteAbstractLocalizedAttributesTakenFromProductAbstractLocalizedAttributes(): void
     {
         // Arrange

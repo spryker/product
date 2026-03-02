@@ -20,12 +20,6 @@ interface ProductSuggesterInterface
      */
     public function suggestProductAbstract(string $suggestion, ?int $limit = null): array;
 
-    /**
-     * @param string $suggestion
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
-     */
     public function getPaginatedProductAbstractSuggestions(
         string $suggestion,
         PaginationTransfer $paginationTransfer

@@ -32,9 +32,6 @@ use Spryker\Zed\Product\ProductDependencyProvider;
  */
 class StoreRelationAbstractProductReadinessExpanderPluginTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testProvideCreatesTwoReadinessEntriesPerAbstract(): void
     {
         // Arrange

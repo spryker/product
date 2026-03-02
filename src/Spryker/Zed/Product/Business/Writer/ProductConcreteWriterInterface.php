@@ -11,11 +11,6 @@ use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 
 interface ProductConcreteWriterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
-     *
-     * @return void
-     */
     public function createProductConcreteCollection(
         ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
     ): void;

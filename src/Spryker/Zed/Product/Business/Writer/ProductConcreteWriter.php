@@ -32,11 +32,6 @@ class ProductConcreteWriter implements ProductConcreteWriterInterface
      */
     protected $productConcreteAssertion;
 
-    /**
-     * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
-     * @param \Spryker\Zed\Product\Persistence\ProductEntityManagerInterface $productEntityManager
-     * @param \Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface $productConcreteAssertion
-     */
     public function __construct(
         ProductConcreteManagerInterface $productConcreteManager,
         ProductEntityManagerInterface $productEntityManager,
@@ -47,11 +42,6 @@ class ProductConcreteWriter implements ProductConcreteWriterInterface
         $this->productConcreteAssertion = $productConcreteAssertion;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
-     *
-     * @return void
-     */
     public function createProductConcreteCollection(
         ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
     ): void {
@@ -60,11 +50,6 @@ class ProductConcreteWriter implements ProductConcreteWriterInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
-     *
-     * @return void
-     */
     protected function executeCreateProductConcreteCollectionTransaction(
         ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
     ): void {

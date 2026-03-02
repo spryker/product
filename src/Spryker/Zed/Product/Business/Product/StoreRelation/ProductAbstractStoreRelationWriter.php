@@ -23,10 +23,6 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
      */
     protected $productAbstractStoreRelationReader;
 
-    /**
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader
-     */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
         ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader

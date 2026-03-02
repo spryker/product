@@ -23,10 +23,6 @@ class ProductAbstractAfterUpdateUrlObserver implements ProductAbstractUpdateObse
      */
     protected $productUrlManager;
 
-    /**
-     * @param \Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface $productAbstractStatusChecker
-     * @param \Spryker\Zed\Product\Business\Product\Url\ProductUrlManagerInterface $productUrlManager
-     */
     public function __construct(ProductAbstractStatusCheckerInterface $productAbstractStatusChecker, ProductUrlManagerInterface $productUrlManager)
     {
         $this->productAbstractStatusChecker = $productAbstractStatusChecker;

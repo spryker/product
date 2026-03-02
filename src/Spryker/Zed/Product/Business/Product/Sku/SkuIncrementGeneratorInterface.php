@@ -9,10 +9,5 @@ namespace Spryker\Zed\Product\Business\Product\Sku;
 
 interface SkuIncrementGeneratorInterface
 {
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return string
-     */
     public function generateProductConcreteSkuIncrement(int $idProductAbstract): string;
 }

@@ -27,9 +27,6 @@ use Spryker\Zed\Url\Business\Exception\UrlExistsException;
  */
 class UrlHandlingTest extends FacadeTestAbstract
 {
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -41,20 +38,17 @@ class UrlHandlingTest extends FacadeTestAbstract
         $this->productFacade->setFactory($productBusinessFactory);
     }
 
-        /**
-         * @return void
-         */
     public function testCreateProductUrlShouldCreateNewUrlForProductAbstract(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
         $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
 
         $expectedENUrl = (new LocalizedUrlTransfer())
-            ->setLocale($this->locales['en_US'])
-            ->setUrl('/en-us/product-name-enus-' . $idProductAbstract);
+        ->setLocale($this->locales['en_US'])
+        ->setUrl('/en-us/product-name-enus-' . $idProductAbstract);
         $expectedDEUrl = (new LocalizedUrlTransfer())
-            ->setLocale($this->locales['de_DE'])
-            ->setUrl('/de-de/product-name-dede-' . $idProductAbstract);
+        ->setLocale($this->locales['de_DE'])
+        ->setUrl('/de-de/product-name-dede-' . $idProductAbstract);
 
         $productUrl = $this->productFacade->createProductUrl($this->productAbstractTransfer);
 
@@ -62,9 +56,6 @@ class UrlHandlingTest extends FacadeTestAbstract
         $this->assertProductUrl($productUrl, $expectedDEUrl);
     }
 
-    /**
-     * @return void
-     */
     public function testCreateProductUrlShouldCreateNewUrlForProductAbstractBCCheck(): void
     {
         $configMock = $this->createMock(ProductConfig::class);
@@ -88,9 +79,6 @@ class UrlHandlingTest extends FacadeTestAbstract
         $this->assertProductUrl($productUrl, $expectedDEUrl);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateProductsUrlShouldCreateUrlsForProductAbstracts(): void
     {
         // Arrange
@@ -160,9 +148,6 @@ class UrlHandlingTest extends FacadeTestAbstract
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateProductUrlShouldSaveUrlForProductAbstract(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
@@ -186,9 +171,6 @@ class UrlHandlingTest extends FacadeTestAbstract
         $this->assertProductUrl($productUrl, $expectedDEUrl);
     }
 
-    /**
-     * @return void
-     */
     public function testDeleteProductUrlShouldDeleteUrlForProductAbstract(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
@@ -205,9 +187,6 @@ class UrlHandlingTest extends FacadeTestAbstract
         }
     }
 
-    /**
-     * @return void
-     */
     public function testCreateUrlShouldThrowExceptionWhenUrlExists(): void
     {
         $this->expectException(UrlExistsException::class);
@@ -219,9 +198,6 @@ class UrlHandlingTest extends FacadeTestAbstract
         $this->productFacade->createProductUrl($this->productAbstractTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateUrlShouldNotThrowExceptionWhenUrlExistsForSameProduct(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
@@ -231,9 +207,6 @@ class UrlHandlingTest extends FacadeTestAbstract
         $this->productFacade->updateProductUrl($this->productAbstractTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testProductUrlShouldBeUnique(): void
     {
         $this->expectException(UrlExistsException::class);
@@ -245,9 +218,6 @@ class UrlHandlingTest extends FacadeTestAbstract
         $this->productFacade->createProductUrl($this->productAbstractTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testDeleteProductUrlCanBeExecutedWhenUrlDoesNotExist(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
@@ -256,9 +226,6 @@ class UrlHandlingTest extends FacadeTestAbstract
         $this->productFacade->deleteProductUrl($this->productAbstractTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductUrl(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
@@ -278,9 +245,6 @@ class UrlHandlingTest extends FacadeTestAbstract
         $this->assertProductUrl($productUrl, $expectedDEUrl);
     }
 
-    /**
-     * @return void
-     */
     public function testTouchProductUrlActiveShouldTouchLogic(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
@@ -301,9 +265,6 @@ class UrlHandlingTest extends FacadeTestAbstract
         }
     }
 
-    /**
-     * @return void
-     */
     public function testTouchProductUrlDeletedShouldTouchLogic(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
@@ -324,12 +285,6 @@ class UrlHandlingTest extends FacadeTestAbstract
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductUrlTransfer $productUrl
-     * @param \Generated\Shared\Transfer\LocalizedUrlTransfer $expectedUrl
-     *
-     * @return void
-     */
     protected function assertProductUrl(ProductUrlTransfer $productUrl, LocalizedUrlTransfer $expectedUrl): void
     {
         $this->assertSame($productUrl->getAbstractSku(), $productUrl->getAbstractSku());

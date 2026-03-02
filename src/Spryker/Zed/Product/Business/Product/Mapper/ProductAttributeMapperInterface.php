@@ -12,12 +12,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 
 interface ProductAttributeMapperInterface
 {
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributesEntity
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
-     */
     public function mapProductAttributeEntityToProductAbstractTransfer(
         SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributesEntity,
         LocalizedAttributesTransfer $localizedAttributesTransfer

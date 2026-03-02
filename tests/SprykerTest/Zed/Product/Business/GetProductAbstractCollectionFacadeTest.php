@@ -82,9 +82,6 @@ class GetProductAbstractCollectionFacadeTest extends Unit
      */
     protected $eventFacade;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -92,9 +89,6 @@ class GetProductAbstractCollectionFacadeTest extends Unit
         $this->tester->setUpDatabase();
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductAbstractCollectionFiltersProductAbstractsBySkus(): void
     {
         // Arrange
@@ -114,9 +108,6 @@ class GetProductAbstractCollectionFacadeTest extends Unit
         $this->assertSame($productAbstractCollectionTransfer->getProductAbstracts()->offsetGet(0)->getSku(), $productAbstractTransfer->getSku());
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductAbstractCollectionPaginatesProductAbstracts(): void
     {
         // Arrange
@@ -139,9 +130,6 @@ class GetProductAbstractCollectionFacadeTest extends Unit
         $this->assertCount(2, $productAbstractCollectionTransfer->getProductAbstracts());
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductAbstractCollectionSortsProductAbstractsBySku(): void
     {
         // Arrange
@@ -170,9 +158,6 @@ class GetProductAbstractCollectionFacadeTest extends Unit
         $this->assertSame($productAbstractCollectionTransfer->getProductAbstracts()->offsetGet(2)->getSku(), 'abc');
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductAbstractCollectionReturnsProductAbstractsWithProductConcretes(): void
     {
         // Arrange

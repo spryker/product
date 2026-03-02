@@ -70,13 +70,6 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
      */
     protected ProductEventTriggerInterface $productEventTrigger;
 
-    /**
-     * @param \Spryker\Zed\Product\Business\Reader\ProductConcreteReaderInterface $productConcreteReader
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterface $messageBrokerFacade
-     * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
-     * @param \Spryker\Zed\Product\ProductConfig $productConfig
-     * @param \Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface $productEventTrigger
-     */
     public function __construct(
         ProductConcreteReaderInterface $productConcreteReader,
         ProductToMessageBrokerInterface $messageBrokerFacade,
@@ -91,11 +84,6 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
         $this->productEventTrigger = $productEventTrigger;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MessageSendingContextTransfer $messageSendingContextTransfer
-     *
-     * @return bool
-     */
     public function canPublishMessage(MessageSendingContextTransfer $messageSendingContextTransfer): bool
     {
         if (!$this->productConfig->isPublishingToMessageBrokerEnabled()) {
@@ -105,11 +93,6 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
         return $this->messageBrokerFacade->isMessageSendable($messageSendingContextTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductPublisherConfigTransfer $productPublisherConfigTransfer
-     *
-     * @return void
-     */
     public function publish(ProductPublisherConfigTransfer $productPublisherConfigTransfer): void
     {
         $this->assertEventNameIsProperForPublish($productPublisherConfigTransfer);
@@ -117,11 +100,6 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
         $this->performProductsPublish($productPublisherConfigTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductPublisherConfigTransfer $productPublisherConfigTransfer
-     *
-     * @return void
-     */
     public function unpublish(ProductPublisherConfigTransfer $productPublisherConfigTransfer): void
     {
         $this->assertEventNameIsProperForUnpublish($productPublisherConfigTransfer);
@@ -167,11 +145,6 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductPublisherConfigTransfer $productPublisherConfigTransfer
-     *
-     * @return void
-     */
     protected function performProductsPublish(ProductPublisherConfigTransfer $productPublisherConfigTransfer): void
     {
         $productConcreteIds = $this->getProductConcreteIds($productPublisherConfigTransfer);

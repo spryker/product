@@ -55,11 +55,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     public const KEY_FILTERED_PRODUCTS_PRODUCT_NAME = 'name';
 
-    /**
-     * @param string $productConcreteSku
-     *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer|null
-     */
     public function findProductConcreteBySku(string $productConcreteSku): ?SpyProductEntityTransfer
     {
         $productQuery = $this->getFactory()
@@ -70,11 +65,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         return $this->buildQueryFromCriteria($productQuery)->findOne();
     }
 
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer|null
-     */
     public function findProductConcreteById(int $idProductConcrete): ?SpyProductEntityTransfer
     {
         $productQuery = $this->getFactory()
@@ -100,13 +90,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         return $this->buildQueryFromCriteria($productQuery)->find();
     }
 
-    /**
-     * @param string $search
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param int $limit
-     *
-     * @return array
-     */
     public function findProductAbstractDataBySkuOrLocalizedName(string $search, LocaleTransfer $localeTransfer, int $limit): array
     {
         $criteria = new Criteria();
@@ -141,13 +124,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         );
     }
 
-    /**
-     * @param string $search
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param int $limit
-     *
-     * @return array
-     */
     public function findProductConcreteDataBySkuOrLocalizedName(string $search, LocaleTransfer $localeTransfer, int $limit): array
     {
         $criteria = new Criteria();
@@ -182,11 +158,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         );
     }
 
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return int|null
-     */
     public function findProductAbstractIdByConcreteId(int $idProductConcrete): ?int
     {
         $productConcrete = $this->getFactory()
@@ -260,11 +231,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         return $productConcreteIds->toArray();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return bool
-     */
     public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool
     {
         return $this->getFactory()
@@ -273,11 +239,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->getIsActive();
     }
 
-    /**
-     * @param array $products
-     *
-     * @return array
-     */
     protected function collectFilteredResults(array $products): array
     {
         $results = [];
@@ -397,13 +358,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         return $this->getProductConcreteTransfersMappedFromProductConcreteEntities($productConcreteEntities);
     }
 
-    /**
-     * @param string $search
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
-     */
     public function getProductAbstractSuggestionCollectionBySkuOrLocalizedName(
         string $search,
         PaginationTransfer $paginationTransfer,
@@ -455,12 +409,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         return $this->getProductConcreteTransfersMappedFromProductConcreteEntities($productConcreteEntities);
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     *
-     * @return \Propel\Runtime\Util\PropelModelPager
-     */
     protected function getPaginationModelFromQuery(
         SpyProductAbstractQuery $productAbstractQuery,
         PaginationTransfer $paginationTransfer
@@ -618,12 +566,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         return $urlTransfers;
     }
 
-    /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrlQuery $urlQuery
-     * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
-     *
-     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
-     */
     protected function setUrlFilters(
         SpyUrlQuery $urlQuery,
         ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
@@ -875,11 +817,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         return $products->toArray();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
-     */
     public function getProductAbstractCollection(ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer): ProductAbstractCollectionTransfer
     {
         $productAbstractQuery = $this->getFactory()->createProductAbstractQuery();
@@ -935,12 +872,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->mapProductLocalizedAttributesEntitiesToLocalizedAttributesTransfers($productAbstractLocalizedAttributesEntities);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
     public function applyProductAbstractCriteria(
         ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer,
         SpyProductAbstractQuery $productAbstractQuery
@@ -957,12 +888,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         return $productAbstractQuery;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
     public function applyProductAbstractSortings(
         ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer,
         SpyProductAbstractQuery $productAbstractQuery
@@ -977,12 +902,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         return $productAbstractQuery;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
     public function applyProductAbstractPagination(
         ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer,
         SpyProductAbstractQuery $productAbstractQuery
@@ -998,11 +917,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         return $productAbstractQuery;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
-     */
     public function getProductConcreteCollection(
         ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
     ): ProductConcreteCollectionTransfer {
@@ -1033,11 +947,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAttributeKeyCollectionTransfer
-     */
     public function getProductAttributeKeyCollection(
         ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
     ): ProductAttributeKeyCollectionTransfer {
@@ -1139,12 +1048,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         return $productConcreteQuery;
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
     protected function applyProductConcreteFilters(
         SpyProductQuery $productConcreteQuery,
         ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
@@ -1176,12 +1079,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         return $productConcreteQuery;
     }
 
-    /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
-     */
     protected function applyPaginationToQuery(
         ModelCriteria $query,
         PaginationTransfer $paginationTransfer
@@ -1235,12 +1132,6 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         return $query;
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery $productAttributeKeyQuery
-     * @param \Generated\Shared\Transfer\ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
-     */
     protected function applyProductAttributeKeyFilters(
         SpyProductAttributeKeyQuery $productAttributeKeyQuery,
         ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer

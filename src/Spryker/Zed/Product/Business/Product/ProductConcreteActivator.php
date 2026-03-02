@@ -56,15 +56,6 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
      */
     protected $productRepository;
 
-    /**
-     * @param \Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface $productAbstractStatusChecker
-     * @param \Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface $productAbstractManager
-     * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
-     * @param \Spryker\Zed\Product\Business\Product\Url\ProductUrlManagerInterface $productUrlManager
-     * @param \Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface $productConcreteTouch
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
-     */
     public function __construct(
         ProductAbstractStatusCheckerInterface $productAbstractStatusChecker,
         ProductAbstractManagerInterface $productAbstractManager,
@@ -119,11 +110,6 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
         });
     }
 
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
     protected function executeActivateProductConcreteTransaction(int $idProductConcrete): void
     {
         $productConcreteTransfer = $this->getProductConcreteTransfer($idProductConcrete);
@@ -133,11 +119,6 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
         $this->productUrlManager->updateProductUrl($productAbstractTransfer);
     }
 
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
     protected function executeDeactivateProductConcreteTransaction(int $idProductConcrete): void
     {
         $productConcreteTransfer = $this->getProductConcreteTransfer($idProductConcrete);

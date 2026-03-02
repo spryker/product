@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductAbstractLocalizedAttributesDataMerger extends AbstractProductDataMerger
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     protected function doMerge(
         ProductConcreteTransfer $productConcreteTransfer,
         ProductAbstractTransfer $productAbstractTransfer

@@ -26,21 +26,11 @@ class ProductToMessageBrokerBridge implements ProductToMessageBrokerInterface
         $this->messageBrokerFacade = $messageBrokerFacade;
     }
 
-    /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $messageTransfer
-     *
-     * @return \Generated\Shared\Transfer\MessageResponseTransfer
-     */
     public function sendMessage(TransferInterface $messageTransfer): MessageResponseTransfer
     {
         return $this->messageBrokerFacade->sendMessage($messageTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\MessageSendingContextTransfer $messageSendingContextTransfer
-     *
-     * @return bool
-     */
     public function isMessageSendable(MessageSendingContextTransfer $messageSendingContextTransfer): bool
     {
         return $this->messageBrokerFacade->isMessageSendable($messageSendingContextTransfer);

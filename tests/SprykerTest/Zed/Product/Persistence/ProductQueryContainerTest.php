@@ -25,9 +25,6 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainer;
  */
 class ProductQueryContainerTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testQueryAllProductLocalizedAttributesReturnsCorrectQuery(): void
     {
         $productQueryContainer = new ProductQueryContainer();
@@ -37,9 +34,6 @@ class ProductQueryContainerTest extends Unit
         $this->assertInstanceOf(SpyProductLocalizedAttributesQuery::class, $query);
     }
 
-    /**
-     * @return void
-     */
     public function testQueryAllProductAbstractLocalizedAttributesReturnsCorrectQuery(): void
     {
         $productQueryContainer = new ProductQueryContainer();

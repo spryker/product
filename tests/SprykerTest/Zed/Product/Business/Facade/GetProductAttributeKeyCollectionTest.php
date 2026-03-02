@@ -39,9 +39,6 @@ class GetProductAttributeKeyCollectionTest extends Unit
      */
     protected ProductBusinessTester $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -49,9 +46,6 @@ class GetProductAttributeKeyCollectionTest extends Unit
         $this->tester->ensureProductAttributeKeyTableIsEmpty();
     }
 
-    /**
-     * @return void
-     */
     public function testReturnsCollectionFilteredByKeys(): void
     {
         // Arrange
@@ -76,9 +70,6 @@ class GetProductAttributeKeyCollectionTest extends Unit
         $this->assertTrue($this->isProductAttributeKeyInCollection($productAttributeKeyCollectionTransfer, $productAttributeKey2Entity->getKey()));
     }
 
-    /**
-     * @return void
-     */
     public function testReturnsCollectionFilteredIsSuperFlag(): void
     {
         // Arrange
@@ -102,9 +93,6 @@ class GetProductAttributeKeyCollectionTest extends Unit
         $this->assertTrue($this->isProductAttributeKeyInCollection($productAttributeKeyCollectionTransfer, $productAttributeKey2Entity->getKey()));
     }
 
-    /**
-     * @return void
-     */
     public function testShouldReturnCollectionPaginatedByLimitAndOffset(): void
     {
         // Arrange
@@ -134,9 +122,6 @@ class GetProductAttributeKeyCollectionTest extends Unit
         $this->assertSame(5, $productAttributeKeyCollectionTransfer->getPaginationOrFail()->getNbResults());
     }
 
-    /**
-     * @return void
-     */
     public function testShouldReturnCollectionPaginatedByPageAndMaxPerPage(): void
     {
         // Arrange
@@ -175,9 +160,6 @@ class GetProductAttributeKeyCollectionTest extends Unit
         $this->assertSame(1, $paginationTransfer->getPreviousPage());
     }
 
-    /**
-     * @return void
-     */
     public function testReturnsShipmentTypesSortedByKeyFieldDesc(): void
     {
         // Arrange
@@ -203,9 +185,6 @@ class GetProductAttributeKeyCollectionTest extends Unit
         $this->assertSame('abc', $productAttributeKeysIterator->offsetGet(2)->getKeyOrFail());
     }
 
-    /**
-     * @return void
-     */
     public function testReturnsShipmentTypesSortedByKeyFieldAsc(): void
     {
         // Arrange
@@ -231,12 +210,6 @@ class GetProductAttributeKeyCollectionTest extends Unit
         $this->assertSame('ghi', $productAttributeKeysIterator->offsetGet(2)->getKeyOrFail());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAttributeKeyCollectionTransfer $productAttributeKeyCollectionTransfer
-     * @param string $key
-     *
-     * @return bool
-     */
     protected function isProductAttributeKeyInCollection(ProductAttributeKeyCollectionTransfer $productAttributeKeyCollectionTransfer, string $key): bool
     {
         foreach ($productAttributeKeyCollectionTransfer->getProductAttributeKeys() as $productAttributeKeyTransfer) {

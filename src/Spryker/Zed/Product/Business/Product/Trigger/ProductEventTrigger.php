@@ -18,9 +18,6 @@ class ProductEventTrigger implements ProductEventTriggerInterface
      */
     protected $eventFacade;
 
-    /**
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface $eventFacade
-     */
     public function __construct(ProductToEventInterface $eventFacade)
     {
         $this->eventFacade = $eventFacade;

@@ -34,9 +34,6 @@ class AttributeMergerTest extends Unit
      */
     protected $attributeMerger;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -44,9 +41,6 @@ class AttributeMergerTest extends Unit
         $this->attributeMerger = new AttributeMerger();
     }
 
-    /**
-     * @return array
-     */
     public function getCombinedConcreteAttributesDataProvider(): array
     {
         return [
@@ -77,9 +71,6 @@ class AttributeMergerTest extends Unit
         $this->assertEquals($expectedAttributes, $actualAttributes);
     }
 
-    /**
-     * @return array
-     */
     protected function getEmptyAttributesData(): array
     {
         $expectedAttributes = [];
@@ -87,9 +78,6 @@ class AttributeMergerTest extends Unit
         return [new RawProductAttributesTransfer(), $expectedAttributes];
     }
 
-    /**
-     * @return array
-     */
     protected function getConcreteAttributesData(): array
     {
         $expectedAttributes = [
@@ -104,9 +92,6 @@ class AttributeMergerTest extends Unit
         return [$rawProductAttributesTransfer, $expectedAttributes];
     }
 
-    /**
-     * @return array
-     */
     protected function getLocalizedConcreteAttributesData(): array
     {
         $expectedAttributes = [
@@ -127,9 +112,6 @@ class AttributeMergerTest extends Unit
         return [$rawProductAttributesTransfer, $expectedAttributes];
     }
 
-    /**
-     * @return array
-     */
     protected function getAbstractAttributesData(): array
     {
         $expectedAttributes = [
@@ -152,9 +134,6 @@ class AttributeMergerTest extends Unit
         return [$rawProductAttributesTransfer, $expectedAttributes];
     }
 
-    /**
-     * @return array
-     */
     protected function getLocalizedAbstractAttributesData(): array
     {
         $expectedAttributes = [
@@ -184,9 +163,6 @@ class AttributeMergerTest extends Unit
         return [$rawProductAttributesTransfer, $expectedAttributes];
     }
 
-    /**
-     * @return array
-     */
     protected function getNumericKeyAttributesData(): array
     {
         $expectedAttributes = [
@@ -201,9 +177,6 @@ class AttributeMergerTest extends Unit
         return [$rawProductAttributesTransfer, $expectedAttributes];
     }
 
-    /**
-     * @return array
-     */
     protected function getQuotedNumericKeyAttributesData(): array
     {
         $expectedAttributes = [

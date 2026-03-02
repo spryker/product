@@ -102,11 +102,6 @@ interface ProductConcreteManagerInterface
      */
     public function getProductAbstractIdByConcreteSku($sku);
 
-    /**
-     * @param int $idConcrete
-     *
-     * @return int|null
-     */
     public function findProductAbstractIdByConcreteId(int $idConcrete): ?int;
 
     /**
@@ -161,18 +156,8 @@ interface ProductConcreteManagerInterface
      */
     public function getProductConcretesByConcreteSkus(array $productConcreteSkus): array;
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function notifyBeforeCreateObservers(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function notifyAfterCreateObservers(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 
     /**

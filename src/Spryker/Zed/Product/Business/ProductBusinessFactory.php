@@ -222,9 +222,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new ProductAbstractStatusChecker($this->getQueryContainer(), $this->getRepository());
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Status\ProductConcreteStatusCheckerInterface
-     */
     public function createProductConcreteStatusChecker(): ProductConcreteStatusCheckerInterface
     {
         return new ProductConcreteStatusChecker($this->getRepository());
@@ -238,9 +235,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new SkuGenerator($this->getUtilTextService(), $this->createSkuIncrementGenerator());
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Sku\SkuIncrementGeneratorInterface
-     */
     public function createSkuIncrementGenerator(): SkuIncrementGeneratorInterface
     {
         return new SkuIncrementGenerator($this->createProductConcreteManager());
@@ -644,9 +638,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_EVENT);
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Suggest\ProductSuggesterInterface
-     */
     public function createProductSuggester(): ProductSuggesterInterface
     {
         return new ProductSuggester(
@@ -656,9 +647,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Writer\ProductConcreteWriterInterface
-     */
     public function createProductConcreteWriter(): ProductConcreteWriterInterface
     {
         return new ProductConcreteWriter(
@@ -676,9 +664,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_PRE_CREATE);
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Exporter\ProductExporterInterface
-     */
     public function createProductEventBusExporter(): ProductExporterInterface
     {
         return new ProductEventBusExporter(
@@ -689,9 +674,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Reader\ProductConcreteReaderInterface
-     */
     public function createProductConcreteReader(): ProductConcreteReaderInterface
     {
         return new ProductConcreteReader(
@@ -704,9 +686,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Publisher\ProductPublisherInterface
-     */
     public function createProductMessageBrokerPublisher(): ProductPublisherInterface
     {
         return new ProductMessageBrokerPublisher(
@@ -718,17 +697,11 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterface
-     */
     public function getMessageBrokerFacade(): ProductToMessageBrokerInterface
     {
         return $this->getProvidedDependency(ProductDependencyProvider::FACADE_MESSAGE_BROKER);
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Merger\ProductConcreteMergerInterface
-     */
     public function createProductConcreteMerger(): ProductConcreteMergerInterface
     {
         return new ProductConcreteMerger(
@@ -737,9 +710,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface
-     */
     public function createProductEventTrigger(): ProductEventTriggerInterface
     {
         return new ProductEventTrigger(
@@ -755,9 +725,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_CONCRETE_MERGER);
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Reader\ProductAbstractReaderInterface
-     */
     public function createProductAbstractReader(): ProductAbstractReaderInterface
     {
         return new ProductAbstractReader(
@@ -788,49 +755,31 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         ];
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductDataMergerInterface
-     */
     public function createProductAbstractLocalizedAttributesDataMerger(): ProductDataMergerInterface
     {
         return new ProductAbstractLocalizedAttributesDataMerger();
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductDataMergerInterface
-     */
     public function createProductAttributesDataMerger(): ProductDataMergerInterface
     {
         return new ProductAttributesDataMerger();
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductDataMergerInterface
-     */
     public function createProductLocalizedAttributesDataMerger(): ProductDataMergerInterface
     {
         return new ProductLocalizedAttributesDataMerger();
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductDataMergerInterface
-     */
     public function createProductSearchMetadataMerger(): ProductDataMergerInterface
     {
         return new ProductSearchMetadataMerger();
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductDataMergerInterface
-     */
     public function createProductStoreDataMerger(): ProductDataMergerInterface
     {
         return new ProductStoreDataMerger();
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\Product\Mapper\ProductAttributeMapperInterface
-     */
     public function createProductAttributesMapper(): ProductAttributeMapperInterface
     {
         return new ProductAttributeMapper(

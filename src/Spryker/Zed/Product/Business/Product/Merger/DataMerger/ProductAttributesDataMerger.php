@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductAttributesDataMerger extends AbstractProductDataMerger
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     protected function doMerge(
         ProductConcreteTransfer $productConcreteTransfer,
         ProductAbstractTransfer $productAbstractTransfer
@@ -25,12 +19,6 @@ class ProductAttributesDataMerger extends AbstractProductDataMerger
         return $productConcreteTransfer->setAttributes($this->getMergedAttributes($productConcreteTransfer, $productAbstractTransfer));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return array
-     */
     protected function getMergedAttributes(
         ProductConcreteTransfer $productConcreteTransfer,
         ProductAbstractTransfer $productAbstractTransfer

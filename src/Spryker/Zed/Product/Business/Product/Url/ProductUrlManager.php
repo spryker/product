@@ -68,15 +68,6 @@ class ProductUrlManager implements ProductUrlManagerInterface
      */
     protected ProductRepositoryInterface $productRepository;
 
-    /**
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
-     * @param \Spryker\Zed\Product\Business\Product\Url\ProductUrlGeneratorInterface $urlGenerator
-     * @param \Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface $productEventTrigger
-     * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
-     */
     public function __construct(
         ProductToUrlInterface $urlFacade,
         ProductToTouchInterface $touchFacade,
@@ -194,11 +185,6 @@ class ProductUrlManager implements ProductUrlManagerInterface
         });
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductUrlTransfer
-     */
     protected function executeCreateProductUrlTransaction(ProductAbstractTransfer $productAbstractTransfer): ProductUrlTransfer
     {
         $productUrl = $this->urlGenerator->generateProductUrl($productAbstractTransfer);
@@ -220,11 +206,6 @@ class ProductUrlManager implements ProductUrlManagerInterface
         return $productUrl;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductUrlTransfer
-     */
     protected function executeUpdateProductUrlTransaction(ProductAbstractTransfer $productAbstractTransfer): ProductUrlTransfer
     {
         $productUrl = $this->urlGenerator->generateProductUrl($productAbstractTransfer);
@@ -263,11 +244,6 @@ class ProductUrlManager implements ProductUrlManagerInterface
         return $this->urlFacade->saveUrlCollection($urlTransfers);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
     protected function executeDeleteProductUrlTransaction(ProductAbstractTransfer $productAbstractTransfer): void
     {
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
@@ -282,11 +258,6 @@ class ProductUrlManager implements ProductUrlManagerInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
     protected function executeTouchProductAbstractUrlActiveTransaction(ProductAbstractTransfer $productAbstractTransfer): void
     {
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
@@ -299,11 +270,6 @@ class ProductUrlManager implements ProductUrlManagerInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
     protected function executeTouchProductAbstractUrlDeletedTransaction(ProductAbstractTransfer $productAbstractTransfer): void
     {
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
@@ -399,12 +365,6 @@ class ProductUrlManager implements ProductUrlManagerInterface
         return $urlTransfers;
     }
 
-    /**
-     * @param int $productAbstractId
-     * @param int $localeId
-     *
-     * @return string
-     */
     protected function generateIndex(int $productAbstractId, int $localeId): string
     {
         return sprintf('%s-%s', $productAbstractId, $localeId);

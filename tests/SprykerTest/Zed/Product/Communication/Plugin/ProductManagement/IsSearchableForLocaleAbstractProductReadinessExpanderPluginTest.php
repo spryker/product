@@ -29,9 +29,6 @@ use Spryker\Zed\Product\Communication\Plugin\ProductManagement\IsSearchableForLo
  */
 class IsSearchableForLocaleAbstractProductReadinessExpanderPluginTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testProvideAggregatesSearchableLocalesAcrossAllConcretes(): void
     {
         // Arrange
@@ -69,9 +66,6 @@ class IsSearchableForLocaleAbstractProductReadinessExpanderPluginTest extends Un
         $this->assertContains('de_DE', $notSearchableReadiness->getValues());
     }
 
-    /**
-     * @return void
-     */
     public function testProvideReturnsEarlyWhenNoConcretes(): void
     {
         // Arrange

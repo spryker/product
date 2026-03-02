@@ -84,11 +84,6 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
         return $this->hydrateProductConcreteTransfersWithProductAbstracts($productConcreteTransfers);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
-     */
     public function getProductConcreteCollection(
         ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
     ): ProductConcreteCollectionTransfer {

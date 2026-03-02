@@ -93,11 +93,6 @@ abstract class AbstractProductConcreteManagerSubject
         $this->readObservers[] = $productConcreteReadObserver;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function notifyBeforeCreateObservers(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         foreach ($this->beforeCreateObservers as $observer) {
@@ -109,11 +104,6 @@ abstract class AbstractProductConcreteManagerSubject
         return $productConcreteTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function notifyAfterCreateObservers(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         foreach ($this->afterCreateObservers as $observer) {

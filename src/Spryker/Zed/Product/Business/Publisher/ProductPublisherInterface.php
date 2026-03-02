@@ -12,25 +12,10 @@ use Generated\Shared\Transfer\ProductPublisherConfigTransfer;
 
 interface ProductPublisherInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\MessageSendingContextTransfer $messageSendingContextTransfer
-     *
-     * @return bool
-     */
     public function canPublishMessage(MessageSendingContextTransfer $messageSendingContextTransfer): bool;
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductPublisherConfigTransfer $productPublisherConfigTransfer
-     *
-     * @return void
-     */
     public function publish(ProductPublisherConfigTransfer $productPublisherConfigTransfer): void;
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductPublisherConfigTransfer $productPublisherConfigTransfer
-     *
-     * @return void
-     */
     public function unpublish(ProductPublisherConfigTransfer $productPublisherConfigTransfer): void;
 
     /**

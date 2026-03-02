@@ -24,18 +24,8 @@ use Generated\Shared\Transfer\SpyProductEntityTransfer;
 
 interface ProductRepositoryInterface
 {
-    /**
-     * @param string $productConcreteSku
-     *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer|null
-     */
     public function findProductConcreteBySku(string $productConcreteSku): ?SpyProductEntityTransfer;
 
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer|null
-     */
     public function findProductConcreteById(int $idProductConcrete): ?SpyProductEntityTransfer;
 
     /**
@@ -45,29 +35,10 @@ interface ProductRepositoryInterface
      */
     public function findProductConcreteByIds(array $productIds);
 
-    /**
-     * @param string $search
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param int $limit
-     *
-     * @return array
-     */
     public function findProductAbstractDataBySkuOrLocalizedName(string $search, LocaleTransfer $localeTransfer, int $limit): array;
 
-    /**
-     * @param string $search
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param int $limit
-     *
-     * @return array
-     */
     public function findProductConcreteDataBySkuOrLocalizedName(string $search, LocaleTransfer $localeTransfer, int $limit): array;
 
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return int|null
-     */
     public function findProductAbstractIdByConcreteId(int $idProductConcrete): ?int;
 
     /**
@@ -91,11 +62,6 @@ interface ProductRepositoryInterface
      */
     public function findProductConcreteIdsByProductAbstractIds(array $productAbstractIds): array;
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return bool
-     */
     public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool;
 
     /**
@@ -126,13 +92,6 @@ interface ProductRepositoryInterface
      */
     public function getProductConcreteTransfersByProductAbstractIds(array $productAbstractIds): array;
 
-    /**
-     * @param string $search
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
-     */
     public function getProductAbstractSuggestionCollectionBySkuOrLocalizedName(
         string $search,
         PaginationTransfer $paginationTransfer,
@@ -228,11 +187,6 @@ interface ProductRepositoryInterface
         ?int $idStore = null
     ): array;
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
-     */
     public function getProductAbstractCollection(ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer): ProductAbstractCollectionTransfer;
 
     /**
@@ -249,20 +203,10 @@ interface ProductRepositoryInterface
      */
     public function getProductAbstractLocalizedAttributes(array $productAbstractIds): array;
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
-     */
     public function getProductConcreteCollection(
         ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
     ): ProductConcreteCollectionTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAttributeKeyCollectionTransfer
-     */
     public function getProductAttributeKeyCollection(
         ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
     ): ProductAttributeKeyCollectionTransfer;

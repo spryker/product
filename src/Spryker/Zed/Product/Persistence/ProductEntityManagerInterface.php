@@ -11,20 +11,10 @@ use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 
 interface ProductEntityManagerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
-     */
     public function createProductConcreteCollection(
         ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
     ): ProductConcreteCollectionTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
-     *
-     * @return void
-     */
     public function createProductConcreteCollectionLocalizedAttributes(
         ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
     ): void;

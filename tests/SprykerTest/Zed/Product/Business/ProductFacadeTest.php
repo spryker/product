@@ -105,9 +105,6 @@ class ProductFacadeTest extends Unit
      */
     protected $eventFacade;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -134,9 +131,6 @@ class ProductFacadeTest extends Unit
         ]);
     }
 
-    /**
-     * @return void
-     */
     public function testGenerateProductConcreteSku(): void
     {
         $sku = $this->tester->getFacade()->generateProductConcreteSku(
@@ -147,9 +141,6 @@ class ProductFacadeTest extends Unit
         $this->assertSame($this->getExpectedProductConcreteSku(), $sku);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteTransfersByProductIdsRetrievesAllSpecifiedProductconcreteAsTransferWithId(): void
     {
         $productConcreteIds = $this->tester->getProductConcreteIds();
@@ -164,9 +155,6 @@ class ProductFacadeTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteTransfersByProductAbstractIds(): void
     {
         $productAbstractIds = $this->tester->getProductAbstractIds();
@@ -180,9 +168,6 @@ class ProductFacadeTest extends Unit
         }
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
     protected function createProductAbstractTransfer(): ProductAbstractTransfer
     {
         $productAbstractTransfer = new ProductAbstractTransfer();
@@ -191,9 +176,6 @@ class ProductFacadeTest extends Unit
         return $productAbstractTransfer;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     protected function createProductConcreteTransfer(): ProductConcreteTransfer
     {
         $productConcreteTransfer = new ProductConcreteTransfer();
@@ -205,9 +187,6 @@ class ProductFacadeTest extends Unit
         return $productConcreteTransfer;
     }
 
-    /**
-     * @return string
-     */
     protected function getExpectedProductConcreteSku(): string
     {
         return 'abstract_sku' .
@@ -221,9 +200,6 @@ class ProductFacadeTest extends Unit
             '12MB';
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductUrlsByOneProductAbstractIdAndLocale(): void
     {
         // Arrange
@@ -245,9 +221,6 @@ class ProductFacadeTest extends Unit
         $this->assertSame($correctUrl, $productUrls[0]->getUrl());
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductUrlsByLocaleAndWithoutProductAbstractIds(): void
     {
         // Arrange
@@ -264,9 +237,6 @@ class ProductFacadeTest extends Unit
         $this->assertCount($expectedProductUrlsCount, $productUrls);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductUrlsByProductAbstractIdAndWithoutLocale(): void
     {
         // Arrange
@@ -282,9 +252,6 @@ class ProductFacadeTest extends Unit
         $this->assertCount(2, $productUrls);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcretesByCriteria(): void
     {
         // Arrange
@@ -309,9 +276,6 @@ class ProductFacadeTest extends Unit
         $this->assertCount(0, $productConcreteTransfersWithoutStore);
     }
 
-    /**
-     * @return void
-     */
     public function testCreateProductConcreteCollectionCreatesConcreteProducts(): void
     {
         // Arrange
@@ -336,9 +300,6 @@ class ProductFacadeTest extends Unit
         $this->assertEquals($expectedProductsNumber, $this->tester->getProductConcreteDatabaseEntriesCount());
     }
 
-    /**
-     * @return void
-     */
     public function testCreateProductConcreteCollectionCreatesLocalizedAttributes(): void
     {
         // Arrange
@@ -368,9 +329,6 @@ class ProductFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testCreateProductConcreteCollectionThrowsExceptionIfConcreteProductWithTheSameSkuExists(): void
     {
         // Arrange
@@ -389,9 +347,6 @@ class ProductFacadeTest extends Unit
         $this->tester->getFacade()->createProductConcreteCollection($productConcreteCollectionTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstractShouldReturnProductAbstractNamesByGivenIds(): void
     {
         // Arrange
@@ -419,9 +374,6 @@ class ProductFacadeTest extends Unit
         $this->assertEquals($expectedProductAbstractLocalizedAttributeNames, $actualProductAbstractLocalizedAttributeNames);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstractShouldReturnEmptyArrayWhenProductAbstractDoesNotHaveLocalizedAttributes(): void
     {
         // Arrange
@@ -439,9 +391,6 @@ class ProductFacadeTest extends Unit
         $this->assertEmpty($productAbstractLocalizedAttributeNames);
     }
 
-    /**
-     * @return void
-     */
     public function testProductsNotPublishedToMessageBrokerIfProductIdsIsEmpty(): void
     {
         // Arrange
@@ -457,9 +406,6 @@ class ProductFacadeTest extends Unit
         $this->tester->getProductFacade()->emitPublishProductToMessageBroker($productPublisherConfigTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testProductsSuccessfullyPublishedToMessageBroker(): void
     {
         // Arrange
@@ -481,9 +427,6 @@ class ProductFacadeTest extends Unit
         $this->tester->getProductFacade()->emitPublishProductToMessageBroker($productPublisherConfigTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testProductsSuccessfullyPublishedToMessageBrokerWithTenantIdentifierProvided(): void
     {
         // Arrange
@@ -507,9 +450,6 @@ class ProductFacadeTest extends Unit
         $this->tester->getProductFacade()->emitPublishProductToMessageBroker($productPublisherConfigTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testProductCreatedEventSuccessfullyPublishedToMessageBroker(): void
     {
         // Arrange
@@ -531,9 +471,6 @@ class ProductFacadeTest extends Unit
         $this->tester->getProductFacade()->emitPublishProductToMessageBroker($productPublisherConfigTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testProductUpdatedEventSuccessfullyPublishedToMessageBroker(): void
     {
         // Arrange
@@ -576,9 +513,6 @@ class ProductFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testProductDeletedEventSuccessfullyPublishedToMessageBroker(): void
     {
         // Arrange
@@ -599,9 +533,6 @@ class ProductFacadeTest extends Unit
         $this->tester->getProductFacade()->emitUnpublishProductToMessageBroker($productPublisherConfigTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testProductMessageBrokerPublisherThrowsExceptionOnUnpublishWhenEventNameIsWrong(): void
     {
         // Arrange
@@ -621,9 +552,6 @@ class ProductFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testProductDeletedEventNotPublishedToMessageBrokerIfProductsListIsEmpty(): void
     {
         // Arrange
@@ -639,9 +567,6 @@ class ProductFacadeTest extends Unit
         $this->tester->getProductFacade()->emitUnpublishProductToMessageBroker($productPublisherConfigTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testProductExportEventsSuccessfullyTriggeredWithFullAcceptanceCriteria(): void
     {
         // Arrange
@@ -671,9 +596,6 @@ class ProductFacadeTest extends Unit
         $this->tester->getProductFacade()->triggerProductExportEvents($productExportCriteriaTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testProductExportEventsSuccessfullyTriggeredWithEmptyAcceptanceCriteria(): void
     {
         // Arrange
@@ -744,12 +666,6 @@ class ProductFacadeTest extends Unit
         ];
     }
 
-    /**
-     * @param string $localizedAttributeName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
-     */
     protected function createLocalizedAttributesTransfer(string $localizedAttributeName, LocaleTransfer $localeTransfer): LocalizedAttributesTransfer
     {
         return (new LocalizedAttributesTransfer())
@@ -768,9 +684,6 @@ class ProductFacadeTest extends Unit
         ];
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteTransfersByProductIdsReturnsAttributesArray(): void
     {
         // Arrange
@@ -789,9 +702,6 @@ class ProductFacadeTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testPublishProductToMessageBrokerByProductEventsWithProductIdsEmitsProductUpdatedMessageToMessageBroker(): void
     {
         // Arrange
@@ -811,9 +721,6 @@ class ProductFacadeTest extends Unit
         $this->tester->getProductFacade()->publishProductToMessageBrokerByProductEvents([$eventEntityTransfer]);
     }
 
-    /**
-     * @return void
-     */
     public function testPublishProductToMessageBrokerByProductEventsWithFkProductIdTriggersEventProductUpdate(): void
     {
         // Arrange
@@ -841,9 +748,6 @@ class ProductFacadeTest extends Unit
         $this->tester->getProductFacade()->publishProductToMessageBrokerByProductEvents([$eventEntityTransfer]);
     }
 
-    /**
-     * @return void
-     */
     public function testPublishProductToMessageBrokerByProductAbstractEventsWithProductIdsEmmitsProductUpdatedMessageToMessageBroker(): void
     {
         // Arrange
@@ -863,9 +767,6 @@ class ProductFacadeTest extends Unit
         $this->tester->getProductFacade()->publishProductToMessageBrokerByProductAbstractEvents([$eventEntityTransfer]);
     }
 
-    /**
-     * @return void
-     */
     public function testPublishProductToMessageBrokerByProductAbstractEventsWithFkProductIdTriggersEventProductAbstractUpdate(): void
     {
         // Arrange
@@ -900,9 +801,6 @@ class ProductFacadeTest extends Unit
         $this->tester->getProductFacade()->publishProductToMessageBrokerByProductAbstractEvents($eventEntityTransfers);
     }
 
-    /**
-     * @return void
-     */
     public function testCanPublishMessageReturnsFalseWhenPublishingToMessageBrokerIsDisabled(): void
     {
         // Arrange

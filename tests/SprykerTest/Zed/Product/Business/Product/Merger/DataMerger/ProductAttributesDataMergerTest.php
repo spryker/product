@@ -27,9 +27,6 @@ use Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductAttributesData
  */
 class ProductAttributesDataMergerTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testProductConcreteAttributesExtendedWithProductAbstract(): void
     {
         // Arrange

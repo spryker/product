@@ -31,11 +31,6 @@ class ProductSuggester implements ProductSuggesterInterface
      */
     protected $localeFacade;
 
-    /**
-     * @param \Spryker\Zed\Product\ProductConfig $config
-     * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
-     */
     public function __construct(
         ProductConfig $config,
         ProductRepositoryInterface $productRepository,
@@ -63,12 +58,6 @@ class ProductSuggester implements ProductSuggesterInterface
         );
     }
 
-    /**
-     * @param string $suggestion
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
-     */
     public function getPaginatedProductAbstractSuggestions(
         string $suggestion,
         PaginationTransfer $paginationTransfer
@@ -97,9 +86,6 @@ class ProductSuggester implements ProductSuggesterInterface
         );
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
     protected function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();

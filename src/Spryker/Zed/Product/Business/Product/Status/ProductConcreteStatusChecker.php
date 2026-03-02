@@ -17,19 +17,11 @@ class ProductConcreteStatusChecker implements ProductConcreteStatusCheckerInterf
      */
     protected $productRepository;
 
-    /**
-     * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
-     */
     public function __construct(ProductRepositoryInterface $productRepository)
     {
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return bool
-     */
     public function isActive(ProductConcreteTransfer $productConcreteTransfer): bool
     {
         return $this->productRepository->isProductConcreteActive($productConcreteTransfer);

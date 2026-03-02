@@ -24,11 +24,6 @@ class ProductToStoreBridge implements ProductToStoreInterface
         $this->storeFacade = $storeFacade;
     }
 
-    /**
-     * @param string $storeReference
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
     public function getStoreByStoreReference(string $storeReference): StoreTransfer
     {
         return $this->storeFacade->getStoreByStoreReference($storeReference);

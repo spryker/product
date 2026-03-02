@@ -24,9 +24,6 @@ use Spryker\Zed\Product\Business\Exception\MissingProductException;
  */
 class ConcreteManagementTest extends FacadeTestAbstract
 {
-    /**
-     * @return void
-     */
     protected function a222setupDefaultProducts(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
@@ -36,9 +33,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->productConcreteTransfer->setIdProductConcrete($idProductConcrete);
     }
 
-    /**
-     * @return void
-     */
     public function testCreateProductConcreteShouldCreateProductConcrete(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
@@ -51,9 +45,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertCreateProductConcrete($this->productConcreteTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testSaveProductAbstractShouldUpdateProductAbstract(): void
     {
         $this->setupDefaultProducts();
@@ -70,9 +61,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertSaveProductConcrete($this->productConcreteTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testHasProductConcreteShouldReturnTrue(): void
     {
         $this->setupDefaultProducts();
@@ -81,18 +69,12 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertTrue($exists);
     }
 
-    /**
-     * @return void
-     */
     public function testHasProductConcreteShouldReturnFalse(): void
     {
         $exists = $this->productFacade->hasProductConcrete('INVALIDSKU');
         $this->assertFalse($exists);
     }
 
-    /**
-     * @return void
-     */
     public function testTouchProductConcreteShouldAlsoTouchItsAbstract(): void
     {
         $this->createNewProductAndAssertNoTouchExists();
@@ -104,9 +86,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->tester->assertTouchActive(ProductConfig::RESOURCE_TYPE_ATTRIBUTE_MAP, $this->productConcreteTransfer->getFkProductAbstract());
     }
 
-    /**
-     * @return void
-     */
     public function testTouchProductActiveShouldTouchActiveLogic(): void
     {
         $this->createNewProductAndAssertNoTouchExists();
@@ -119,9 +98,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         );
     }
 
-    /**
-     * @return void
-     */
     public function testTouchProductInactiveShouldTouchInactiveLogic(): void
     {
         $this->createNewProductAndAssertNoTouchExists();
@@ -139,9 +115,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         );
     }
 
-    /**
-     * @return void
-     */
     public function testTouchProductDeletedShouldTouchDeletedLogic(): void
     {
         $this->createNewProductAndAssertNoTouchExists();
@@ -154,9 +127,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcretesBySkusShouldReturnProductConcretesTransfers(): void
     {
         $this->setupDefaultProducts();
@@ -169,9 +139,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcretesTransfers[0]);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcretesBySkusShouldReturnEmptyArray(): void
     {
         $fakeNonExistSku = '101001101001';
@@ -185,9 +152,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertEmpty($productConcreteTransfers);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteByIdShouldReturnConcreteTransfer(): void
     {
         $this->setupDefaultProducts();
@@ -200,9 +164,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcreteTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteCollectionByIdsShouldReturnConcreteTransfers(): void
     {
         // Arrange
@@ -220,9 +181,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcreteTransferCollection[0]);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteByIdShouldReturnNull(): void
     {
         $productConcreteTransfer = $this->productFacade->findProductConcreteById(101001);
@@ -230,9 +188,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertNull($productConcreteTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteCollectionByIdsShouldReturnEmptyArray(): void
     {
         // Act
@@ -243,9 +198,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertEmpty($productConcreteTransferCollection);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteIdBySkuShouldReturnId(): void
     {
         $this->setupDefaultProducts();
@@ -255,9 +207,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertEquals($this->productConcreteTransfer->getIdProductConcrete(), $id);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteIdBySkuShouldReturnNull(): void
     {
         $id = $this->productFacade->findProductConcreteIdBySku('INVALIDSKU');
@@ -265,9 +214,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertNull($id);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteShouldReturnConcreteTransfer(): void
     {
         $this->setupDefaultProducts();
@@ -277,9 +223,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcrete);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductConcreteShouldThrowException(): void
     {
         $this->expectException(MissingProductException::class);
@@ -287,9 +230,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->productFacade->getProductConcrete('INVALIDSKU');
     }
 
-    /**
-     * @return void
-     */
     public function testGetConcreteProductsByAbstractProductIdShouldReturnConcreteCollection(): void
     {
         $this->setupDefaultProducts();
@@ -304,9 +244,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         }
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductAbstractIdByConcreteSku(): void
     {
         $this->setupDefaultProducts();
@@ -316,9 +253,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertEquals($this->productAbstractTransfer->getIdProductAbstract(), $idProductAbstract);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductAbstractIdByConcreteSkuShouldThrowException(): void
     {
         $this->expectException(MissingProductException::class);
@@ -328,9 +262,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->productFacade->getProductAbstractIdByConcreteSku('INVALIDSKU');
     }
 
-    /**
-     * @return void
-     */
     public function testGetConcreteProductsByAbstractProductIdShouldReturnEmptyArray(): void
     {
         $productConcreteCollection = $this->productFacade->getConcreteProductsByAbstractProductId(
@@ -340,9 +271,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertEmpty($productConcreteCollection);
     }
 
-    /**
-     * @return void
-     */
     public function testGetLocalizedProductConcreteName(): void
     {
         $this->setupDefaultProducts();
@@ -361,9 +289,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertSame(static::PRODUCT_CONCRETE_NAME['de_DE'], $productNameDE);
     }
 
-    /**
-     * @return void
-     */
     protected function createNewProductAndAssertNoTouchExists(): void
     {
         $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
@@ -375,11 +300,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->tester->assertNoTouchEntry(ProductConfig::RESOURCE_TYPE_PRODUCT_CONCRETE, $this->productConcreteTransfer->getIdProductConcrete());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
     protected function assertCreateProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $createdProductEntity = $this->getProductConcreteEntityById($productConcreteTransfer->getIdProductConcrete());
@@ -388,11 +308,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         $this->assertEquals($productConcreteTransfer->getSku(), $createdProductEntity->getSku());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
     protected function assertSaveProductConcrete(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $updatedProductEntity = $this->getProductConcreteEntityById($productConcreteTransfer->getIdProductConcrete());
@@ -407,11 +322,6 @@ class ConcreteManagementTest extends FacadeTestAbstract
         }
     }
 
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct|null
-     */
     protected function getProductConcreteEntityById(int $idProductConcrete): ?SpyProduct
     {
         return $this->productQueryContainer

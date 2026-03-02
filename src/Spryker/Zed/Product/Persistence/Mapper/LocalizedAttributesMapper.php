@@ -22,20 +22,11 @@ class LocalizedAttributesMapper
      */
     protected $utilEncodingService;
 
-    /**
-     * @param \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface $utilEncodingService
-     */
     public function __construct(ProductToUtilEncodingInterface $utilEncodingService)
     {
         $this->utilEncodingService = $utilEncodingService;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
-     * @param \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes $productLocalizedAttributesEntity
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes
-     */
     public function mapLocalizedAttributesTransferToProductLocalizedAttributesEntity(
         LocalizedAttributesTransfer $localizedAttributesTransfer,
         SpyProductLocalizedAttributes $productLocalizedAttributesEntity
@@ -73,12 +64,6 @@ class LocalizedAttributesMapper
         return $localizedAttributesTransfers;
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributes
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
-     */
     public function mapProductLocalizedAttributesEntityToLocalizedAttributesTransfer(
         SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributes,
         LocalizedAttributesTransfer $localizedAttributesTransfer
@@ -100,12 +85,6 @@ class LocalizedAttributesMapper
             ->setLocale($localeTransfer);
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes $productLocalizedAttributesEntity
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
-     */
     public function mapProductLocalizedAttributesEntityToTransfer(
         SpyProductLocalizedAttributes $productLocalizedAttributesEntity,
         LocalizedAttributesTransfer $localizedAttributesTransfer
@@ -127,22 +106,11 @@ class LocalizedAttributesMapper
             ->setLocale($localeTransfer);
     }
 
-    /**
-     * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntity
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
     protected function mapLocaleEntityToTransfer(SpyLocale $localeEntity, LocaleTransfer $localeTransfer): LocaleTransfer
     {
         return $localeTransfer->fromArray($localeEntity->toArray(), true);
     }
 
-    /**
-     * @param string $attributes
-     *
-     * @return array
-     */
     protected function decodeAttributes(string $attributes): array
     {
         $result = $this->utilEncodingService->decodeJson($attributes, true);

@@ -42,9 +42,6 @@ class ProductAbstractAssertionTest extends Unit
      */
     protected $productQueryContainer;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -53,9 +50,6 @@ class ProductAbstractAssertionTest extends Unit
             ->disableOriginalConstructor()->getMock();
     }
 
-    /**
-     * @return void
-     */
     public function testAssertSkuIsUnique(): void
     {
         $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
@@ -77,9 +71,6 @@ class ProductAbstractAssertionTest extends Unit
         $productAbstractAssertion->assertSkuIsUnique(static::SKU);
     }
 
-    /**
-     * @return void
-     */
     public function testAssertSkuIsUniqueShouldThrowException(): void
     {
         $this->expectException(ProductAbstractExistsException::class);
@@ -107,9 +98,6 @@ class ProductAbstractAssertionTest extends Unit
         $productAbstractAssertion->assertSkuIsUnique(static::SKU);
     }
 
-    /**
-     * @return void
-     */
     public function testAssertSkuIsUniqueWhenUpdatingProduct(): void
     {
         $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
@@ -137,9 +125,6 @@ class ProductAbstractAssertionTest extends Unit
         $productAbstractAssertion->assertSkuIsUniqueWhenUpdatingProduct(static::ID_PRODUCT_ABSTRACT, static::SKU);
     }
 
-    /**
-     * @return void
-     */
     public function testAssertSkuIsUniqueWhenUpdatingProductShouldThrowException(): void
     {
         $this->expectException(ProductAbstractExistsException::class);
@@ -173,9 +158,6 @@ class ProductAbstractAssertionTest extends Unit
         $productAbstractAssertion->assertSkuIsUniqueWhenUpdatingProduct(static::ID_PRODUCT_ABSTRACT, static::SKU);
     }
 
-    /**
-     * @return void
-     */
     public function testAssertProductExists(): void
     {
         $query = $this->getMockBuilder(SpyProductAbstractQuery::class)
@@ -202,9 +184,6 @@ class ProductAbstractAssertionTest extends Unit
         $productAbstractAssertion->assertProductExists(static::ID_PRODUCT_ABSTRACT);
     }
 
-    /**
-     * @return void
-     */
     public function testAssertProductExistsShouldThrowException(): void
     {
         $this->expectException(MissingProductException::class);

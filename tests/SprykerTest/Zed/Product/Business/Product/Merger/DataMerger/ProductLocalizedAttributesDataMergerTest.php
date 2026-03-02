@@ -34,9 +34,6 @@ class ProductLocalizedAttributesDataMergerTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     public function testProductAbstractLocalizedAttributesAreTakenFromProductAbstractWhenTheyAreEmptyInProductConcrete(): void
     {
         // Arrange
@@ -60,9 +57,6 @@ class ProductLocalizedAttributesDataMergerTest extends Unit
         $this->assertEquals($productAbstractLocalizedAttribute, $productConcreteCollection[0]->getLocalizedAttributes()[0]->toArray());
     }
 
-    /**
-     * @return void
-     */
     public function testProductConcreteLocalizedAttributesAreNotTakenFromProductAbstractWhenTheyExistInProductConcrete(): void
     {
         // Arrange
@@ -91,9 +85,6 @@ class ProductLocalizedAttributesDataMergerTest extends Unit
         $this->assertEquals($productConcreteLocalizedAttribute, $productConcreteCollection[0]->getLocalizedAttributes()[0]->toArray());
     }
 
-    /**
-     * @return void
-     */
     public function testProductConcreteLocalizedAttributesValuesAreTakenFromProductAbstractWhenTheyAreMissingInProductConcreteLocalizedAttributes(): void
     {
         // Arrange
@@ -118,9 +109,6 @@ class ProductLocalizedAttributesDataMergerTest extends Unit
         $this->assertEquals($productAbstractLocalizedAttribute, $productConcreteCollection[0]->getLocalizedAttributes()[0]->toArray());
     }
 
-    /**
-     * @return void
-     */
     public function testProductConcreteLocalizedAttributesValuesAreNotOverridedFromProductAbstractWhenTheyExistInProductConcrete(): void
     {
         // Arrange
@@ -142,9 +130,6 @@ class ProductLocalizedAttributesDataMergerTest extends Unit
         $this->assertEquals($productConcreteLocalizedAttribute, $productConcreteCollection[0]->getLocalizedAttributes()[0]->toArray());
     }
 
-    /**
-     * @return void
-     */
     public function testProductConcreteLocalizedAttributesLocalesAreTakenFromProductAbstractWhenTheyAreMissingInProductConcrete(): void
     {
         // Arrange
@@ -201,9 +186,6 @@ class ProductLocalizedAttributesDataMergerTest extends Unit
         $this->assertEquals($productAbstractLocalizedAttribute2, $productConcreteCollection[0]->getLocalizedAttributes()[2]->toArray());
     }
 
-    /**
-     * @return void
-     */
     public function testProductConcreteLocalizedAttributesNestedAttributesExtendedWithProductAbstractLocalizedAttributes(): void
     {
         // Arrange

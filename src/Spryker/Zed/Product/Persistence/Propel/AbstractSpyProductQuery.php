@@ -23,11 +23,6 @@ use Orm\Zed\Product\Persistence\SpyProductQuery;
  */
 abstract class AbstractSpyProductQuery extends BaseSpyProductQuery
 {
-    /**
-     * @param string|null $relationAlias
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
-     */
     public function leftJoinSpyProductBundleRelatedByFkBundledProduct(?string $relationAlias = null): SpyProductQuery
     {
         if (method_exists(BaseSpyProductQuery::class, 'leftJoinSpyProductBundleRelatedByFkBundledProduct')) {

@@ -186,9 +186,6 @@ class FacadeTestAbstract extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -249,9 +246,6 @@ class FacadeTestAbstract extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     protected function setupLocales(): void
     {
         $this->locales['de_DE'] = new LocaleTransfer();
@@ -267,9 +261,6 @@ class FacadeTestAbstract extends Unit
             ->setLocaleName('en_US');
     }
 
-    /**
-     * @return void
-     */
     protected function setupProductAbstract(): void
     {
         $this->productAbstractTransfer = new ProductAbstractTransfer();
@@ -291,9 +282,6 @@ class FacadeTestAbstract extends Unit
         $this->productAbstractTransfer->addLocalizedAttributes($localizedAttribute);
     }
 
-    /**
-     * @return void
-     */
     protected function setupProductConcrete(): void
     {
         $this->productConcreteTransfer = new ProductConcreteTransfer();
@@ -316,19 +304,11 @@ class FacadeTestAbstract extends Unit
         $this->productConcreteTransfer->addLocalizedAttributes($localizedAttribute);
     }
 
-    /**
-     * @return void
-     */
     protected function setupDefaultProducts(): void
     {
         $this->productManager->addProduct($this->productAbstractTransfer, [$this->productConcreteTransfer]);
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract|null
-     */
     protected function getProductAbstractEntityById(int $idProductAbstract): ?SpyProductAbstract
     {
         return $this->productQueryContainer
@@ -337,11 +317,6 @@ class FacadeTestAbstract extends Unit
             ->findOne();
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct|null
-     */
     protected function getProductConcreteEntityByAbstractId(int $idProductAbstract): ?SpyProduct
     {
         return $this->productQueryContainer

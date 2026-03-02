@@ -39,9 +39,6 @@ class AttributeKeyManagementTest extends Unit
      */
     protected $productFacade;
 
-    /**
-     * @return void
-     */
     public function setUp(): void
     {
         parent::setUp();
@@ -49,9 +46,6 @@ class AttributeKeyManagementTest extends Unit
         $this->productFacade = new ProductFacade();
     }
 
-    /**
-     * @return void
-     */
     public function testHasProductAttributeKeyReturnsFalseIfKeyDoesNotExist(): void
     {
         $result = $this->productFacade->hasProductAttributeKey(static::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
@@ -59,9 +53,6 @@ class AttributeKeyManagementTest extends Unit
         $this->assertFalse($result);
     }
 
-    /**
-     * @return void
-     */
     public function testHasProductAttributeKeyReturnsTrueIfKeyExists(): void
     {
         $productAttributeKeyEntity = $this->createAttributeKeyEntity(static::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
@@ -71,9 +62,6 @@ class AttributeKeyManagementTest extends Unit
         $this->assertTrue($result);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductAttributeKeyReturnsNullIfKeyDoesNotExist(): void
     {
         $productAttributeKeyTransfer = $this->productFacade->findProductAttributeKey(static::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
@@ -81,9 +69,6 @@ class AttributeKeyManagementTest extends Unit
         $this->assertNull($productAttributeKeyTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductAttributeKeyReturnsTransferIfKeyExist(): void
     {
         $productAttributeKeyEntity = $this->createAttributeKeyEntity(static::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
@@ -93,9 +78,6 @@ class AttributeKeyManagementTest extends Unit
         $this->assertEquals($productAttributeKeyEntity->toArray(), $productAttributeKeyTransfer->toArray());
     }
 
-    /**
-     * @return void
-     */
     public function testCreateProductAttributeKey(): void
     {
         $productAttributeKeyTransfer = new ProductAttributeKeyTransfer();
@@ -106,9 +88,6 @@ class AttributeKeyManagementTest extends Unit
         $this->assertNotNull($productAttributeKeyTransfer->getIdProductAttributeKey());
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateProductAttributeKey(): void
     {
         $productAttributeKeyEntity = $this->createAttributeKeyEntity(static::UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB);
@@ -123,11 +102,6 @@ class AttributeKeyManagementTest extends Unit
         $this->assertSame(static::CHANGED_UNIQUE_ATTRIBUTE_KEY_NOT_EXISTING_IN_DB, $productAttributeKeyTransfer->getKey());
     }
 
-    /**
-     * @param string $key
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKey
-     */
     protected function createAttributeKeyEntity(string $key): SpyProductAttributeKey
     {
         $productAttributeKeyEntity = new SpyProductAttributeKey();

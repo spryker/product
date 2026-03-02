@@ -18,11 +18,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class ProductEntityManager extends AbstractEntityManager implements ProductEntityManagerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
-     */
     public function createProductConcreteCollection(
         ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
     ): ProductConcreteCollectionTransfer {
@@ -47,11 +42,6 @@ class ProductEntityManager extends AbstractEntityManager implements ProductEntit
         );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
-     *
-     * @return void
-     */
     public function createProductConcreteCollectionLocalizedAttributes(
         ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
     ): void {

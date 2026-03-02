@@ -27,9 +27,6 @@ use Spryker\Zed\Product\Communication\Plugin\ProductManagement\IsActiveAbstractP
  */
 class IsActiveAbstractProductReadinessProviderPluginTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testProvideReturnsYesWhenAtLeastOneConcreteIsActive(): void
     {
         // Arrange
@@ -54,9 +51,6 @@ class IsActiveAbstractProductReadinessProviderPluginTest extends Unit
         $this->assertSame('Yes', $productReadiness->getValues()[0]);
     }
 
-    /**
-     * @return void
-     */
     public function testProvideReturnsNoWhenNoConcreteIsActive(): void
     {
         // Arrange

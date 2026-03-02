@@ -18,11 +18,6 @@ interface ProductConcreteTouchInterface
      */
     public function touchProductConcrete($idProductConcrete);
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
     public function touchProductConcreteByTransfer(ProductConcreteTransfer $productConcreteTransfer): void;
 
     /**

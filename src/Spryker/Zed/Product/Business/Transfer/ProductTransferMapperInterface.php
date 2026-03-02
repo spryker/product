@@ -37,11 +37,6 @@ interface ProductTransferMapperInterface
      */
     public function convertProduct(SpyProduct $productEntity);
 
-    /**
-     * @param \Generated\Shared\Transfer\SpyProductEntityTransfer $productEntityTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function mapSpyProductEntityTransferToProductConcreteTransfer(SpyProductEntityTransfer $productEntityTransfer): ProductConcreteTransfer;
 
     /**

@@ -43,12 +43,6 @@ class ProductEventBusExporter implements ProductExporterInterface
      */
     protected $productConfig;
 
-    /**
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface $eventFacade
-     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToStoreInterface $storeFacade
-     * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
-     * @param \Spryker\Zed\Product\ProductConfig $productConfig
-     */
     public function __construct(
         ProductToEventInterface $eventFacade,
         ProductToStoreInterface $storeFacade,
@@ -61,11 +55,6 @@ class ProductEventBusExporter implements ProductExporterInterface
         $this->productConfig = $productConfig;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductExportCriteriaTransfer $productExportCriteriaTransfer
-     *
-     * @return void
-     */
     public function export(ProductExportCriteriaTransfer $productExportCriteriaTransfer): void
     {
         if (!$this->isProductExportCriteriaStoreReferenceValid($productExportCriteriaTransfer)) {
@@ -84,11 +73,6 @@ class ProductEventBusExporter implements ProductExporterInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductExportCriteriaTransfer $productExportCriteriaTransfer
-     *
-     * @return bool
-     */
     protected function isProductExportCriteriaStoreReferenceValid(ProductExportCriteriaTransfer $productExportCriteriaTransfer): bool
     {
         if (!$productExportCriteriaTransfer->isPropertyModified(ProductExportCriteriaTransfer::STORE_REFERENCE)) {
@@ -110,11 +94,6 @@ class ProductEventBusExporter implements ProductExporterInterface
         return true;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductExportCriteriaTransfer $productExportCriteriaTransfer
-     *
-     * @return int|null
-     */
     protected function findIdStoreForExporting(ProductExportCriteriaTransfer $productExportCriteriaTransfer): ?int
     {
         if (!$productExportCriteriaTransfer->isPropertyModified(ProductExportCriteriaTransfer::STORE_REFERENCE)) {
@@ -124,11 +103,6 @@ class ProductEventBusExporter implements ProductExporterInterface
         return $this->getStoreTransfer($productExportCriteriaTransfer)->getIdStore();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductExportCriteriaTransfer $productExportCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
     protected function getStoreTransfer(ProductExportCriteriaTransfer $productExportCriteriaTransfer): StoreTransfer
     {
         return $this->storeFacade->getStoreByStoreReference($productExportCriteriaTransfer->getStoreReferenceOrFail());

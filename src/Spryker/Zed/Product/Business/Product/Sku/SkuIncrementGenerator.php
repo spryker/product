@@ -16,19 +16,11 @@ class SkuIncrementGenerator implements SkuIncrementGeneratorInterface
      */
     protected $productConcreteManager;
 
-    /**
-     * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface $productConcreteManager
-     */
     public function __construct(ProductConcreteManagerInterface $productConcreteManager)
     {
         $this->productConcreteManager = $productConcreteManager;
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return string
-     */
     public function generateProductConcreteSkuIncrement(int $idProductAbstract): string
     {
         $productConcreteTransfers = $this->productConcreteManager->getConcreteProductsByAbstractProductId($idProductAbstract);
@@ -56,11 +48,6 @@ class SkuIncrementGenerator implements SkuIncrementGeneratorInterface
         return (string)$productConcreteSkuMaxLastIncrementalValue;
     }
 
-    /**
-     * @param string $productConcreteSku
-     *
-     * @return int
-     */
     protected function getProductConcreteSkuLastPartIncremented(string $productConcreteSku): int
     {
         if (mb_strpos($productConcreteSku, SkuGenerator::SKU_ABSTRACT_SEPARATOR) === false) {

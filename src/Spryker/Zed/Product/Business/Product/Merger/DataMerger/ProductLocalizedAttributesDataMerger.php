@@ -13,12 +13,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductLocalizedAttributesDataMerger extends AbstractProductDataMerger
 {
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     protected function doMerge(
         ProductConcreteTransfer $productConcreteTransfer,
         ProductAbstractTransfer $productAbstractTransfer
@@ -39,12 +33,6 @@ class ProductLocalizedAttributesDataMerger extends AbstractProductDataMerger
         return $productConcreteTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer|null
-     */
     protected function getProductConcreteLocalizedAttributesByLocale(
         ProductConcreteTransfer $productConcreteTransfer,
         LocalizedAttributesTransfer $localizedAttributesTransfer
@@ -61,12 +49,6 @@ class ProductLocalizedAttributesDataMerger extends AbstractProductDataMerger
         return null;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $productConcreteLocalizedAttributesTransfer
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $productAbstractLocalizedAttributesTransfer
-     *
-     * @return void
-     */
     protected function mergeLocalizedAttributesData(
         LocalizedAttributesTransfer $productConcreteLocalizedAttributesTransfer,
         LocalizedAttributesTransfer $productAbstractLocalizedAttributesTransfer

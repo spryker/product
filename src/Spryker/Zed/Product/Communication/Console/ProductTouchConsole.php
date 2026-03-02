@@ -81,9 +81,6 @@ class ProductTouchConsole extends Console
      */
     public const ARGUMENT_TOUCH_ACTION_DESCRIPTION = 'The `touch action` can be one of the following: `active`, `inactive`, `deleted` or just the first letter.';
 
-    /**
-     * @return void
-     */
     protected function configure(): void
     {
         parent::configure();

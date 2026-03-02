@@ -75,9 +75,6 @@ class ProductUrlGeneratorTest extends Unit
      */
     protected $locales;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -125,9 +122,6 @@ class ProductUrlGeneratorTest extends Unit
         });
     }
 
-    /**
-     * @return void
-     */
     protected function setupLocales(): void
     {
         $this->locales['de_DE'] = new LocaleTransfer();
@@ -141,9 +135,6 @@ class ProductUrlGeneratorTest extends Unit
         ->setLocaleName('en_US');
     }
 
-    /**
-     * @return void
-     */
     protected function setupProductAbstract(): void
     {
         $this->productAbstractTransfer = new ProductAbstractTransfer();
@@ -166,9 +157,6 @@ class ProductUrlGeneratorTest extends Unit
         $this->productAbstractTransfer->addLocalizedAttributes($localizedAttribute);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductUrlShouldReturnTransfer(): void
     {
         $expectedDEUrl = (new LocalizedUrlTransfer())
@@ -210,9 +198,6 @@ class ProductUrlGeneratorTest extends Unit
         $this->assertEquals($productUrlExpected, $productUrl);
     }
 
-    /**
-     * @return void
-     */
     public function testGetProductUrlShouldReturnTransferBCCheck(): void
     {
         $expectedDEUrl = (new LocalizedUrlTransfer())

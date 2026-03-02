@@ -22,9 +22,6 @@ use Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException;
  */
 class ActivationTest extends FacadeTestAbstract
 {
-    /**
-     * @return void
-     */
     public function testProductActivationShouldGenerateUrlAndTouch(): void
     {
         $this->productConcreteTransfer->setIsActive(false);
@@ -42,9 +39,6 @@ class ActivationTest extends FacadeTestAbstract
         }
     }
 
-    /**
-     * @return void
-     */
     public function testProductDeactivationShouldGenerateUrlAndTouch(): void
     {
         $idProductAbstract = $this->createNewActiveProduct();
@@ -60,9 +54,6 @@ class ActivationTest extends FacadeTestAbstract
         }
     }
 
-    /**
-     * @return void
-     */
     public function testProductActivationShouldThrowException(): void
     {
         $this->expectException(ProductConcreteNotFoundException::class);
@@ -71,11 +62,6 @@ class ActivationTest extends FacadeTestAbstract
         $this->productFacade->activateProductConcrete(12324);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
     protected function assertProductWasActivated(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $productConcrete = $this->productConcreteManager->findProductConcreteById(
@@ -92,11 +78,6 @@ class ActivationTest extends FacadeTestAbstract
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
     protected function assertProductWasDeactivated(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $productConcrete = $this->productConcreteManager->findProductConcreteById(
@@ -113,17 +94,11 @@ class ActivationTest extends FacadeTestAbstract
         }
     }
 
-    /**
-     * @return int
-     */
     protected function createNewProduct(): int
     {
         return $this->productManager->addProduct($this->productAbstractTransfer, [$this->productConcreteTransfer]);
     }
 
-    /**
-     * @return int
-     */
     protected function createNewActiveProduct(): int
     {
         $this->productAbstractTransfer->setIsActive(true);

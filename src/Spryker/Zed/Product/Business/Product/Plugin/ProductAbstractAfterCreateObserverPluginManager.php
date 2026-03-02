@@ -66,11 +66,6 @@ class ProductAbstractAfterCreateObserverPluginManager implements ProductAbstract
         return $productAbstractTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
     protected function executeProductAbstractPostCreatePlugins(
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer {

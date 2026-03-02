@@ -38,13 +38,6 @@ class ProductDataHelper extends Module
      */
     protected const LOCALE_US = 'en_US';
 
-    /**
-     * @param array $productConcreteOverride
-     * @param array $productAbstractOverride
-     * @param string|null $locale
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function haveProduct(array $productConcreteOverride = [], array $productAbstractOverride = [], ?string $locale = null): ProductConcreteTransfer
     {
         $productAbstractTransfer = (new ProductAbstractBuilder($productAbstractOverride))->build();
@@ -73,11 +66,6 @@ class ProductDataHelper extends Module
         return $productConcreteTransfer;
     }
 
-    /**
-     * @param array $productConcreteOverride
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function haveProductConcrete(array $productConcreteOverride = []): ProductConcreteTransfer
     {
         $productConcreteTransfer = (new ProductConcreteBuilder())
@@ -98,11 +86,6 @@ class ProductDataHelper extends Module
         return $productConcreteTransfer;
     }
 
-    /**
-     * @param array $productConcreteOverride
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function haveProductConcreteWithLocalizedAttributes(array $productConcreteOverride = []): ProductConcreteTransfer
     {
         $allStoresRelation = $this->getAllStoresRelation()->toArray();
@@ -138,12 +121,6 @@ class ProductDataHelper extends Module
         return $productConcreteTransfer;
     }
 
-    /**
-     * @param array $productAbstractOverride
-     * @param bool $localized
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
     public function haveProductAbstract(array $productAbstractOverride = [], bool $localized = false): ProductAbstractTransfer
     {
         $productAbstractTransfer = new ProductAbstractBuilder($productAbstractOverride);
@@ -178,12 +155,6 @@ class ProductDataHelper extends Module
         return $productAbstractTransfer;
     }
 
-    /**
-     * @param array $productConcreteOverride
-     * @param array $productAbstractOverride
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
     public function haveFullProduct(
         array $productConcreteOverride = [],
         array $productAbstractOverride = []
@@ -256,9 +227,6 @@ class ProductDataHelper extends Module
             ->getData();
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
     protected function getAllStoresRelation(): StoreRelationTransfer
     {
         $stores = $this->getStoreFacade()->getAllStores();
@@ -272,17 +240,11 @@ class ProductDataHelper extends Module
         ]))->build();
     }
 
-    /**
-     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
-     */
     protected function getStoreFacade(): StoreFacadeInterface
     {
         return $this->getLocator()->store()->facade();
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
     protected function getCurrentLocale(): LocaleTransfer
     {
         if ((bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') === false) {
@@ -292,9 +254,6 @@ class ProductDataHelper extends Module
         return $this->getLocaleFacade()->getLocale(static::LOCALE_US);
     }
 
-    /**
-     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
-     */
     protected function getLocaleFacade(): LocaleFacadeInterface
     {
         return $this->getLocator()->locale()->facade();
@@ -330,27 +289,16 @@ class ProductDataHelper extends Module
         $this->getProductFacade()->saveProductConcrete($productConcreteTransfer);
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
-     */
     private function getProductFacade(): ProductFacadeInterface
     {
         return $this->getLocator()->product()->facade();
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
-     */
     private function getProductQuery(): ProductQueryContainerInterface
     {
         return $this->getLocator()->product()->queryContainer();
     }
 
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return void
-     */
     private function cleanupProductConcrete(int $idProductConcrete): void
     {
         $this->debug(sprintf('Deleting Concrete Product: %d', $idProductConcrete));
@@ -361,11 +309,6 @@ class ProductDataHelper extends Module
             ->delete();
     }
 
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return void
-     */
     private function cleanupProductAbstract(int $idProductAbstract): void
     {
         $this->debug(sprintf('Deleting Abstract Product: %d', $idProductAbstract));

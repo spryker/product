@@ -30,9 +30,6 @@ use Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductStoreDataMerge
  */
 class ProductStoreDataMergerTest extends Unit
 {
-    /**
-     * @return void
-     */
     public function testProductConcreteStoresTakenFromProductAbstractWhenEmpty(): void
     {
         // Arrange
@@ -56,9 +53,6 @@ class ProductStoreDataMergerTest extends Unit
         $this->assertEquals($productConcreteStore->getIdStore(), $productConcreteCollection[0]->getStores()->offsetGet(0)->getIdStore());
     }
 
-    /**
-     * @return void
-     */
     public function testProductConcreteStoresNotTakenFromProductAbstractWhenProductConcreteHaveStores(): void
     {
         // Arrange
@@ -84,9 +78,6 @@ class ProductStoreDataMergerTest extends Unit
         $this->assertEquals($productConcreteStore->getIdStore(), $productConcreteCollection[0]->getStores()->offsetGet(0)->getIdStore());
     }
 
-    /**
-     * @return void
-     */
     public function testProductConcreteStoresNotTakenFromProductAbstractWhenProductAbstractDoesNotHaveStoreRelation(): void
     {
         // Arrange

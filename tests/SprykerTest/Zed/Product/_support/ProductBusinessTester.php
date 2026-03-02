@@ -64,9 +64,6 @@ class ProductBusinessTester extends Actor
      */
     protected $productAbstractIds = [];
 
-    /**
-     * @return void
-     */
     public function setUpDatabase(): void
     {
         $this->insertProducts();
@@ -75,25 +72,16 @@ class ProductBusinessTester extends Actor
         $this->haveLocale([LocaleTransfer::LOCALE_NAME => 'de_DE']);
     }
 
-    /**
-     * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
-     */
     public function getProductFacade(): ProductFacadeInterface
     {
         return $this->getLocator()->product()->facade();
     }
 
-    /**
-     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
-     */
     public function getStoreFacade(): StoreFacadeInterface
     {
         return $this->getLocator()->store()->facade();
     }
 
-    /**
-     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
-     */
     public function getLocaleFacade(): LocaleFacadeInterface
     {
         return $this->getLocator()->locale()->facade();
@@ -115,9 +103,6 @@ class ProductBusinessTester extends Actor
         return $this->productAbstractIds;
     }
 
-    /**
-     * @return void
-     */
     protected function insertProducts(): void
     {
         $productConcreteIds = [];
@@ -140,9 +125,6 @@ class ProductBusinessTester extends Actor
         $this->productConcreteIds = $productConcreteIds;
     }
 
-    /**
-     * @return void
-     */
     public function createProductUrls(): void
     {
         foreach ($this->productAbstractIds as $idProductAbstract) {
@@ -156,12 +138,6 @@ class ProductBusinessTester extends Actor
         }
     }
 
-    /**
-     * @param int $idProductAbstract
-     * @param string $localeName
-     *
-     * @return string
-     */
     public function getProductUrl(int $idProductAbstract, string $localeName): string
     {
         return sprintf(
@@ -170,11 +146,6 @@ class ProductBusinessTester extends Actor
         );
     }
 
-    /**
-     * @param int $idLocale
-     *
-     * @return int
-     */
     public function getUrlsCount(int $idLocale): int
     {
         return SpyUrlQuery::create()
@@ -182,20 +153,11 @@ class ProductBusinessTester extends Actor
             ->count();
     }
 
-    /**
-     * @return int
-     */
     public function getProductConcreteDatabaseEntriesCount(): int
     {
         return (new SpyProductQuery())->count();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return int
-     */
     public function deleteProductFromStore(
         ProductConcreteTransfer $productConcreteTransfer,
         StoreTransfer $storeTransfer
@@ -206,11 +168,6 @@ class ProductBusinessTester extends Actor
             ->delete();
     }
 
-    /**
-     * @param string $sku
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
-     */
     protected function createProductAbstractTransfer(string $sku): ProductAbstractTransfer
     {
         $productAbstractTransfer = new ProductAbstractTransfer();
@@ -226,11 +183,6 @@ class ProductBusinessTester extends Actor
         return $productAbstractTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer
-     */
     protected function createStoreRelationTransfer(ProductAbstractTransfer $productAbstractTransfer): StoreRelationTransfer
     {
         $storeTransfer = $this->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE]);
@@ -294,11 +246,6 @@ class ProductBusinessTester extends Actor
         return $productConcreteTransfers;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
-     */
     protected function createLocalizedAttributeTransfer(?LocaleTransfer $localeTransfer = null): LocalizedAttributesTransfer
     {
         $localizedAttributeTransfer = new LocalizedAttributesTransfer();
@@ -308,21 +255,11 @@ class ProductBusinessTester extends Actor
         return $localizedAttributeTransfer;
     }
 
-    /**
-     * @param array $skus
-     *
-     * @return void
-     */
     public function deleteConcreteProductBySkus(array $skus): void
     {
         (new SpyProductQuery())->filterBySku_In($skus)->delete();
     }
 
-    /**
-     * @param array $skus
-     *
-     * @return int
-     */
     public function countProductLocalizedAttributesByProductBySkus(array $skus): int
     {
         return (new SpyProductLocalizedAttributesQuery())
@@ -332,61 +269,36 @@ class ProductBusinessTester extends Actor
             ->count();
     }
 
-    /**
-     * @return void
-     */
     public function ensureProductAbstractTableIsEmpty(): void
     {
         $this->ensureDatabaseTableIsEmpty($this->getProductAbstractQuery());
     }
 
-    /**
-     * @return void
-     */
     public function ensureProductAttributeKeyTableIsEmpty(): void
     {
         $this->ensureDatabaseTableIsEmpty($this->getProductAttributeKeyQuery());
     }
 
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
-     */
     protected function getProductAbstractQuery(): SpyProductAbstractQuery
     {
         return SpyProductAbstractQuery::create();
     }
 
-    /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
-     */
     protected function getProductAttributeKeyQuery(): SpyProductAttributeKeyQuery
     {
         return SpyProductAttributeKeyQuery::create();
     }
 
-    /**
-     * @return \PHPUnit\Framework\MockObject\Rule\InvokedCount
-     */
     protected function once(): InvokedCountMatcher
     {
         return new InvokedCountMatcher(1);
     }
 
-    /**
-     * @param int $numberOfInvokations
-     *
-     * @return \PHPUnit\Framework\MockObject\Rule\InvokedCount
-     */
     protected function exactly(int $numberOfInvokations): InvokedCountMatcher
     {
         return new InvokedCountMatcher($numberOfInvokations);
     }
 
-    /**
-     * @param callable $callback
-     *
-     * @return \PHPUnit\Framework\Constraint\Callback
-     */
     protected static function callback(callable $callback): Callback
     {
         return new Callback($callback);
