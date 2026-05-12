@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\Product\Persistence\SpyProductAbstractStore;
 use Orm\Zed\Store\Persistence\SpyStore;
 use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
@@ -22,6 +23,11 @@ use Spryker\Zed\Product\Persistence\ProductRepository;
 
 class ProductMapper implements ProductMapperInterface
 {
+    /**
+     * @var array<int, \Generated\Shared\Transfer\StoreTransfer>
+     */
+    protected static array $storeCache = [];
+
     /**
      * @var \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface
      */
@@ -68,9 +74,7 @@ class ProductMapper implements ProductMapperInterface
         }
 
         foreach ($productEntity->getSpyProductAbstract()->getSpyProductAbstractStores() as $productAbstractStoreEntity) {
-            $productConcreteTransfer->addStores(
-                $this->mapStoreEntityToTransfer($productAbstractStoreEntity->getSpyStore(), new StoreTransfer()),
-            );
+            $productConcreteTransfer->addStores($this->getStoreTransfer($productAbstractStoreEntity));
         }
 
         return $productConcreteTransfer;
@@ -237,5 +241,14 @@ class ProductMapper implements ProductMapperInterface
         }
 
         return $productEntitiesIndexedBySku;
+    }
+
+    protected function getStoreTransfer(SpyProductAbstractStore $productAbstractStoreEntity): StoreTransfer
+    {
+        if (!isset(static::$storeCache[$productAbstractStoreEntity->getFkStore()])) {
+            static::$storeCache[$productAbstractStoreEntity->getFkStore()] = $this->mapStoreEntityToTransfer($productAbstractStoreEntity->getSpyStore(), new StoreTransfer());
+        }
+
+        return static::$storeCache[$productAbstractStoreEntity->getFkStore()];
     }
 }
