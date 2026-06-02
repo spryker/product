@@ -285,6 +285,141 @@ class UrlHandlingTest extends FacadeTestAbstract
         }
     }
 
+    public function testUpdateProductUrlSkipsUpdateWhenSlugIsUnchanged(): void
+    {
+        // Arrange
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+        $this->productFacade->createProductUrl($this->productAbstractTransfer);
+
+        // Act: update without changing the product name — slug is identical
+        $this->productFacade->updateProductUrl($this->productAbstractTransfer);
+
+        // Assert: stored URLs are unchanged because the slug did not change
+        $productUrlTransfer = $this->productFacade->getProductUrl($this->productAbstractTransfer);
+
+        $this->assertProductUrl($productUrlTransfer, (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['en_US'])
+            ->setUrl('/en-us/product-name-enus-' . $idProductAbstract));
+        $this->assertProductUrl($productUrlTransfer, (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['de_DE'])
+            ->setUrl('/de-de/product-name-dede-' . $idProductAbstract));
+    }
+
+    public function testUpdateProductUrlCreatesUrlWhenNoExistingUrlPresent(): void
+    {
+        // Arrange: product exists but no URL has been created yet
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+
+        // Act: update without a prior createProductUrl call
+        $this->productFacade->updateProductUrl($this->productAbstractTransfer);
+
+        // Assert: URL was created via the update path
+        $productUrlTransfer = $this->productFacade->getProductUrl($this->productAbstractTransfer);
+
+        $this->assertProductUrl($productUrlTransfer, (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['en_US'])
+            ->setUrl('/en-us/product-name-enus-' . $idProductAbstract));
+        $this->assertProductUrl($productUrlTransfer, (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['de_DE'])
+            ->setUrl('/de-de/product-name-dede-' . $idProductAbstract));
+    }
+
+    public function testUpdateProductUrlPreservesUrlWhenOnlyLocalePrefixDiffers(): void
+    {
+        // Arrange: create URL with short locale prefix format (/de/slug, /en/slug)
+        $shortLocaleFactory = new ProductBusinessFactory();
+        $shortLocaleConfig = $this->createMock(ProductConfig::class);
+        $shortLocaleConfig->method('isFullLocaleNamesInUrlEnabled')->willReturn(false);
+        $shortLocaleFactory->setConfig($shortLocaleConfig);
+        $this->productFacade->setFactory($shortLocaleFactory);
+
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+        $this->productFacade->createProductUrl($this->productAbstractTransfer);
+
+        // Act: switch to full locale prefix format (/de-de/slug) and update
+        $fullLocaleFactory = new ProductBusinessFactory();
+        $fullLocaleConfig = $this->createMock(ProductConfig::class);
+        $fullLocaleConfig->method('isFullLocaleNamesInUrlEnabled')->willReturn(true);
+        $fullLocaleFactory->setConfig($fullLocaleConfig);
+        $this->productFacade->setFactory($fullLocaleFactory);
+
+        $this->productFacade->updateProductUrl($this->productAbstractTransfer);
+
+        // Assert: original short-prefix URL is preserved because the slug segment is identical
+        $productUrlTransfer = $this->productFacade->getProductUrl($this->productAbstractTransfer);
+
+        $this->assertProductUrl($productUrlTransfer, (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['de_DE'])
+            ->setUrl('/de/product-name-dede-' . $idProductAbstract));
+        $this->assertProductUrl($productUrlTransfer, (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['en_US'])
+            ->setUrl('/en/product-name-enus-' . $idProductAbstract));
+    }
+
+    public function testUpdateProductUrlSavesNewUrlAndCapturesOldUrlWhenSlugChanges(): void
+    {
+        // Arrange
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+        $this->productFacade->createProductUrl($this->productAbstractTransfer);
+
+        foreach ($this->productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            $localizedAttribute->setName('New ' . $localizedAttribute->getName());
+        }
+
+        // Act
+        $this->productFacade->updateProductUrl($this->productAbstractTransfer);
+
+        // Assert: new URLs are stored
+        $productUrlTransfer = $this->productFacade->getProductUrl($this->productAbstractTransfer);
+
+        $this->assertProductUrl($productUrlTransfer, (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['en_US'])
+            ->setUrl('/en-us/new-product-name-enus-' . $idProductAbstract));
+        $this->assertProductUrl($productUrlTransfer, (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['de_DE'])
+            ->setUrl('/de-de/new-product-name-dede-' . $idProductAbstract));
+
+        // Assert: old URL is preserved as a redirect entry so existing links keep working
+        $oldDeUrlTransfer = $this->urlFacade->findUrlCaseInsensitive(
+            (new UrlTransfer())->setUrl('/de-de/product-name-dede-' . $idProductAbstract),
+        );
+        $this->assertNotNull($oldDeUrlTransfer, 'Old URL should remain as a redirect after the slug changes.');
+    }
+
+    public function testUpdateProductUrlOnlyUpdatesLocalesWhoseSlugChanged(): void
+    {
+        // Arrange
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($this->productAbstractTransfer);
+        $this->productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+        $this->productFacade->createProductUrl($this->productAbstractTransfer);
+
+        // Change name only for DE locale
+        foreach ($this->productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            if ($localizedAttribute->getLocale()->getLocaleName() === static::DE_LOCALE) {
+                $localizedAttribute->setName('New ' . $localizedAttribute->getName());
+            }
+        }
+
+        // Act
+        $this->productFacade->updateProductUrl($this->productAbstractTransfer);
+
+        // Assert: DE URL is updated to the new slug
+        $productUrlTransfer = $this->productFacade->getProductUrl($this->productAbstractTransfer);
+
+        $this->assertProductUrl($productUrlTransfer, (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['de_DE'])
+            ->setUrl('/de-de/new-product-name-dede-' . $idProductAbstract));
+
+        // Assert: EN URL is unchanged because its slug did not change
+        $this->assertProductUrl($productUrlTransfer, (new LocalizedUrlTransfer())
+            ->setLocale($this->locales['en_US'])
+            ->setUrl('/en-us/product-name-enus-' . $idProductAbstract));
+    }
+
     protected function assertProductUrl(ProductUrlTransfer $productUrl, LocalizedUrlTransfer $expectedUrl): void
     {
         $this->assertSame($productUrl->getAbstractSku(), $productUrl->getAbstractSku());

@@ -210,25 +210,71 @@ class ProductUrlManager implements ProductUrlManagerInterface
     {
         $productUrl = $this->urlGenerator->generateProductUrl($productAbstractTransfer);
 
+        $idProductAbstract = $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract();
+        $existingUrlsByLocaleId = $this->getExistingUrlsByLocaleId($idProductAbstract);
+
+        $urlTransfers = [];
         foreach ($productUrl->getUrls() as $localizedUrlTransfer) {
-            $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
-                $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
-                $localizedUrlTransfer->getLocale()->getIdLocale(),
-            );
+            $idLocale = $localizedUrlTransfer->getLocale()->getIdLocale();
+            $generatedUrl = $localizedUrlTransfer->getUrl();
+
+            $urlTransfer = $existingUrlsByLocaleId[$idLocale] ?? (new UrlTransfer())
+                ->setFkResourceProductAbstract($idProductAbstract)
+                ->setFkLocale($idLocale);
+
+            if ($urlTransfer->getIdUrl() && $this->hasSameUrlSlug((string)$urlTransfer->getUrl(), $generatedUrl)) {
+                continue;
+            }
+
+            if ($urlTransfer->getUrl() !== null && $urlTransfer->getUrl() !== $generatedUrl) {
+                $urlTransfer->setOriginalUrl($urlTransfer->getUrl());
+            }
 
             $urlTransfer
-                ->setUrl($localizedUrlTransfer->getUrl())
-                ->setFkLocale($localizedUrlTransfer->getLocale()->getIdLocale())
-                ->setFkResourceProductAbstract($productAbstractTransfer->getIdProductAbstract());
+                ->setUrl($generatedUrl)
+                ->setFkLocale($idLocale)
+                ->setFkResourceProductAbstract($idProductAbstract);
 
-            if ($urlTransfer->getIdUrl()) {
-                $this->urlFacade->updateUrl($urlTransfer);
-            } else {
-                $this->urlFacade->createUrl($urlTransfer);
-            }
+            $urlTransfers[] = $urlTransfer;
+        }
+
+        if ($urlTransfers !== []) {
+            $this->urlFacade->saveUrlCollection($urlTransfers);
         }
 
         return $productUrl;
+    }
+
+    /**
+     * @return array<int|string, \Generated\Shared\Transfer\UrlTransfer>
+     */
+    protected function getExistingUrlsByLocaleId(int $idProductAbstract): array
+    {
+        return $this->productRepository->getUrlsByProductAbstractIds(
+            [$idProductAbstract],
+            fn (int $productAbstractId, int $localeId): string => (string)$localeId,
+        );
+    }
+
+    protected function hasSameUrlSlug(string $existingUrl, string $generatedUrl): bool
+    {
+        return $this->extractUrlSlug($existingUrl) === $this->extractUrlSlug($generatedUrl);
+    }
+
+    /**
+     * Strips the leading locale prefix segment and returns the remainder of the URL path.
+     * E.g. "/de-de/some-product-123" → "some-product-123"
+     */
+    protected function extractUrlSlug(string $url): string
+    {
+        $path = ltrim($url, '/');
+        $slashPosition = strpos($path, '/');
+
+        if ($slashPosition === false) {
+            return $path;
+        }
+
+        return substr($path, $slashPosition + 1);
     }
 
     /**
