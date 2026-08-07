@@ -208,7 +208,7 @@ class AttributeLoader implements AttributeLoaderInterface
 
         $productAbstractEntity = $this->productQueryContainer
             ->queryProductAbstract()
-            ->findOneByIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+            ->findPk($productAbstractTransfer->getIdProductAbstract());
 
         if (!$productAbstractEntity) {
             throw new MissingProductException(sprintf(
