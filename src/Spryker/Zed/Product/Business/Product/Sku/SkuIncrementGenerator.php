@@ -7,45 +7,56 @@
 
 namespace Spryker\Zed\Product\Business\Product\Sku;
 
-use Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface;
+use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 
 class SkuIncrementGenerator implements SkuIncrementGeneratorInterface
 {
-    /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface
-     */
-    protected $productConcreteManager;
+    protected const int SKU_READ_BATCH_SIZE = 1000;
 
-    public function __construct(ProductConcreteManagerInterface $productConcreteManager)
+    public function __construct(protected ProductRepositoryInterface $productRepository)
     {
-        $this->productConcreteManager = $productConcreteManager;
     }
 
     public function generateProductConcreteSkuIncrement(int $idProductAbstract): string
     {
-        $productConcreteTransfers = $this->productConcreteManager->getConcreteProductsByAbstractProductId($idProductAbstract);
+        $productConcreteSkuMaxLastIncrementalValue = 1;
+        $offset = 0;
 
-        return $this->generateProductConcreteSkuIncrementalValue($productConcreteTransfers);
+        do {
+            $productConcreteSkus = $this->productRepository->getProductConcreteSkusByAbstractProductId(
+                $idProductAbstract,
+                $offset,
+                static::SKU_READ_BATCH_SIZE,
+            );
+
+            $productConcreteSkuMaxLastIncrementalValue = $this->resolveMaxIncrementalValue(
+                $productConcreteSkus,
+                $productConcreteSkuMaxLastIncrementalValue,
+            );
+
+            $offset += static::SKU_READ_BATCH_SIZE;
+        } while (count($productConcreteSkus) === static::SKU_READ_BATCH_SIZE);
+
+        return (string)$productConcreteSkuMaxLastIncrementalValue;
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     * @param array<string> $productConcreteSkus
+     * @param int $productConcreteSkuMaxLastIncrementalValue
      *
-     * @return string
+     * @return int
      */
-    protected function generateProductConcreteSkuIncrementalValue(array $productConcreteTransfers): string
+    protected function resolveMaxIncrementalValue(array $productConcreteSkus, int $productConcreteSkuMaxLastIncrementalValue): int
     {
-        $productConcreteSkuMaxLastIncrementalValue = 1;
-
-        foreach ($productConcreteTransfers as $productConcreteTransfer) {
-            $productConcreteSkuLastValue = $this->getProductConcreteSkuLastPartIncremented($productConcreteTransfer->getSku());
+        foreach ($productConcreteSkus as $productConcreteSku) {
+            $productConcreteSkuLastValue = $this->getProductConcreteSkuLastPartIncremented($productConcreteSku);
 
             if ($productConcreteSkuLastValue > $productConcreteSkuMaxLastIncrementalValue) {
                 $productConcreteSkuMaxLastIncrementalValue = $productConcreteSkuLastValue;
             }
         }
 
-        return (string)$productConcreteSkuMaxLastIncrementalValue;
+        return $productConcreteSkuMaxLastIncrementalValue;
     }
 
     protected function getProductConcreteSkuLastPartIncremented(string $productConcreteSku): int

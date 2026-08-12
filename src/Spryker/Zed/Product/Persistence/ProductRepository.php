@@ -215,6 +215,32 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
+     * @param int $idProductAbstract
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array<string>
+     */
+    public function getProductConcreteSkusByAbstractProductId(int $idProductAbstract, int $offset, int $limit): array
+    {
+        /** @var \Propel\Runtime\Collection\ObjectCollection|null $productConcreteSkus */
+        $productConcreteSkus = $this->getFactory()
+            ->createProductQuery()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->select([SpyProductTableMap::COL_SKU])
+            ->orderBy(SpyProductTableMap::COL_ID_PRODUCT)
+            ->offset($offset)
+            ->limit($limit)
+            ->find();
+
+        if (!$productConcreteSkus) {
+            return [];
+        }
+
+        return $productConcreteSkus->getData();
+    }
+
+    /**
      * @param array<int> $productAbstractIds
      *
      * @return array<int>

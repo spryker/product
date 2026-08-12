@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoder;
+use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Attribute\AttributeKeyManager;
 use Spryker\Zed\Product\Business\Attribute\AttributeLoader;
 use Spryker\Zed\Product\Business\Attribute\AttributeMerger;
@@ -86,6 +87,8 @@ use Spryker\Zed\Product\ProductDependencyProvider;
  */
 class ProductBusinessFactory extends AbstractBusinessFactory
 {
+    protected static ?AttributeEncoderInterface $attributeEncoder = null;
+
     /**
      * @return \Spryker\Zed\Product\Business\Product\ProductManagerInterface
      */
@@ -237,7 +240,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
 
     public function createSkuIncrementGenerator(): SkuIncrementGeneratorInterface
     {
-        return new SkuIncrementGenerator($this->createProductConcreteManager());
+        return new SkuIncrementGenerator($this->getRepository());
     }
 
     /**
@@ -261,7 +264,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createAttributeEncoder()
     {
-        return new AttributeEncoder($this->getUtilEncodingService());
+        return static::$attributeEncoder ??= new AttributeEncoder();
     }
 
     /**

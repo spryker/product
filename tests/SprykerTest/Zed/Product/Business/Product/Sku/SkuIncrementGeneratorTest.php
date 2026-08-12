@@ -72,7 +72,7 @@ class SkuIncrementGeneratorTest extends FacadeTestAbstract
 
     protected function createSkuIncrementGeneratorMock(): SkuIncrementGenerator
     {
-        return new SkuIncrementGenerator($this->productConcreteManager);
+        return new SkuIncrementGenerator($this->productRepository);
     }
 
     protected function getFacade(): ProductFacadeInterface

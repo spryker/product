@@ -56,6 +56,15 @@ interface ProductRepositoryInterface
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
 
     /**
+     * @param int $idProductAbstract
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return array<string>
+     */
+    public function getProductConcreteSkusByAbstractProductId(int $idProductAbstract, int $offset, int $limit): array;
+
+    /**
      * @param array<int> $productAbstractIds
      *
      * @return array<int>

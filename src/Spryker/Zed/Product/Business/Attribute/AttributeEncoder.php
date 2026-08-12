@@ -7,20 +7,8 @@
 
 namespace Spryker\Zed\Product\Business\Attribute;
 
-use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
-
 class AttributeEncoder implements AttributeEncoderInterface
 {
-    /**
-     * @var \Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface
-     */
-    protected $utilEncodingService;
-
-    public function __construct(ProductToUtilEncodingInterface $utilEncodingService)
-    {
-        $this->utilEncodingService = $utilEncodingService;
-    }
-
     /**
      * @param array $attributes
      *
@@ -28,7 +16,7 @@ class AttributeEncoder implements AttributeEncoderInterface
      */
     public function encodeAttributes(array $attributes)
     {
-        return $this->utilEncodingService->encodeJson($attributes);
+        return (string)json_encode($attributes);
     }
 
     /**
@@ -38,7 +26,7 @@ class AttributeEncoder implements AttributeEncoderInterface
      */
     public function decodeAttributes($json)
     {
-        $value = $this->utilEncodingService->decodeJson($json, true);
+        $value = json_decode($json, true);
 
         if (!is_array($value)) {
             $value = [];
