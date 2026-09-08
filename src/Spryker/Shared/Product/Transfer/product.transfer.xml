@@ -189,6 +189,7 @@
         <property name="localeNames" type="string[]" singular="localeName"/>
         <property name="productIds" type="int[]" singular="idProduct" strict="true"/>
         <property name="productAbstractIds" type="int[]" singular="idProductAbstract" strict="true"/>
+        <property name="productAbstractSkus" type="string[]" singular="productAbstractSku" strict="true"/>
     </transfer>
 
     <transfer name="ProductAttributeKeyCriteria" strict="true">
@@ -296,6 +297,38 @@
 
     <transfer name="ProductConcreteReadinessRequest" strict="true">
         <property name="productConcrete" type="ProductConcrete"/>
+    </transfer>
+
+    <transfer name="LocaleConditions">
+    </transfer>
+
+    <transfer name="LocaleCriteria">
+    </transfer>
+
+    <transfer name="ProductConcreteCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="products" type="ProductConcrete[]" singular="product"/>
+    </transfer>
+
+    <transfer name="ProductConcreteCollectionResponse" strict="true">
+        <property name="products" type="ProductConcrete[]" singular="product"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="ProductAbstractCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="productAbstracts" type="ProductAbstract[]" singular="productAbstract"/>
+    </transfer>
+
+    <transfer name="ProductAbstractCollectionResponse" strict="true">
+        <property name="productAbstracts" type="ProductAbstract[]" singular="productAbstract"/>
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="entityIdentifier" type="string"/>
+        <property name="message" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
     </transfer>
 
 </transfers>

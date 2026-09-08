@@ -157,6 +157,18 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const PLUGINS_PRODUCT_ABSTRACT_COLLECTION_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_COLLECTION_EXPANDER';
 
+    public const string PLUGINS_PRODUCT_CONCRETE_BEFORE_UPDATE_COLLECTION = 'PLUGINS_PRODUCT_CONCRETE_BEFORE_UPDATE_COLLECTION';
+
+    public const string PLUGINS_PRODUCT_CONCRETE_AFTER_UPDATE_COLLECTION = 'PLUGINS_PRODUCT_CONCRETE_AFTER_UPDATE_COLLECTION';
+
+    public const string PLUGINS_PRODUCT_CONCRETE_COLLECTION_CREATE_VALIDATOR = 'PLUGINS_PRODUCT_CONCRETE_COLLECTION_CREATE_VALIDATOR';
+
+    public const string PLUGINS_PRODUCT_CONCRETE_COLLECTION_UPDATE_VALIDATOR = 'PLUGINS_PRODUCT_CONCRETE_COLLECTION_UPDATE_VALIDATOR';
+
+    public const string PLUGINS_PRODUCT_ABSTRACT_COLLECTION_CREATE_VALIDATOR = 'PLUGINS_PRODUCT_ABSTRACT_COLLECTION_CREATE_VALIDATOR';
+
+    public const string PLUGINS_PRODUCT_ABSTRACT_COLLECTION_UPDATE_VALIDATOR = 'PLUGINS_PRODUCT_ABSTRACT_COLLECTION_UPDATE_VALIDATOR';
+
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->addStoreFacade($container);
@@ -183,6 +195,12 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMessageBrokerFacade($container);
         $container = $this->addProductConcreteMergerPlugins($container);
         $container = $this->addProductAbstractCollectionExpanderPlugins($container);
+        $container = $this->addProductConcreteBeforeUpdateCollectionPlugins($container);
+        $container = $this->addProductConcreteAfterUpdateCollectionPlugins($container);
+        $container = $this->addProductConcreteCollectionCreateValidatorPlugins($container);
+        $container = $this->addProductConcreteCollectionUpdateValidatorPlugins($container);
+        $container = $this->addProductAbstractCollectionCreateValidatorPlugins($container);
+        $container = $this->addProductAbstractCollectionUpdateValidatorPlugins($container);
 
         return $container;
     }
@@ -612,6 +630,108 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractCollectionExpanderPluginInterface>
      */
     protected function getProductAbstractCollectionExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    protected function addProductConcreteBeforeUpdateCollectionPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_BEFORE_UPDATE_COLLECTION, function () {
+            return $this->getProductConcreteBeforeUpdateCollectionPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface>
+     */
+    protected function getProductConcreteBeforeUpdateCollectionPlugins(): array
+    {
+        return [];
+    }
+
+    protected function addProductConcreteAfterUpdateCollectionPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_AFTER_UPDATE_COLLECTION, function () {
+            return $this->getProductConcreteAfterUpdateCollectionPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface>
+     */
+    protected function getProductConcreteAfterUpdateCollectionPlugins(): array
+    {
+        return [];
+    }
+
+    protected function addProductConcreteCollectionCreateValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_COLLECTION_CREATE_VALIDATOR, function () {
+            return $this->getProductConcreteCollectionCreateValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteCollectionCreateValidatorPluginInterface>
+     */
+    protected function getProductConcreteCollectionCreateValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    protected function addProductConcreteCollectionUpdateValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_COLLECTION_UPDATE_VALIDATOR, function () {
+            return $this->getProductConcreteCollectionUpdateValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteCollectionUpdateValidatorPluginInterface>
+     */
+    protected function getProductConcreteCollectionUpdateValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    protected function addProductAbstractCollectionCreateValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_COLLECTION_CREATE_VALIDATOR, function () {
+            return $this->getProductAbstractCollectionCreateValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractCollectionCreateValidatorPluginInterface>
+     */
+    protected function getProductAbstractCollectionCreateValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    protected function addProductAbstractCollectionUpdateValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_COLLECTION_UPDATE_VALIDATOR, function () {
+            return $this->getProductAbstractCollectionUpdateValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractCollectionUpdateValidatorPluginInterface>
+     */
+    protected function getProductAbstractCollectionUpdateValidatorPlugins(): array
     {
         return [];
     }

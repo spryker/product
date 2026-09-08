@@ -95,6 +95,8 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
      */
     protected ProductAttributeMapperInterface $productAttributeMapper;
 
+    protected LocalizedAttributesLocaleResolverInterface $localizedAttributesLocaleResolver;
+
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
@@ -123,7 +125,8 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         array $productAbstractPreCreatePlugins,
         ProductEventTriggerInterface $productEventTrigger,
         ProductRepositoryInterface $productRepository,
-        ProductAttributeMapperInterface $productAttributeMapper
+        ProductAttributeMapperInterface $productAttributeMapper,
+        LocalizedAttributesLocaleResolverInterface $localizedAttributesLocaleResolver
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -138,6 +141,7 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         $this->productEventTrigger = $productEventTrigger;
         $this->productRepository = $productRepository;
         $this->productAttributeMapper = $productAttributeMapper;
+        $this->localizedAttributesLocaleResolver = $localizedAttributesLocaleResolver;
     }
 
     /**
@@ -483,8 +487,10 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
     protected function executePersistProductAbstractLocalizedAttributesTransaction(ProductAbstractTransfer $productAbstractTransfer): void
     {
         $idProductAbstract = $productAbstractTransfer->getIdProductAbstract();
+        $resolvedLocalizedAttributes = $this->localizedAttributesLocaleResolver
+            ->resolveLocales($productAbstractTransfer->getLocalizedAttributes());
 
-        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributes) {
+        foreach ($resolvedLocalizedAttributes as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
             $jsonAttributes = $this->attributeEncoder->encodeAttributes($localizedAttributes->getAttributes());
 

@@ -17,6 +17,8 @@ use Spryker\Zed\Product\Business\Exporter\ProductEventBusExporter;
 use Spryker\Zed\Product\Business\Exporter\ProductExporterInterface;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertion;
+use Spryker\Zed\Product\Business\Product\LocalizedAttributesLocaleResolver;
+use Spryker\Zed\Product\Business\Product\LocalizedAttributesLocaleResolverInterface;
 use Spryker\Zed\Product\Business\Product\Mapper\ProductAttributeMapper;
 use Spryker\Zed\Product\Business\Product\Mapper\ProductAttributeMapperInterface;
 use Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductAbstractLocalizedAttributesDataMerger;
@@ -60,6 +62,21 @@ use Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\Product\Business\Product\Url\ProductAbstractAfterUpdateUrlObserver;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlManager;
+use Spryker\Zed\Product\Business\Product\Validator\ProductAbstractCollectionCreateValidator;
+use Spryker\Zed\Product\Business\Product\Validator\ProductAbstractCollectionUpdateValidator;
+use Spryker\Zed\Product\Business\Product\Validator\ProductAbstractCollectionValidatorInterface;
+use Spryker\Zed\Product\Business\Product\Validator\ProductConcreteCollectionCreateValidator;
+use Spryker\Zed\Product\Business\Product\Validator\ProductConcreteCollectionUpdateValidator;
+use Spryker\Zed\Product\Business\Product\Validator\ProductConcreteCollectionValidatorInterface;
+use Spryker\Zed\Product\Business\Product\Validator\Rule\ProductAbstractCollectionValidatorRuleInterface;
+use Spryker\Zed\Product\Business\Product\Validator\Rule\ProductAbstractCreateValidatorRule;
+use Spryker\Zed\Product\Business\Product\Validator\Rule\ProductAbstractLocaleValidatorRule;
+use Spryker\Zed\Product\Business\Product\Validator\Rule\ProductAbstractStoreValidatorRule;
+use Spryker\Zed\Product\Business\Product\Validator\Rule\ProductAbstractUpdateValidatorRule;
+use Spryker\Zed\Product\Business\Product\Validator\Rule\ProductConcreteCollectionValidatorRuleInterface;
+use Spryker\Zed\Product\Business\Product\Validator\Rule\ProductConcreteCreateValidatorRule;
+use Spryker\Zed\Product\Business\Product\Validator\Rule\ProductConcreteLocaleValidatorRule;
+use Spryker\Zed\Product\Business\Product\Validator\Rule\ProductConcreteUpdateValidatorRule;
 use Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator;
 use Spryker\Zed\Product\Business\Product\Variant\VariantGenerator;
 use Spryker\Zed\Product\Business\Provider\ProductReadiness\IsActiveAbstractProductReadinessProvider;
@@ -69,11 +86,25 @@ use Spryker\Zed\Product\Business\Provider\ProductReadiness\ProductConcreteReadin
 use Spryker\Zed\Product\Business\Provider\ProductReadiness\StoreRelationAbstractProductReadinessProvider;
 use Spryker\Zed\Product\Business\Publisher\ProductMessageBrokerPublisher;
 use Spryker\Zed\Product\Business\Publisher\ProductPublisherInterface;
+use Spryker\Zed\Product\Business\Reader\LocaleReader;
+use Spryker\Zed\Product\Business\Reader\LocaleReaderInterface;
 use Spryker\Zed\Product\Business\Reader\ProductAbstractReader;
 use Spryker\Zed\Product\Business\Reader\ProductAbstractReaderInterface;
+use Spryker\Zed\Product\Business\Reader\ProductAbstractSkuReader;
+use Spryker\Zed\Product\Business\Reader\ProductAbstractSkuReaderInterface;
 use Spryker\Zed\Product\Business\Reader\ProductConcreteReader;
 use Spryker\Zed\Product\Business\Reader\ProductConcreteReaderInterface;
+use Spryker\Zed\Product\Business\Reader\StoreReader;
+use Spryker\Zed\Product\Business\Reader\StoreReaderInterface;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
+use Spryker\Zed\Product\Business\Writer\ProductAbstractCollectionCreator;
+use Spryker\Zed\Product\Business\Writer\ProductAbstractCollectionCreatorInterface;
+use Spryker\Zed\Product\Business\Writer\ProductAbstractCollectionUpdater;
+use Spryker\Zed\Product\Business\Writer\ProductAbstractCollectionUpdaterInterface;
+use Spryker\Zed\Product\Business\Writer\ProductConcreteCollectionCreator;
+use Spryker\Zed\Product\Business\Writer\ProductConcreteCollectionCreatorInterface;
+use Spryker\Zed\Product\Business\Writer\ProductConcreteCollectionUpdater;
+use Spryker\Zed\Product\Business\Writer\ProductConcreteCollectionUpdaterInterface;
 use Spryker\Zed\Product\Business\Writer\ProductConcreteWriter;
 use Spryker\Zed\Product\Business\Writer\ProductConcreteWriterInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterface;
@@ -120,6 +151,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductEventTrigger(),
             $this->getRepository(),
             $this->createProductAttributesMapper(),
+            $this->createLocalizedAttributesLocaleResolver(),
         );
 
         $productAbstractManager->setEventFacade($this->getEventFacade());
@@ -149,6 +181,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getProductConcreteExpanderPlugins(),
             $this->createProductEventTrigger(),
+            $this->createLocalizedAttributesLocaleResolver(),
         );
 
         $productConcreteManager->setEventFacade($this->getEventFacade());
@@ -159,6 +192,13 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         $productConcreteManager->attachReadObserver($this->createProductConcreteReadObserverPluginManager());
 
         return $productConcreteManager;
+    }
+
+    public function createLocalizedAttributesLocaleResolver(): LocalizedAttributesLocaleResolverInterface
+    {
+        return new LocalizedAttributesLocaleResolver(
+            $this->getLocaleFacade(),
+        );
     }
 
     /**
@@ -354,6 +394,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         return new ProductAbstractStoreRelationWriter(
             $this->getQueryContainer(),
             $this->createProductAbstractStoreRelationReader(),
+            $this->getStoreFacade(),
         );
     }
 
@@ -656,7 +697,24 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductConcreteManager(),
             $this->getEntityManager(),
             $this->createProductConcreteAssertion(),
+            $this->createLocalizedAttributesLocaleResolver(),
         );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface>
+     */
+    public function getProductConcreteBeforeUpdateCollectionPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_CONCRETE_BEFORE_UPDATE_COLLECTION);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginUpdateInterface>
+     */
+    public function getProductConcreteAfterUpdateCollectionPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_CONCRETE_AFTER_UPDATE_COLLECTION);
     }
 
     /**
@@ -665,6 +723,207 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function getProductAbstractPreCreatePlugins(): array
     {
         return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_PRE_CREATE);
+    }
+
+    public function createProductConcreteCollectionCreator(): ProductConcreteCollectionCreatorInterface
+    {
+        return new ProductConcreteCollectionCreator(
+            $this->createProductConcreteCollectionCreateValidator(),
+            $this->createProductConcreteManager(),
+        );
+    }
+
+    public function createProductConcreteCollectionUpdater(): ProductConcreteCollectionUpdaterInterface
+    {
+        return new ProductConcreteCollectionUpdater(
+            $this->createProductConcreteCollectionUpdateValidator(),
+            $this->getEntityManager(),
+            $this->createLocalizedAttributesLocaleResolver(),
+            $this->getProductConcreteBeforeUpdateCollectionPlugins(),
+            $this->getProductConcreteAfterUpdateCollectionPlugins(),
+        );
+    }
+
+    public function createProductAbstractCollectionCreator(): ProductAbstractCollectionCreatorInterface
+    {
+        return new ProductAbstractCollectionCreator(
+            $this->createProductAbstractCollectionCreateValidator(),
+            $this->createProductAbstractManager(),
+        );
+    }
+
+    public function createProductAbstractCollectionUpdater(): ProductAbstractCollectionUpdaterInterface
+    {
+        return new ProductAbstractCollectionUpdater(
+            $this->createProductAbstractCollectionUpdateValidator(),
+            $this->createProductAbstractManager(),
+        );
+    }
+
+    public function createProductConcreteCollectionCreateValidator(): ProductConcreteCollectionValidatorInterface
+    {
+        return new ProductConcreteCollectionCreateValidator(
+            $this->getProductConcreteCollectionCreateValidatorRules(),
+            $this->getProductConcreteCollectionCreateValidatorPlugins(),
+        );
+    }
+
+    public function createProductConcreteCollectionUpdateValidator(): ProductConcreteCollectionValidatorInterface
+    {
+        return new ProductConcreteCollectionUpdateValidator(
+            $this->getProductConcreteCollectionUpdateValidatorRules(),
+            $this->getProductConcreteCollectionUpdateValidatorPlugins(),
+        );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\Product\Business\Product\Validator\Rule\ProductConcreteCollectionValidatorRuleInterface>
+     */
+    public function getProductConcreteCollectionCreateValidatorRules(): array
+    {
+        return [
+            $this->createProductConcreteCreateValidatorRule(),
+            $this->createProductConcreteLocaleValidatorRule(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\Product\Business\Product\Validator\Rule\ProductConcreteCollectionValidatorRuleInterface>
+     */
+    public function getProductConcreteCollectionUpdateValidatorRules(): array
+    {
+        return [
+            $this->createProductConcreteUpdateValidatorRule(),
+            $this->createProductConcreteLocaleValidatorRule(),
+        ];
+    }
+
+    public function createProductAbstractCollectionCreateValidator(): ProductAbstractCollectionValidatorInterface
+    {
+        return new ProductAbstractCollectionCreateValidator(
+            $this->getProductAbstractCollectionCreateValidatorRules(),
+            $this->getProductAbstractCollectionCreateValidatorPlugins(),
+        );
+    }
+
+    public function createProductAbstractCollectionUpdateValidator(): ProductAbstractCollectionValidatorInterface
+    {
+        return new ProductAbstractCollectionUpdateValidator(
+            $this->getProductAbstractCollectionUpdateValidatorRules(),
+            $this->getProductAbstractCollectionUpdateValidatorPlugins(),
+        );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\Product\Business\Product\Validator\Rule\ProductAbstractCollectionValidatorRuleInterface>
+     */
+    public function getProductAbstractCollectionCreateValidatorRules(): array
+    {
+        return [
+            $this->createProductAbstractCreateValidatorRule(),
+            $this->createProductAbstractLocaleValidatorRule(),
+            $this->createProductAbstractStoreValidatorRule(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\Product\Business\Product\Validator\Rule\ProductAbstractCollectionValidatorRuleInterface>
+     */
+    public function getProductAbstractCollectionUpdateValidatorRules(): array
+    {
+        return [
+            $this->createProductAbstractUpdateValidatorRule(),
+            $this->createProductAbstractLocaleValidatorRule(),
+            $this->createProductAbstractStoreValidatorRule(),
+        ];
+    }
+
+    public function createProductConcreteCreateValidatorRule(): ProductConcreteCollectionValidatorRuleInterface
+    {
+        return new ProductConcreteCreateValidatorRule(
+            $this->createProductConcreteManager(),
+            $this->createProductAbstractManager(),
+        );
+    }
+
+    public function createProductConcreteUpdateValidatorRule(): ProductConcreteCollectionValidatorRuleInterface
+    {
+        return new ProductConcreteUpdateValidatorRule(
+            $this->getRepository(),
+            $this->createProductConcreteManager(),
+        );
+    }
+
+    public function createProductAbstractCreateValidatorRule(): ProductAbstractCollectionValidatorRuleInterface
+    {
+        return new ProductAbstractCreateValidatorRule($this->createProductAbstractSkuReader());
+    }
+
+    public function createProductAbstractUpdateValidatorRule(): ProductAbstractCollectionValidatorRuleInterface
+    {
+        return new ProductAbstractUpdateValidatorRule($this->createProductAbstractSkuReader());
+    }
+
+    public function createProductAbstractSkuReader(): ProductAbstractSkuReaderInterface
+    {
+        return new ProductAbstractSkuReader($this->getRepository());
+    }
+
+    public function createProductConcreteLocaleValidatorRule(): ProductConcreteCollectionValidatorRuleInterface
+    {
+        return new ProductConcreteLocaleValidatorRule($this->createLocaleReader());
+    }
+
+    public function createProductAbstractLocaleValidatorRule(): ProductAbstractCollectionValidatorRuleInterface
+    {
+        return new ProductAbstractLocaleValidatorRule($this->createLocaleReader());
+    }
+
+    public function createProductAbstractStoreValidatorRule(): ProductAbstractCollectionValidatorRuleInterface
+    {
+        return new ProductAbstractStoreValidatorRule($this->createStoreReader());
+    }
+
+    public function createStoreReader(): StoreReaderInterface
+    {
+        return new StoreReader($this->getStoreFacade());
+    }
+
+    public function createLocaleReader(): LocaleReaderInterface
+    {
+        return new LocaleReader($this->getLocaleFacade());
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteCollectionCreateValidatorPluginInterface>
+     */
+    public function getProductConcreteCollectionCreateValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_CONCRETE_COLLECTION_CREATE_VALIDATOR);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteCollectionUpdateValidatorPluginInterface>
+     */
+    public function getProductConcreteCollectionUpdateValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_CONCRETE_COLLECTION_UPDATE_VALIDATOR);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractCollectionCreateValidatorPluginInterface>
+     */
+    public function getProductAbstractCollectionCreateValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_COLLECTION_CREATE_VALIDATOR);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractCollectionUpdateValidatorPluginInterface>
+     */
+    public function getProductAbstractCollectionUpdateValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_COLLECTION_UPDATE_VALIDATOR);
     }
 
     public function createProductEventBusExporter(): ProductExporterInterface

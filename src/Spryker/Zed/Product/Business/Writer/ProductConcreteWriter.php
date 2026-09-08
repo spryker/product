@@ -10,6 +10,7 @@ namespace Spryker\Zed\Product\Business\Writer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface;
+use Spryker\Zed\Product\Business\Product\LocalizedAttributesLocaleResolverInterface;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface;
 use Spryker\Zed\Product\Persistence\ProductEntityManagerInterface;
 
@@ -17,29 +18,24 @@ class ProductConcreteWriter implements ProductConcreteWriterInterface
 {
     use TransactionTrait;
 
-    /**
-     * @var \Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface
-     */
-    protected $productConcreteManager;
+    protected ProductConcreteManagerInterface $productConcreteManager;
 
-    /**
-     * @var \Spryker\Zed\Product\Persistence\ProductEntityManagerInterface
-     */
-    protected $productEntityManager;
+    protected ProductEntityManagerInterface $productEntityManager;
 
-    /**
-     * @var \Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface
-     */
-    protected $productConcreteAssertion;
+    protected ProductConcreteAssertionInterface $productConcreteAssertion;
+
+    protected LocalizedAttributesLocaleResolverInterface $localizedAttributesLocaleResolver;
 
     public function __construct(
         ProductConcreteManagerInterface $productConcreteManager,
         ProductEntityManagerInterface $productEntityManager,
-        ProductConcreteAssertionInterface $productConcreteAssertion
+        ProductConcreteAssertionInterface $productConcreteAssertion,
+        LocalizedAttributesLocaleResolverInterface $localizedAttributesLocaleResolver,
     ) {
         $this->productConcreteManager = $productConcreteManager;
         $this->productEntityManager = $productEntityManager;
         $this->productConcreteAssertion = $productConcreteAssertion;
+        $this->localizedAttributesLocaleResolver = $localizedAttributesLocaleResolver;
     }
 
     public function createProductConcreteCollection(
@@ -55,6 +51,11 @@ class ProductConcreteWriter implements ProductConcreteWriterInterface
     ): void {
         foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
             $this->productConcreteAssertion->assertSkuIsUnique($productConcreteTransfer->getSku());
+
+            $this->localizedAttributesLocaleResolver->resolveLocales(
+                $productConcreteTransfer->getLocalizedAttributes(),
+            );
+
             $this->productConcreteManager->notifyBeforeCreateObservers($productConcreteTransfer);
         }
 

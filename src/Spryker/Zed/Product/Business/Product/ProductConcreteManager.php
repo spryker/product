@@ -86,6 +86,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      */
     protected $productEventTrigger;
 
+    protected LocalizedAttributesLocaleResolverInterface $localizedAttributesLocaleResolver;
+
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
@@ -108,7 +110,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         ProductTransferMapperInterface $productTransferMapper,
         ProductRepositoryInterface $productRepository,
         array $productConcreteExpanderPlugins,
-        ProductEventTriggerInterface $productEventTrigger
+        ProductEventTriggerInterface $productEventTrigger,
+        LocalizedAttributesLocaleResolverInterface $localizedAttributesLocaleResolver
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -120,6 +123,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $this->productRepository = $productRepository;
         $this->productConcreteExpanderPlugins = $productConcreteExpanderPlugins;
         $this->productEventTrigger = $productEventTrigger;
+        $this->localizedAttributesLocaleResolver = $localizedAttributesLocaleResolver;
     }
 
     /**
@@ -428,6 +432,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $sku = $productConcreteTransfer->getSku();
         $this->productConcreteAssertion->assertSkuIsUnique($sku);
 
+        $productConcreteTransfer = $this->resolveProductAbstractId($productConcreteTransfer);
         $productConcreteTransfer = $this->notifyBeforeCreateObservers($productConcreteTransfer);
 
         $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
@@ -472,6 +477,38 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $this->productEventTrigger->triggerProductAbstractUpdateEvents([$idProductAbstract]);
 
         return $idProductConcrete;
+    }
+
+    protected function resolveProductAbstractId(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
+        if ($productConcreteTransfer->getFkProductAbstract() !== null) {
+            return $productConcreteTransfer;
+        }
+
+        $abstractSku = $productConcreteTransfer->getAbstractSku();
+
+        if ($abstractSku !== null) {
+            return $this->resolveProductAbstractIdBySku($productConcreteTransfer, $abstractSku);
+        }
+
+        return $productConcreteTransfer;
+    }
+
+    protected function resolveProductAbstractIdBySku(
+        ProductConcreteTransfer $productConcreteTransfer,
+        string $abstractSku
+    ): ProductConcreteTransfer {
+        $productAbstractTransfers = $this->productRepository->getRawProductAbstractTransfersByAbstractSkus([$abstractSku]);
+
+        if ($productAbstractTransfers === []) {
+            return $productConcreteTransfer;
+        }
+
+        $productConcreteTransfer->setFkProductAbstract(
+            $productAbstractTransfers[0]->getIdProductAbstractOrFail(),
+        );
+
+        return $productConcreteTransfer;
     }
 
     /**
@@ -604,10 +641,13 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     protected function executePersistProductConcreteLocalizedAttributesTransaction(ProductConcreteTransfer $productConcreteTransfer): void
     {
         $idProductConcrete = $productConcreteTransfer->getIdProductConcrete();
+        $resolvedLocalizedAttributes = $this->localizedAttributesLocaleResolver
+            ->resolveLocales($productConcreteTransfer->getLocalizedAttributes());
 
-        foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
+        foreach ($resolvedLocalizedAttributes as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
             $jsonAttributes = $localizedAttributes->getAttributes();
+
             // @phpstan-ignore function.alreadyNarrowedType
             if (is_array($jsonAttributes)) {
                 $jsonAttributes = $this->attributeEncoder->encodeAttributes($localizedAttributes->getAttributes());

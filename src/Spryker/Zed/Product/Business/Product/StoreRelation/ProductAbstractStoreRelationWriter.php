@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product\Business\Product\StoreRelation;
 
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstractStore;
+use Spryker\Zed\Product\Dependency\Facade\ProductToStoreInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelationWriterInterface
@@ -25,7 +26,8 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
 
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
-        ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader
+        ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader,
+        protected readonly ProductToStoreInterface $storeFacade
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->productAbstractStoreRelationReader = $productAbstractStoreRelationReader;
@@ -59,11 +61,44 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
     {
         /** @var array<int>|null $ids */
         $ids = $storeRelationTransfer->getIdStores();
-        if ($ids === null) {
+
+        if ($ids !== null && $ids !== []) {
+            return $ids;
+        }
+
+        return $this->resolveIdStoresFromNames($storeRelationTransfer);
+    }
+
+    /**
+     * @return array<int>
+     */
+    protected function resolveIdStoresFromNames(StoreRelationTransfer $storeRelationTransfer): array
+    {
+        $storeNames = [];
+
+        foreach ($storeRelationTransfer->getStores() as $storeTransfer) {
+            $storeName = $storeTransfer->getName();
+
+            if ($storeName !== null) {
+                $storeNames[] = $storeName;
+            }
+        }
+
+        if ($storeNames === []) {
             return [];
         }
 
-        return $ids;
+        $idStores = [];
+
+        foreach ($this->storeFacade->getStoreTransfersByStoreNames($storeNames) as $storeTransfer) {
+            $idStore = $storeTransfer->getIdStore();
+
+            if ($idStore !== null) {
+                $idStores[] = $idStore;
+            }
+        }
+
+        return $idStores;
     }
 
     /**

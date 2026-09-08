@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MessageSendingContextTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractCollectionRequestTransfer;
+use Generated\Shared\Transfer\ProductAbstractCollectionResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
@@ -18,6 +20,8 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyCollectionTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionRequestTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -1348,5 +1352,57 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
         ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
     ): ProductAttributeKeyCollectionTransfer {
         return $this->getRepository()->getProductAttributeKeyCollection($productAttributeKeyCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function createProductCollection(
+        ProductConcreteCollectionRequestTransfer $productConcreteCollectionRequestTransfer
+    ): ProductConcreteCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createProductConcreteCollectionCreator()
+            ->createProductCollection($productConcreteCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function updateProductCollection(
+        ProductConcreteCollectionRequestTransfer $productConcreteCollectionRequestTransfer
+    ): ProductConcreteCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createProductConcreteCollectionUpdater()
+            ->updateProductCollection($productConcreteCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function createProductAbstractCollection(
+        ProductAbstractCollectionRequestTransfer $productAbstractCollectionRequestTransfer
+    ): ProductAbstractCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createProductAbstractCollectionCreator()
+            ->createProductAbstractCollection($productAbstractCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     */
+    public function updateProductAbstractCollection(
+        ProductAbstractCollectionRequestTransfer $productAbstractCollectionRequestTransfer
+    ): ProductAbstractCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createProductAbstractCollectionUpdater()
+            ->updateProductAbstractCollection($productAbstractCollectionRequestTransfer);
     }
 }

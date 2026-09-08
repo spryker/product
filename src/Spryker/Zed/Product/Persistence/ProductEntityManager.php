@@ -67,4 +67,50 @@ class ProductEntityManager extends AbstractEntityManager implements ProductEntit
 
         $productLocalizedAttributesEntityCollection->save();
     }
+
+    public function updateProductConcreteCollection(
+        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+    ): void {
+        $productMapper = $this->getFactory()->createProductMapper();
+
+        foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
+            $productConcreteTransfer->requireIdProductConcrete()->requireSku()->requireFkProductAbstract();
+
+            $productEntity = $this->getFactory()
+                ->createProductQuery()
+                ->filterByIdProduct($productConcreteTransfer->getIdProductConcreteOrFail())
+                ->findOneOrCreate();
+
+            $productMapper->mapProductConcreteTransferToProductEntity($productConcreteTransfer, $productEntity);
+
+            $productEntity->save();
+        }
+    }
+
+    public function updateProductConcreteCollectionLocalizedAttributes(
+        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+    ): void {
+        $localizedAttributesMapper = $this->getFactory()->createLocalizedAttributesMapper();
+
+        foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
+            $idProductConcrete = $productConcreteTransfer->getIdProductConcreteOrFail();
+
+            foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
+                $localizedAttributesTransfer->requireName()->requireLocale();
+
+                $productLocalizedAttributesEntity = $this->getFactory()
+                    ->createProductLocalizedAttributesQuery()
+                    ->filterByFkProduct($idProductConcrete)
+                    ->filterByFkLocale($localizedAttributesTransfer->getLocaleOrFail()->getIdLocaleOrFail())
+                    ->findOneOrCreate();
+
+                $localizedAttributesMapper->mapLocalizedAttributesTransferToProductLocalizedAttributesEntity(
+                    $localizedAttributesTransfer,
+                    $productLocalizedAttributesEntity->setFkProduct($idProductConcrete),
+                );
+
+                $productLocalizedAttributesEntity->save();
+            }
+        }
+    }
 }

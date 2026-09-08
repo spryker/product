@@ -1095,6 +1095,13 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             $productConcreteQuery->filterByFkProductAbstract_In($productConcreteConditionsTransfer->getProductAbstractIds());
         }
 
+        if ($productConcreteConditionsTransfer->getProductAbstractSkus()) {
+            $productConcreteQuery
+                ->useSpyProductAbstractQuery()
+                    ->filterBySku_In($productConcreteConditionsTransfer->getProductAbstractSkus())
+                ->endUse();
+        }
+
         if ($productConcreteConditionsTransfer->getLocaleNames()) {
             $productConcreteQuery = $this->filterProductConcretesByLocaleName(
                 $productConcreteQuery,

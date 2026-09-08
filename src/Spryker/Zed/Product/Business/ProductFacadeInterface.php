@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MessageSendingContextTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractCollectionRequestTransfer;
+use Generated\Shared\Transfer\ProductAbstractCollectionResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
@@ -18,6 +20,8 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyCollectionTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionRequestTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -1210,4 +1214,108 @@ interface ProductFacadeInterface
     public function getProductAttributeKeyCollection(
         ProductAttributeKeyCriteriaTransfer $productAttributeKeyCriteriaTransfer
     ): ProductAttributeKeyCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Validates the whole collection before any write query is executed.
+     * - Validates that the SKU of each concrete product is not taken yet.
+     * - Validates that an explicitly provided `abstractSku` refers to an existing abstract product.
+     * - Validates that `abstractSku` is provided when no abstract product is referenced.
+     * - Validates that every localized attributes entry carries a locale name.
+     * - Validates that `validFrom` is not later than `validTo`.
+     * - Executes `ProductConcreteCollectionCreateValidatorPluginInterface` plugins to validate referenced entities.
+     * - Returns `ProductConcreteCollectionResponseTransfer` with the requested products and ALL collected errors, persisting nothing, when any violation is found.
+     * - Uses `ProductConcreteCollectionRequestTransfer.isTransactional` for transactional operation, defaults to `true`.
+     * - The transactional flag applies to the persistence of the collection, validation always runs before the transaction is opened.
+     * - A failure raised by the persistence layer or by a write plugin surfaces as an exception, not as an `Error`.
+     * - Creates each concrete product one by one, executing the configured before/after create plugins per product.
+     * - Returns `ProductConcreteCollectionResponseTransfer` with the persisted products and an empty error list on success.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteCollectionRequestTransfer $productConcreteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionResponseTransfer
+     */
+    public function createProductCollection(
+        ProductConcreteCollectionRequestTransfer $productConcreteCollectionRequestTransfer
+    ): ProductConcreteCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Validates the whole collection before any write query is executed.
+     * - Expects each concrete product to carry its full target state, not only the changed fields.
+     * - Validates that `idProductConcrete` is provided for each concrete product.
+     * - Validates that `idProductConcrete` refers to an existing concrete product.
+     * - Validates that a changed `sku` is not already taken by another concrete product.
+     * - Validates that `abstractSku` is not changed.
+     * - Validates that every localized attributes entry carries a locale name.
+     * - Validates that `validFrom` is not later than `validTo`.
+     * - Executes `ProductConcreteCollectionUpdateValidatorPluginInterface` plugins to validate referenced entities.
+     * - Returns `ProductConcreteCollectionResponseTransfer` with the requested products and ALL collected errors, persisting nothing, when any violation is found.
+     * - Uses `ProductConcreteCollectionRequestTransfer.isTransactional` for transactional operation, defaults to `true`.
+     * - The transactional flag applies to the persistence of the collection, validation always runs before the transaction is opened.
+     * - A failure raised by the persistence layer or by a write plugin surfaces as an exception, not as an `Error`.
+     * - Executes the configured before-update plugins per product, persists the collection, then executes the after-update plugins per product.
+     * - Requires each `ProductConcreteTransfer` to have `idProductConcrete`, `sku` and `fkProductAbstract` set.
+     * - Returns `ProductConcreteCollectionResponseTransfer` with the persisted products and an empty error list on success.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteCollectionRequestTransfer $productConcreteCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionResponseTransfer
+     */
+    public function updateProductCollection(
+        ProductConcreteCollectionRequestTransfer $productConcreteCollectionRequestTransfer
+    ): ProductConcreteCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Validates the whole collection before any write query is executed.
+     * - Validates that the SKU of each abstract product is not taken yet.
+     * - Validates that every localized attributes entry carries a locale name.
+     * - Validates that `newFrom` is not later than `newTo`.
+     * - Executes `ProductAbstractCollectionCreateValidatorPluginInterface` plugins to validate referenced entities.
+     * - Returns `ProductAbstractCollectionResponseTransfer` with the requested abstract products and ALL collected errors, persisting nothing, when any violation is found.
+     * - Uses `ProductAbstractCollectionRequestTransfer.isTransactional` for transactional operation, defaults to `true`.
+     * - The transactional flag applies to the persistence of the collection, validation always runs before the transaction is opened.
+     * - A failure raised by the persistence layer or by a write plugin surfaces as an exception, not as an `Error`.
+     * - Creates each abstract product one by one, executing the configured pre/post create plugins per abstract product.
+     * - Returns `ProductAbstractCollectionResponseTransfer` with the persisted abstract products and an empty error list on success.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractCollectionRequestTransfer $productAbstractCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCollectionResponseTransfer
+     */
+    public function createProductAbstractCollection(
+        ProductAbstractCollectionRequestTransfer $productAbstractCollectionRequestTransfer
+    ): ProductAbstractCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Validates the whole collection before any write query is executed.
+     * - Expects each abstract product to carry its full target state, not only the changed fields.
+     * - Validates that the SKU of each abstract product refers to an existing abstract product.
+     * - Validates that every localized attributes entry carries a locale name.
+     * - Validates that `newFrom` is not later than `newTo`.
+     * - Executes `ProductAbstractCollectionUpdateValidatorPluginInterface` plugins to validate referenced entities.
+     * - Returns `ProductAbstractCollectionResponseTransfer` with the requested abstract products and ALL collected errors, persisting nothing, when any violation is found.
+     * - Uses `ProductAbstractCollectionRequestTransfer.isTransactional` for transactional operation, defaults to `true`.
+     * - The transactional flag applies to the persistence of the collection, validation always runs before the transaction is opened.
+     * - A failure raised by the persistence layer or by a write plugin surfaces as an exception, not as an `Error`.
+     * - Updates each abstract product one by one, executing the configured before/after update plugins per abstract product.
+     * - Returns `ProductAbstractCollectionResponseTransfer` with the persisted abstract products and an empty error list on success.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractCollectionRequestTransfer $productAbstractCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCollectionResponseTransfer
+     */
+    public function updateProductAbstractCollection(
+        ProductAbstractCollectionRequestTransfer $productAbstractCollectionRequestTransfer
+    ): ProductAbstractCollectionResponseTransfer;
 }

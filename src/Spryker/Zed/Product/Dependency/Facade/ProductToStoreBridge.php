@@ -36,4 +36,14 @@ class ProductToStoreBridge implements ProductToStoreInterface
     {
         return $this->storeFacade->getAllStores();
     }
+
+    /**
+     * @param array<string> $storeNames
+     *
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getStoreTransfersByStoreNames(array $storeNames): array
+    {
+        return $this->storeFacade->getStoreTransfersByStoreNames($storeNames);
+    }
 }

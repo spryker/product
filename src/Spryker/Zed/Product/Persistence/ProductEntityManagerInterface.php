@@ -18,4 +18,12 @@ interface ProductEntityManagerInterface
     public function createProductConcreteCollectionLocalizedAttributes(
         ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
     ): void;
+
+    public function updateProductConcreteCollection(
+        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+    ): void;
+
+    public function updateProductConcreteCollectionLocalizedAttributes(
+        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+    ): void;
 }

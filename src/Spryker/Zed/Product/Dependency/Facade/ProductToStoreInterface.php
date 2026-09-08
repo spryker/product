@@ -24,4 +24,11 @@ interface ProductToStoreInterface
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores(): array;
+
+    /**
+     * @param array<string> $storeNames
+     *
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getStoreTransfersByStoreNames(array $storeNames): array;
 }
