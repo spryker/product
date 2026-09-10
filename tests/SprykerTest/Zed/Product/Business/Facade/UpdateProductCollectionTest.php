@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductConcreteCollectionRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerTest\Zed\Product\ProductBusinessTester;
 
 /**
@@ -110,7 +111,7 @@ class UpdateProductCollectionTest extends Unit
         $productConcreteCollectionRequestTransfer = (new ProductConcreteCollectionRequestTransfer())
             ->addProduct(
                 (new ProductConcreteTransfer())
-                    ->setIdProductConcrete(PHP_INT_MAX)
+                    ->setIdProductConcrete($this->getUnknownIdProductConcrete())
                     ->setSku(sprintf('missing-concrete-%s', uniqid())),
             );
 
@@ -121,5 +122,12 @@ class UpdateProductCollectionTest extends Unit
         // Assert
         $this->assertCount(1, $productConcreteCollectionResponseTransfer->getErrors());
         $this->assertNotNull(SpyProductQuery::create()->findOneBySku($seededProductConcreteTransfer->getSku()));
+    }
+
+    protected function getUnknownIdProductConcrete(): int
+    {
+        $productEntity = SpyProductQuery::create()->orderByIdProduct(Criteria::DESC)->findOne();
+
+        return ($productEntity?->getIdProduct() ?? 0) + 1;
     }
 }
