@@ -13,6 +13,9 @@
         <property name="stores" type="Store[]" singular="stores"/>
         <property name="url" type="ProductUrl"/>
         <property name="searchMetadata" type="array" singular="searchMetadata" associative="true"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="imageSets" type="ProductImageSet[]" singular="imageSet" description="A collection of image sets for a product."/>
     </transfer>
 
     <transfer name="ProductAbstract">
@@ -300,9 +303,11 @@
     </transfer>
 
     <transfer name="LocaleConditions">
+        <property name="localeNames" type="string[]" singular="localeName"/>
     </transfer>
 
     <transfer name="LocaleCriteria">
+        <property name="localeConditions" type="LocaleConditions"/>
     </transfer>
 
     <transfer name="ProductConcreteCollectionRequest" strict="true">
@@ -329,6 +334,10 @@
         <property name="entityIdentifier" type="string"/>
         <property name="message" type="string"/>
         <property name="parameters" type="array" singular="parameter"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="locale" type="Locale" description="The locale context for a request or entity, affecting language and regional formats."/>
     </transfer>
 
 </transfers>
