@@ -35,7 +35,8 @@ class SkuIncrementGenerator implements SkuIncrementGeneratorInterface
             );
 
             $offset += static::SKU_READ_BATCH_SIZE;
-        } while (count($productConcreteSkus) === static::SKU_READ_BATCH_SIZE);
+            $hasNextBatch = count($productConcreteSkus) === static::SKU_READ_BATCH_SIZE;
+        } while ($hasNextBatch);
 
         return (string)$productConcreteSkuMaxLastIncrementalValue;
     }
